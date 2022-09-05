@@ -102,10 +102,30 @@
 	width: 100%;
 	margin-bottom: 5px;
 
-	.styles-form .components-base-control {
-	  width: 200px;
-	  margin-right: 20px;
-	  display: inline-block;
+	.styles-form {
+	  display: flex;
+	  align-items: flex-end;
+	  justify-content: flex-start;
+	  flex-wrap: wrap;
+	  margin-bottom: 20px;
+
+	  .components-base-control {
+		width: 175px;
+		margin-right: 20px;
+		display: inline-block;
+
+		&:last-of-type {
+		  margin-right: 0;
+		}
+	  }
+
+	  .components-button {
+		margin-bottom: 5px;
+
+		svg {
+		  height: 15px;
+		}
+	  }
 	}
   }
 

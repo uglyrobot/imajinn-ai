@@ -96,6 +96,10 @@ export default {
 					name: __('Illustration', 'imajinn-ai'),
 				},
 				{
+					id: 'cyberpunk, trending on artstation',
+					name: __('Cyberpunk', 'imajinn-ai'),
+				},
+				{
 					id: 'pencil sketch, drawing, trending on artstation',
 					name: __('Pencil', 'imajinn-ai'),
 				},
@@ -170,7 +174,7 @@ export default {
 					name: __('Simpsons', 'imajinn-ai'),
 				},
 				{
-					id: 'anime style',
+					id: 'anime style, rhads, Bruce Pennington, Studio Ghibli, tim hildebrandt, trending on artstation',
 					name: __('Anime', 'imajinn-ai'),
 				},
 				{
@@ -350,6 +354,60 @@ export default {
 		{
 			value: 'by Vincent van Gogh',
 			label: __('Vincent van Gogh', 'imajinn-ai'),
+		},
+	],
+	modifiers: [
+		{
+			value: '',
+			label: __('No Modifier', 'imajinn-ai'),
+		},
+		{
+			value: 'in the style of steampunk',
+			label: __('Steampunk', 'imajinn-ai'),
+		},
+		{
+			value: 'in the style of cyberpunk',
+			label: __('Cyberpunk', 'imajinn-ai'),
+		},
+		{
+			value: 'insanely detailed and intricate, hypermaximalist, elegant, ornate, hyper realistic, super detailed',
+			label: __('Detailed & Intricate', 'imajinn-ai'),
+		},
+		{
+			value: 'n a symbolic and meaningful style, insanely detailed and intricate, hypermaximalist, elegant, ornate, hyper realistic, super detailed',
+			label: __('Symbolic & Meaningful', 'imajinn-ai'),
+		},
+		{
+			value: 'Cinematic Lighting',
+			label: __('Cinematic Lighting', 'imajinn-ai'),
+		},
+		{
+			value: 'Contre-Jour',
+			label: __('Contre-Jour', 'imajinn-ai'),
+		},
+		{
+			value: 'futuristic',
+			label: __('Futuristic', 'imajinn-ai'),
+		},
+		{
+			value: 'black and white',
+			label: __('Black & White', 'imajinn-ai'),
+		},
+		{
+			value: 'technicolor',
+			label: __('Technicolor', 'imajinn-ai'),
+		},
+		{
+			value: 'warm color palette',
+			label: __('Warm', 'imajinn-ai'),
+		},
+		{
+			value: 'neon',
+			label: __('Neon', 'imajinn-ai'),
+		},
+		{
+			value: 'colorful',
+			label: __('Colorful', 'imajinn-ai'),
 		},
 	],
 };

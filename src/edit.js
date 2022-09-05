@@ -89,6 +89,7 @@ export default function Edit() {
 	const [showUpgrade, setShowUpgrade] = useState(false);
 	const [imageStyle, setImageStyle] = useState('');
 	const [imageArtist, setImageArtist] = useState('');
+	const [imageModifier, setImageModifier] = useState('');
 
 	//calculate credit estimate
 	useEffect(() => {
@@ -119,9 +120,11 @@ export default function Edit() {
 	//add our styles to the prompt string
 	useEffect(() => {
 		setPromptStyle(
-			sprintf('%s, %s, %s', prompt, imageStyle, imageArtist)
+			[prompt, imageStyle, imageArtist, imageModifier]
+				.filter(Boolean)
+				.join(', ')
 		);
-	}, [prompt, imageStyle, imageArtist]); // <-- here put the parameter to listen
+	}, [prompt, imageStyle, imageArtist, imageModifier]); // <-- here put the parameter to listen
 
 	const blockProps = useBlockProps();
 
@@ -764,6 +767,22 @@ export default function Edit() {
 		);
 	};
 
+	const ModifierSelect = (props) => {
+		return (
+			<SelectControl
+				__next36pxDefaultSize
+				allowReset
+				disabled={isLoading}
+				label={__('Select a style modifier', 'imajinn-ai')}
+				value={imageModifier}
+				onChange={(value) => {
+					setImageModifier(value);
+				}}
+				options={optionData.modifiers}
+			/>
+		);
+	};
+
 	const placeholderInstructions = generations.length
 		? ''
 		: metadata.description;
@@ -788,6 +807,7 @@ export default function Edit() {
 						<div className="prompt-form">
 							<TextareaControl
 								disabled={isLoading}
+								maxLength={450}
 								label={
 									<>
 										{__(
@@ -803,6 +823,21 @@ export default function Edit() {
 							<div className={'styles-form'}>
 								<StyleSelect/>
 								<ArtistSelect/>
+								<ModifierSelect/>
+								<Button
+									icon={close}
+									disabled={isLoading}
+									label={_x(
+										'Clear styles',
+										'clear the image style selects',
+										'imajinn-ai'
+									)}
+									onClick={() => {
+										setImageStyle('');
+										setImageArtist('');
+										setImageModifier('');
+									}}
+								/>
 							</div>
 						</div>
 						<Flex align="top" wrap="true">

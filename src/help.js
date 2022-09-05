@@ -160,7 +160,7 @@ export function PromptHelpModal(props) {
 						to make your image more artistic, add “trending on
 						artstation”. If you want to add more realistic lighting
 						add “Unreal Engine.” You can add anything you want, but
-						here are some examples:{' '}
+						here are some examples:
 					</p>
 					<p>
 						Highly detailed, surrealism, trending on art station,
@@ -178,6 +178,43 @@ export function PromptHelpModal(props) {
 						improves the image quality by a lot in every aspect.
 					</p>
 
+					<h3>Some fun example prompts to get you started:</h3>
+					<ul>
+						<li>
+							A cat walks through a cyberpunk street, rain,
+							poster, artstation, neon, futuristic, stunning,
+							highly detailed, digital painting
+						</li>
+						<li>
+							a portrait of a family of dwarfs in middle earth, by
+							Albert Bierstadt, 8K
+						</li>
+						<li>
+							a <em>[beach|jungle|scene of your choice]</em>,
+							highly detailed oil painting, unreal 5 render,
+							rhads, Bruce Pennington, Studio Ghibli, tim
+							hildebrandt, digital art, octane render, beautiful
+							composition, award-winning photograph, masterpiece
+						</li>
+						<li>
+							a close up view of a man looking like Elon Musk.
+							rockets launching in the background, highly detailed
+							oil painting, render, rhads, Bruce Pennington,
+							Studio Ghibli, tim hildebrandt, digital art, octane
+							render, beautiful composition, trending on
+							artstation, award-winning photograph,
+							masterpiece,8k, high quality sharp anime classic
+							anime from 2010 in style of Hayao Miyazaki
+						</li>
+						<li>
+							a headless astronaut in space suit, holding space
+							helmet in hands, extremely detailed oil painting,
+							unreal 5 render, rhads, Bruce Pennington, tim
+							hildebrandt, digital art, octane render, beautiful
+							composition, trending on artstation, award-winning
+							photograph, masterpiece
+						</li>
+					</ul>
 					<Button variant="secondary" onClick={closeModal}>
 						{__('Close', 'imajinn-ai')}
 					</Button>
@@ -251,6 +288,32 @@ export function HelpModal(props) {
 						see our prompt engineering guide for more information on
 						how to write a good prompt.
 					</p>
+
+					<h3>Prefilled Styles</h3>
+					<p>
+						To give you inspiration and make it easier to generate
+						images in specific styles, we have added some dropdowns
+						with prefilled styles that you can optionally select
+						from. When optionally choosing options here it will
+						append specific keywords to your prompt to achieve that
+						style when sent to our servers.
+					</p>
+					<ul>
+						<li>
+							<strong>Image Style</strong> - Choose from many
+							common photographic or artistic styles and mediums.
+						</li>
+						<li>
+							<strong>Artist Style</strong> - Choose to generate
+							your images based on the styles of some famous
+							artists.
+						</li>
+						<li>
+							<strong>Modifier</strong> - Some fun and common
+							styles to modify the image output with that special
+							uniqueness.
+						</li>
+					</ul>
 
 					<h3>Output Settings</h3>
 					<p>
