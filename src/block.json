@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "infinite-uploads/imajinn-ai",
+  "version": "0.1.0",
+  "title": "IMAJINN AI",
+  "category": "media",
+  "icon": "art",
+  "description": "Generate and easily embed beautiful art and images from a text prompt using cutting-edge AI technology.",
+  "keywords": [
+	"img",
+	"photo",
+	"picture",
+	"ai",
+	"art",
+	"infinite"
+  ],
+  "supports": {
+	"html": false,
+	"multiple": false
+  },
+  "textdomain": "imajinn-ai",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css"
+}

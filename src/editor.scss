@@ -1,0 +1,170 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.editor-styles-wrapper .wp-block-infinite-uploads-imajinn-ai p {
+  font-size: 120%;
+}
+
+.imajinn-upgrade-modal-buttons {
+  text-align: right;
+
+  a, button {
+	float: right;
+	margin-left: 10px;
+  }
+}
+
+.wp-block-infinite-uploads-imajinn-ai {
+
+  .components-placeholder__label svg {
+	fill: #2b2953;
+  }
+
+  .components-notice {
+	width: 100%;
+	margin-bottom: 10px;
+  }
+
+  .results-grid {
+	gap: calc(16px);
+	margin-bottom: 20px;
+  }
+
+  img.generation-zoom {
+	transition: transform .2s; /* Animation */
+	&:hover {
+	  transform: scale(1.25); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+	  z-index: 100;
+	  position: absolute;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+	  border-radius: 3px;
+	}
+  }
+
+  .components-placeholder__fieldset .components-button, button {
+	margin: 0;
+  }
+
+  button.ratio-3-2 svg {
+	transform: rotate(90deg) scaleX(-1);
+  }
+
+  .credits {
+	margin: 0;
+	font-size: 20px !important;
+	font-weight: lighter;
+  }
+
+  .corner-controls {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	display: flex;
+	align-items: center;
+
+	div {
+	  padding: 6px;
+	}
+
+	.refreshing-button {
+	  padding-left: 0;
+
+	  .dashicon {
+		font-size: 15px;
+		color: gray;
+	  }
+
+	  &.is-refreshing .dashicon {
+		/* The animation part: */
+		animation-name: spin;
+		animation-duration: 2000ms;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+		@keyframes spin {
+		  from {
+			transform: rotate(0deg);
+		  }
+		  to {
+			transform: rotate(360deg);
+		  }
+		}
+	  }
+
+	}
+
+
+  }
+
+  .prompt-form {
+	width: 100%;
+	margin-bottom: 5px;
+
+	.styles-form .components-base-control {
+	  width: 200px;
+	  margin-right: 20px;
+	  display: inline-block;
+	}
+  }
+
+  .text-prompt {
+	width: 100%;
+  }
+
+  .prompt-tips {
+	padding: 0;
+	width: 20px;
+	height: 20px;
+
+	svg {
+	  width: 20px;
+	  height: 20px;
+	}
+  }
+
+  .imajinn-footer, .imajinn-footer button {
+	text-align: right;
+	font-size: calc(13px);
+	color: gray;
+
+	.dashicon {
+	  font-size: 13px;
+	  line-height: 3; //ugly hack
+	  height: 13px;
+	  width: 13px;
+	}
+
+	a {
+	  margin-right: 10px;
+	}
+  }
+
+  .connect-wrapper {
+	align-content: space-between;
+	margin-top: 10px;
+	align-items: end;
+
+	.components-base-control__help {
+	  font-size: 80%;
+	}
+  }
+
+  .components-placeholder__fieldset .components-button.connect-button {
+	margin-bottom: calc(8px);
+  }
+
+  .license-links {
+	margin-left: 30px;
+	margin-bottom: 10px;
+
+	.components-external-link {
+	  margin-right: 12px;
+	}
+  }
+
+  .components-notice .components-external-link {
+	margin-left: 5px;
+  }
+}
