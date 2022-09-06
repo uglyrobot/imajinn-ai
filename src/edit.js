@@ -136,7 +136,7 @@ export default function Edit() {
 		}
 
 		//show upgrade modal when trying to start job with no credits
-		if (credits <= 0) {
+		if ( ( credits - estimatedCredits ) <= 0 ) {
 			setShowUpgrade(true);
 			return false;
 		}

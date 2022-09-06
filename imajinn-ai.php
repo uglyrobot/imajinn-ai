@@ -91,7 +91,7 @@ class Imajinn_AI {
 	function inline_script() {
 		$site_id      = $this->get_site_id();
 		$expire       = strtotime( '+1 day' );
-		$auth         = hash( 'sha256', $site_id . $expire . $this->get_api_key() );
+		$auth         = hash( 'sha256', $site_id . $expire . hash( 'sha256', $this->get_api_key() ) );
 		$checkout_url = add_query_arg( compact( [ 'site_id', 'expire', 'auth' ] ), 'https://infiniteuploads.com/imajinn/checkout/' );
 
 		$data = array(
