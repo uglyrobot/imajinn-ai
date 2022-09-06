@@ -1,4 +1,4 @@
-=== IMAJINN AI Text-to-Image Generator ===
+=== Imajinn AI Text-to-Image Generator ===
 Contributors:      Aaron Edwards
 Tags:              block
 Tested up to:      6.0

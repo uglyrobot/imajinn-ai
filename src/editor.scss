@@ -151,13 +151,17 @@
 
 	.dashicon {
 	  font-size: 13px;
-	  line-height: 3; //ugly hack
+	  line-height: 1.9; //ugly hack
 	  height: 13px;
 	  width: 13px;
 	}
 
 	a {
 	  margin-right: 10px;
+	}
+
+	.imajinn-credits {
+	  display: inline-block;
 	}
   }
 

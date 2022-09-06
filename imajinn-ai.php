@@ -1,14 +1,9 @@
 <?php
 /**
- * Plugin Name:       IMAJINN AI
- * Description:       Generate and use beautiful art and images from a text prompt using cutting-edge AI. Turn your imagination into creative media for your site.
- * Requires at least: 6.0
- * Requires PHP:      7.0
- * Version:           0.1.0-beta-1
- * Author:            Infinite Uploads
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       imajinn-ai
+ * Plugin Name:       Imajinn AI
+ * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just
+ * your imagination. Requires at least: 6.0 Requires PHP:      7.0 Version:           0.1.0-beta-2 Author:            Infinite Uploads Author URI:        https://infiniteuploads.com Plugin URI:        https://infiniteuploads.com/imajinn/ License:           GPL-2.0-or-later License URI:
+ * https://www.gnu.org/licenses/gpl-2.0.html Text Domain:       imajinn-ai
  *
  * @package           imajinn-ai
  *
@@ -17,7 +12,7 @@
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '0.1.0-beta-1' );
+define( 'IMAJINN_AI_VERSION', '0.1.0-beta-2' );
 
 class Imajinn_AI {
 
@@ -44,8 +39,11 @@ class Imajinn_AI {
 		add_action( 'init', [ &$this, 'block_init' ] );
 		add_action( 'enqueue_block_editor_assets', [ &$this, 'inline_script' ] );
 
+		add_filter( 'plugin_action_links_imajinn-ai/imajinn-ai.php', [ &$this, 'plugins_list_links' ] );
+
 		add_action( 'wp_ajax_imajinn-connect', [ &$this, 'ajax_connect' ] );
 		add_action( 'wp_ajax_imajinn-refresh', [ &$this, 'ajax_refresh' ] );
+		add_action( 'wp_ajax_imajinn-account-url', [ &$this, 'ajax_get_account_url' ] );
 		add_action( 'wp_ajax_imajinn-start-job', [ &$this, 'ajax_start_job' ] );
 		add_action( 'wp_ajax_imajinn-check-job', [ &$this, 'ajax_check_job' ] );
 		add_action( 'wp_ajax_imajinn-cancel-job', [ &$this, 'ajax_cancel_job' ] );
@@ -62,8 +60,20 @@ class Imajinn_AI {
 	 */
 	function block_init() {
 		if ( current_user_can( 'upload_files' ) ) {
-			register_block_type( __DIR__ . '/build' );
+			register_block_type( __DIR__ . '/build/block.json' );
 		}
+	}
+
+	/**
+	 * Adds support link to plugin row.
+	 */
+	function plugins_list_links( $actions ) {
+		// Create the link.
+		$custom_links            = [];
+		$custom_links['support'] = '<a href="' . esc_url( 'https://infiniteuploads.com/support/?utm_source=imajinn_plugin&utm_medium=plugin&utm_campaign=imajinn_plugin&utm_term=support&utm_content=meta' ) . '">' . esc_html__( 'Support', 'imajinn-ai' ) . '</a>';
+
+		// Adds the links to the beginning of the array.
+		return array_merge( $custom_links, $actions );
 	}
 
 	/**
@@ -72,11 +82,17 @@ class Imajinn_AI {
 	 * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
 	 */
 	function inline_script() {
+		$site_id      = $this->get_site_id();
+		$expire       = strtotime( '+1 day' );
+		$auth         = hash( 'sha256', $site_id . $expire . $this->get_api_key() );
+		$checkout_url = add_query_arg( compact( [ 'site_id', 'expire', 'auth' ] ), 'https://infiniteuploads.com/imajinn/checkout/' );
+
 		$data = array(
-			'connected'         => $this->get_api_key() && $this->get_site_id(),
+			'connected'         => $this->is_connected(),
 			'remaining_credits' => $this->get_site_data( 'remaining_credits' ),
 			'email'             => wp_get_current_user()->user_email,
 			'nonce'             => wp_create_nonce( 'imajinn-ai' ),
+			'checkout_url'      => $checkout_url,
 		);
 		wp_register_script( 'imajinn-dummy-js-header', '' );
 		wp_enqueue_script( 'imajinn-dummy-js-header' );
@@ -153,16 +169,38 @@ class Imajinn_AI {
 			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
 		}
 
-		if ( $this->get_site_id() ) {
-			$params['site_id'] = $this->get_site_id();
-		}
-
 		$result = $this->api_request( sprintf( 'site/%s', $this->get_site_id() ), [], 'GET' );
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error( $result );
 		}
 
 		$this->update_data( $result );
+
+		wp_send_json_success( $result );
+	}
+
+	/**
+	 * ajax request. Refreshes the site data and credit counts.
+	 *
+	 * @return void
+	 */
+	public function ajax_get_account_url() {
+		// check caps
+		if ( ! current_user_can( 'upload_files' ) ) {
+			wp_send_json_error( new WP_Error( 'permissions', esc_html__( "You don't have permission to upload files.", 'imajinn-ai' ) ) );
+		}
+
+		$params = json_decode( file_get_contents( 'php://input' ), true );
+
+		//check nonce
+		if ( ! wp_verify_nonce( $params['nonce'], 'imajinn-ai' ) ) {
+			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
+		}
+
+		$result = $this->api_request( 'account', [], 'GET' );
+		if ( is_wp_error( $result ) ) {
+			wp_send_json_error( $result );
+		}
 
 		wp_send_json_success( $result );
 	}
@@ -305,9 +343,9 @@ class Imajinn_AI {
 		}
 
 		$url      = esc_url_raw( $_GET['image'] );
-		$text     = urlencode( __( 'I generated this image with the IMAJINN AI WordPress plugin!', 'imajinn-ai' ) );
+		$text     = urlencode( __( 'I generated this image with the Imajinn AI WordPress plugin!', 'imajinn-ai' ) );
 		$via      = 'infiniteuploads';
-		$hashtags = 'IMAJINN_AI,WordPress';
+		$hashtags = 'Imajinn_AI,WordPress';
 		wp_redirect( add_query_arg( compact( 'text', 'url', 'via', 'hashtags' ), 'https://twitter.com/intent/tweet' ) );
 	}
 
@@ -412,6 +450,10 @@ class Imajinn_AI {
 		}
 
 		return false;
+	}
+
+	public function is_connected() {
+		return $this->get_api_key() && $this->get_site_id();
 	}
 
 	private function update_data( $data ) {

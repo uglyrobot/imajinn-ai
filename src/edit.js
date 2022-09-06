@@ -290,6 +290,25 @@ export default function Edit() {
 		}
 	};
 
+	const visitAccount = async () => {
+		const response = await fetch(`${ajaxurl}?action=imajinn-account-url`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				nonce: IMAJINN.nonce,
+			}),
+		});
+		const result = await response.json();
+		console.log(result);
+		if (result.success) {
+			window.open(result.data.account_url, '_blank');
+		} else {
+			setError(result.data[0].message);
+		}
+	};
+
 	const insertImageBlock = async (url) => {
 		const data = await saveImage(url);
 		if (data) {
@@ -603,7 +622,7 @@ export default function Edit() {
 				<HelpModal/>
 				<Button
 					icon={close}
-					label={__('Close IMAJINN Block', 'imajinn-ai')}
+					label={__('Close Imajinn Block', 'imajinn-ai')}
 					onClick={() => {
 						deleteBlock();
 					}}
@@ -717,7 +736,8 @@ export default function Edit() {
 						<div className="imajinn-upgrade-modal-buttons">
 							<Button
 								variant="primary"
-								href="https://infiniteuploads.com/imajinn/checkout/"
+								href={IMAJINN.checkout_url}
+								target="_blank"
 							>
 								{__('Get More Credits', 'imajinn-ai')}
 							</Button>
@@ -792,7 +812,7 @@ export default function Edit() {
 			<Placeholder
 				icon={Imajinn}
 				instructions={placeholderInstructions}
-				label="AI Text-to-Image Generator"
+				label={__('AI Text-to-Image Generator [beta]', 'imajinn-ai')}
 			>
 				{!isConnected && (
 					<Connect
@@ -872,6 +892,14 @@ export default function Edit() {
 			</Placeholder>
 
 			<div className="imajinn-footer">
+				<Button
+					onClick={() => {
+						visitAccount();
+					}}
+				>
+					{__('Account', 'imajinn-ai')}
+				</Button>
+
 				<LicenseModal/>
 
 				<a
@@ -881,27 +909,29 @@ export default function Edit() {
 					{__('Support', 'imajinn-ai')}
 				</a>
 
-				{_x(
-					'Made with ',
-					'Made with love by Infinite Uploads',
-					'imajinn-ai'
-				)}
-				<Dashicon
-					icon="heart"
-					aria-label={_x(
-						'love',
+				<span className={"imajinn-credits"}>
+					{_x(
+						'Made with ',
 						'Made with love by Infinite Uploads',
 						'imajinn-ai'
 					)}
-				/>
-				{_x(
-					' by ',
-					'Made with love by Infinite Uploads',
-					'imajinn-ai'
-				)}
-				<a href="https://infiniteuploads.com/" target={'_blank'}>
-					Infinite Uploads
-				</a>
+					<Dashicon
+						icon="heart"
+						aria-label={_x(
+							'love',
+							'Made with love by Infinite Uploads',
+							'imajinn-ai'
+						)}
+					/>
+					{_x(
+						' by ',
+						'Made with love by Infinite Uploads',
+						'imajinn-ai'
+					)}
+					<a href="https://infiniteuploads.com/" target={'_blank'}>
+						Infinite Uploads
+					</a>
+				</span>
 			</div>
 		</figure>
 	);

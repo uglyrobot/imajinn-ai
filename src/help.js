@@ -245,17 +245,17 @@ export function HelpModal(props) {
 					title={__('Usage Instructions', 'imajinn-ai')}
 				>
 					<p>
-						IMAJINN AI is a powerful tool that uses the latest
+						Imajinn AI is a powerful tool that uses the latest
 						technology in AI to generate images from text. It is a
 						great tool for writers, artists, and anyone who needs to
 						visualize their ideas.
 					</p>
 					<p>
-						The IMAJINN AI interface is a block that you can add to
+						The Imajinn AI interface is a block that you can add to
 						your post or page. You can add it by clicking on the
 						plus button in the top left corner of the editor and
-						selecting IMAJINN AI. You can also add it by clicking on
-						the IMAJINN AI icon in the block inserter. It does not
+						selecting Imajinn AI. You can also add it by clicking on
+						the Imajinn AI icon in the block inserter. It does not
 						output any content on your site on its own, but allows
 						you to generate and insert images into the same location
 						in the block editor. When finished you can just close
@@ -269,7 +269,7 @@ export function HelpModal(props) {
 						possible, we run a cloud service to run the neural
 						network. This means that you need to connect to our
 						service before you can use the plugin. To connect to
-						IMAJINN AI, you need to have a user account. You can
+						Imajinn AI, you need to have a user account. You can
 						create one for free with just your valid email address
 						and a password, or if you already have an account, you
 						can log in with your Infinite Uploads/IMAJINN email and
@@ -310,14 +310,14 @@ export function HelpModal(props) {
 						</li>
 						<li>
 							<strong>Modifier</strong> - Some fun and common
-							styles to modify the image output with that special
+							styles to give the image output that special
 							uniqueness.
 						</li>
 					</ul>
 
 					<h3>Output Settings</h3>
 					<p>
-						IMAJINN AI allows you to control the output of the
+						Imajinn AI allows you to control the output of the
 						image(s). You can choose the image count and dimensions.
 						Square images use the fewest credits, while rectangular
 						images use more credits as they have more pixels and
@@ -329,7 +329,7 @@ export function HelpModal(props) {
 
 					<h3>Saving Images</h3>
 					<p>
-						IMAJINN AI allows you to save images to your media
+						Imajinn AI allows you to save images to your media
 						library, and optionally insert them into your post/page.
 						You can save images by clicking on the save button in
 						the bottom left corner of each image generation. You can
@@ -342,14 +342,14 @@ export function HelpModal(props) {
 
 					<h3>Credits</h3>
 					<p>
-						When you first signup for IMAJINN AI, you get a chunk of
+						When you first signup for Imajinn AI, you get a chunk of
 						free credits. You can use these credits to generate
 						images and get a feel for how the plugin functions and
 						learn how to write effective prompts. Credits are based
 						on the actual processing time our servers spend. One
 						credit is equal to the approximate time it takes to
 						generate one square image. If you run out, you can
-						purchase more credits from the IMAJINN AI website via
+						purchase more credits from the Imajinn AI website via
 						our plans.
 					</p>
 					<p>
