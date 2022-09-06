@@ -475,7 +475,7 @@ export default function Edit() {
 			>
 				<div>
 					<p className="credits">
-						{props.estimatedCredits.toLocaleString()}
+						{props.estimatedCredits}
 					</p>
 					<Text>{__('Estimated credits', 'imajinn-ai')}</Text>
 				</div>
@@ -604,7 +604,7 @@ export default function Edit() {
 					<div>
 						{__('Credits:', 'imajinn-ai')}{' '}
 						<span className="credits">
-							{credits.toLocaleString()}
+							{credits}
 						</span>
 						<Button
 							className={buttonClass}
