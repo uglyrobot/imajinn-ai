@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import {sprintf, __, _x} from '@wordpress/i18n';
+import {__, _x, sprintf} from '@wordpress/i18n';
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -13,41 +13,32 @@ import {sprintf, __, _x} from '@wordpress/i18n';
  */
 import {useBlockProps} from '@wordpress/block-editor';
 
-import {useState, useRef, useEffect} from '@wordpress/element';
+import {useEffect, useState} from '@wordpress/element';
 
 import {
-	Placeholder,
+	__experimentalRadio as Radio,
+	__experimentalRadioGroup as RadioGroup,
+	__experimentalText as Text,
 	Button,
-	TextareaControl,
-	Notice,
 	Card,
 	CardFooter,
 	CardMedia,
-	__experimentalText as Text,
+	Dashicon,
 	Flex,
 	FlexBlock,
 	FlexItem,
-	__experimentalRadio as Radio,
-	__experimentalRadioGroup as RadioGroup,
 	Icon,
-	Spinner,
-	Dashicon,
-	Tooltip,
 	Modal,
-	TreeSelect,
+	Notice,
+	Placeholder,
 	SelectControl,
+	Spinner,
+	TextareaControl,
+	Tooltip,
+	TreeSelect,
 } from '@wordpress/components';
 
-import {
-	aspectRatio,
-	image,
-	gallery,
-	upload,
-	postFeaturedImage,
-	check,
-	close,
-	cloud,
-} from '@wordpress/icons';
+import {aspectRatio, check, close, cloud, gallery, image, postFeaturedImage, upload,} from '@wordpress/icons';
 import metadata from './block.json';
 import {Imajinn, InfiniteUploadsSpinner} from './images';
 import {HelpModal, PromptHelpModal} from './help';
@@ -90,6 +81,7 @@ export default function Edit() {
 	const [imageStyle, setImageStyle] = useState('');
 	const [imageArtist, setImageArtist] = useState('');
 	const [imageModifier, setImageModifier] = useState('');
+	const [saved, setSaved] = useState([]);
 
 	//calculate credit estimate
 	useEffect(() => {
@@ -143,6 +135,7 @@ export default function Edit() {
 
 		setJobId(null);
 		setGenerations([]);
+		setSaved([]);
 		setQueryRatio(ratio);
 		setIsLoading(true);
 		setError(null);
@@ -309,8 +302,15 @@ export default function Edit() {
 		}
 	};
 
-	const insertImageBlock = async (url) => {
-		const data = await saveImage(url);
+	const insertImageBlock = async (genIndex) => {
+		let data = false;
+		//if already saved load up that data
+		if (saved.some(e => e.index === genIndex)) {
+			data = saved.find(e => e.index === genIndex).data;
+		} else {
+			data = await saveImage(genIndex);
+		}
+
 		if (data) {
 			const thisIndex = wp.data
 				.select('core/block-editor')
@@ -332,20 +332,16 @@ export default function Edit() {
 			wp.data
 				.dispatch('core/block-editor')
 				.insertBlocks(newBlock, thisIndex);
-
-			//remove url from generations so that it disappears from grid
-			setGenerations((generations) => {
-				return generations.filter(
-					(value) => value.original !== url
-				);
-			});
 			return true;
 		}
 
 		return false;
 	};
 
-	const saveImage = async (url) => {
+	const saveImage = async (genIndex) => {
+
+		let url = generations[genIndex].jpg
+
 		//save the attachment
 		const response = await fetch(
 			`${ajaxurl}?action=imajinn-save-image`,
@@ -365,6 +361,16 @@ export default function Edit() {
 		const result = await response.json();
 		console.log(result);
 		if (result.success) {
+			setSaved(saved => [...saved, {index: genIndex, data: result.data}] );
+			wp.data.dispatch("core/notices").createNotice(
+				"success", // Can be one of: success, info, warning, error.
+				__('Image saved to media library.', 'imajinn-ai'), // Text string to display.
+				{
+					type: "snackbar",
+					isDismissible: true, // Whether the user can dismiss the notice.
+					actions: [],
+				}
+			);
 			return result.data;
 		}
 
@@ -520,10 +526,19 @@ export default function Edit() {
 		const [isSaving, setIsSaving] = useState(false);
 		const [isSaved, setIsSaved] = useState(false);
 
+		useEffect(() => {
+			if (saved.some(e => e.index === props.genindex)) {
+				setIsSaved(true);
+			} else {
+				setIsSaved(false);
+			}
+			console.log('saved', saved);
+		}, [saved]);
+
 		if (isSaved) {
 			return (
 				<Button disabled icon={check}>
-					{__('Save', 'imajinn-ai')}
+					{__('Saved', 'imajinn-ai')}
 				</Button>
 			);
 		} else {
@@ -541,11 +556,8 @@ export default function Edit() {
 						icon={upload}
 						onClick={async () => {
 							setIsSaving(true);
-							const result = await saveImage(
-								generations[props.genindex].jpg
-							);
-							setIsSaved(Boolean(result));
-							setIsSaving(false);
+							await saveImage(props.genindex);
+							setIsSaving(false); //TODO this is triggering a react warning
 						}}
 					>
 						{__('Save', 'imajinn-ai')}
@@ -572,9 +584,7 @@ export default function Edit() {
 					icon={postFeaturedImage}
 					onClick={async () => {
 						setIsSaving(true);
-						const result = await insertImageBlock(
-							generations[props.genindex].jpg
-						);
+						const result = await insertImageBlock(props.genindex);
 						if (!result) {
 							setIsSaving(false);
 						}
