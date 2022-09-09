@@ -71,6 +71,7 @@ export function Connect(props) {
 				console.log(result);
 				if (result.success) {
 					props.setIsConnected(true);
+					IMAJINN.connected = true;//set global variable in case block is reinitialized before refresh.
 					props.setCredits(result.data.remaining_credits);
 				} else {
 					setIsSubmitting(false);

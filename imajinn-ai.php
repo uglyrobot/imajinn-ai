@@ -103,7 +103,7 @@ class Imajinn_AI {
 		);
 		wp_register_script( 'imajinn-dummy-js-header', '' );
 		wp_enqueue_script( 'imajinn-dummy-js-header' );
-		wp_add_inline_script( 'imajinn-dummy-js-header', 'const IMAJINN = ' . json_encode( $data ) . ';' );
+		wp_add_inline_script( 'imajinn-dummy-js-header', 'let IMAJINN = ' . json_encode( $data ) . ';' );
 	}
 
 	/**

@@ -104,6 +104,7 @@ export default function Edit() {
 
 	//hide upgrade modal when you have credits
 	useEffect(() => {
+		IMAJINN.remaining_credits = credits; //update global in case block is inserted again
 		if (credits > 0) {
 			setShowUpgrade(false);
 		}

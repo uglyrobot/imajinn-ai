@@ -366,6 +366,10 @@ export default {
 			label: __('Steampunk', 'imajinn-ai'),
 		},
 		{
+			value: 'synthwave',
+			label: __('Synthwave', 'imajinn-ai'),
+		},
+		{
 			value: 'in the style of cyberpunk',
 			label: __('Cyberpunk', 'imajinn-ai'),
 		},
