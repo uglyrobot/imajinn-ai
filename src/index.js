@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-import {registerBlockType} from '@wordpress/blocks';
+import { registerBlockType } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -11,14 +11,14 @@ import {registerBlockType} from '@wordpress/blocks';
 import Edit from './edit';
 import save from './save';
 import metadata from './block.json';
-import {Genie} from './images';
+import { Genie } from './images';
 
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType(metadata.name, {
+registerBlockType( metadata.name, {
 	/**
 	 * @see ./edit.js
 	 */
@@ -29,4 +29,4 @@ registerBlockType(metadata.name, {
 	 */
 	save,
 	icon: Genie,
-});
+} );

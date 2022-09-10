@@ -1,26 +1,26 @@
-import {__} from '@wordpress/i18n';
-import {Button, Icon, Modal} from '@wordpress/components';
-import {info} from '@wordpress/icons';
-import {useState} from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { Button, Icon, Modal } from '@wordpress/components';
+import { info } from '@wordpress/icons';
+import { useState } from '@wordpress/element';
 
-export function LicenseModal(props) {
-	const [isOpen, setOpen] = useState(false);
-	const openModal = () => setOpen(true);
-	const closeModal = () => setOpen(false);
+export function LicenseModal( props ) {
+	const [ isOpen, setOpen ] = useState( false );
+	const openModal = () => setOpen( true );
+	const closeModal = () => setOpen( false );
 
 	return (
 		<>
-			<Button onClick={openModal}>
-				{props.buttonLabel ||
-					__('License / Restrictions', 'imajinn-ai')}
+			<Button onClick={ openModal }>
+				{ props.buttonLabel ||
+					__( 'License / Restrictions', 'imajinn-ai' ) }
 			</Button>
-			{isOpen && (
+			{ isOpen && (
 				<Modal
-					{...props}
-					onRequestClose={closeModal}
-					style={{maxWidth: '800px'}}
-					icon={<Icon icon={<Icon icon={info}/>}/>}
-					title={__('License / Usage Restrictions', 'imajinn-ai')}
+					{ ...props }
+					onRequestClose={ closeModal }
+					style={ { maxWidth: '800px' } }
+					icon={ <Icon icon={ <Icon icon={ info } /> } /> }
+					title={ __( 'License / Usage Restrictions', 'imajinn-ai' ) }
 				>
 					<p>CreativeML Open RAIL-M dated August 22, 2022</p>
 					<p>Section I: PREAMBLE</p>
@@ -434,11 +434,11 @@ export function LicenseModal(props) {
 						</li>
 					</ul>
 
-					<Button variant="secondary" onClick={closeModal}>
-						{__('Close', 'imajinn-ai')}
+					<Button variant="secondary" onClick={ closeModal }>
+						{ __( 'Close', 'imajinn-ai' ) }
 					</Button>
 				</Modal>
-			)}
+			) }
 		</>
 	);
 }

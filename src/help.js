@@ -1,28 +1,28 @@
-import {__} from '@wordpress/i18n';
-import {Button, Icon, Modal} from '@wordpress/components';
-import {help, info} from '@wordpress/icons';
-import {useState} from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { Button, Icon, Modal } from '@wordpress/components';
+import { help, info } from '@wordpress/icons';
+import { useState } from '@wordpress/element';
 
-export function PromptHelpModal(props) {
-	const [isOpen, setOpen] = useState(false);
-	const openModal = () => setOpen(true);
-	const closeModal = () => setOpen(false);
+export function PromptHelpModal( props ) {
+	const [ isOpen, setOpen ] = useState( false );
+	const openModal = () => setOpen( true );
+	const closeModal = () => setOpen( false );
 
 	return (
 		<>
 			<Button
 				className="prompt-tips"
-				onClick={openModal}
-				icon={info}
-				label={__('Prompt Tips', 'imajinn-ai')}
+				onClick={ openModal }
+				icon={ info }
+				label={ __( 'Prompt Tips', 'imajinn-ai' ) }
 			/>
-			{isOpen && (
+			{ isOpen && (
 				<Modal
-					{...props}
-					onRequestClose={closeModal}
-					style={{maxWidth: '800px'}}
-					icon={<Icon icon={info}/>}
-					title={__('Basics of Prompt Engineering', 'imajinn-ai')}
+					{ ...props }
+					onRequestClose={ closeModal }
+					style={ { maxWidth: '800px' } }
+					icon={ <Icon icon={ info } /> }
+					title={ __( 'Basics of Prompt Engineering', 'imajinn-ai' ) }
 				>
 					<p>
 						"Prompt Engineering" is an important skill to create
@@ -43,7 +43,7 @@ export function PromptHelpModal(props) {
 					<h3>1. Raw prompt</h3>
 					<p>
 						Raw prompt is the simplest way of describing what you
-						want to generate, for instance;{' '}
+						want to generate, for instance;{ ' ' }
 					</p>
 					<ol>
 						<li>Panda</li>
@@ -68,7 +68,7 @@ export function PromptHelpModal(props) {
 						realistic or oil painting looking images. Having a well
 						chosen style + raw prompt is sometimes enough, as the
 						style influences the image the most right after the raw
-						prompt.{' '}
+						prompt.{ ' ' }
 					</p>
 					<p>The most commonly used styles include:</p>
 					<ol>
@@ -117,7 +117,7 @@ export function PromptHelpModal(props) {
 					<p>
 						Below are lists of artists in different styles that you
 						can use, but we encourage you to search for different
-						artists as it is a cool way of discovering new art.{' '}
+						artists as it is a cool way of discovering new art.{ ' ' }
 					</p>
 					<p>Portrait:</p>
 					<ol>
@@ -215,34 +215,34 @@ export function PromptHelpModal(props) {
 							photograph, masterpiece
 						</li>
 					</ul>
-					<Button variant="secondary" onClick={closeModal}>
-						{__('Close', 'imajinn-ai')}
+					<Button variant="secondary" onClick={ closeModal }>
+						{ __( 'Close', 'imajinn-ai' ) }
 					</Button>
 				</Modal>
-			)}
+			) }
 		</>
 	);
 }
 
-export function HelpModal(props) {
-	const [isOpen, setOpen] = useState(false);
-	const openModal = () => setOpen(true);
-	const closeModal = () => setOpen(false);
+export function HelpModal( props ) {
+	const [ isOpen, setOpen ] = useState( false );
+	const openModal = () => setOpen( true );
+	const closeModal = () => setOpen( false );
 
 	return (
 		<>
 			<Button
-				onClick={openModal}
-				icon={help}
-				label={__('Help', 'imajinn-ai')}
+				onClick={ openModal }
+				icon={ help }
+				label={ __( 'Help', 'imajinn-ai' ) }
 			/>
-			{isOpen && (
+			{ isOpen && (
 				<Modal
-					{...props}
-					onRequestClose={closeModal}
-					style={{maxWidth: '900px'}}
-					icon={<Icon icon={help}/>}
-					title={__('Usage Instructions', 'imajinn-ai')}
+					{ ...props }
+					onRequestClose={ closeModal }
+					style={ { maxWidth: '900px' } }
+					icon={ <Icon icon={ help } /> }
+					title={ __( 'Usage Instructions', 'imajinn-ai' ) }
 				>
 					<p>
 						Imajinn AI is a powerful tool that uses the latest
@@ -383,11 +383,11 @@ export function HelpModal(props) {
 						restrictions, we may disable your account.
 					</p>
 
-					<Button variant="secondary" onClick={closeModal}>
-						{__('Close', 'imajinn-ai')}
+					<Button variant="secondary" onClick={ closeModal }>
+						{ __( 'Close', 'imajinn-ai' ) }
 					</Button>
 				</Modal>
-			)}
+			) }
 		</>
 	);
 }
