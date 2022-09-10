@@ -224,7 +224,7 @@ export default function Edit() {
 				if ( result.data.status === 'succeeded' ) {
 					setGenerations( result.data.generations );
 					setHistory( ( history ) => [
-						{ promptStyle, generations: result.data.generations },
+						{ promptStyle, ratio, generations: result.data.generations },
 						...history,
 					] );
 				} else if ( result.data.status === 'failed' ) {
@@ -849,6 +849,7 @@ export default function Edit() {
 						onClick={ () => {
 							setPrompt( item.promptStyle );
 							setGenerations( item.generations );
+							setRatio( item.ratio );
 							setImageStyle( '' );
 							setImageArtist( '' );
 							setImageModifier( '' );
