@@ -520,6 +520,7 @@ export default function Edit() {
 			return (
 				<div className="imajinn-loading">
 					<ImajinnSpinner />
+					<div>
 					<Text>{ label }</Text>
 					<Button
 						isDestructive
@@ -530,6 +531,7 @@ export default function Edit() {
 					>
 						{ __( 'Cancel' ) }
 					</Button>
+					</div>
 				</div>
 			);
 		} else {
