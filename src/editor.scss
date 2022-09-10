@@ -191,4 +191,40 @@
   .components-notice .components-external-link {
 	margin-left: 5px;
   }
+
+  .imajinn-loading {
+	margin: 40px auto;
+	.components-button {
+	  margin-left: 5px;
+	}
+  }
+
+  .imajinn-spinner {
+	width: 100px;
+	height: 100px;
+	display: block;
+  }
+
+}
+
+.prompt-history {
+  .components-panel__body-title {
+	height: 50px;
+	.components-button {
+	  margin-top: 7px;
+	  float: right;
+	  margin-right: 10px;
+	}
+
+	img {
+	  height: 50px;
+	  width: 50px;
+	  float: left;
+	}
+  }
+
+  .components-panel__row {
+	clear: both;
+  }
+
 }

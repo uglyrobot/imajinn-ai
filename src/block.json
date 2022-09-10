@@ -1,26 +1,18 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 2,
-  "name": "infinite-uploads/imajinn-ai",
-  "version": "0.1.0",
-  "title": "Imajinn AI",
-  "category": "media",
-  "icon": "art",
-  "description": "Generate the perfect images from a text prompt in seconds with cutting-edge AI. Creates stunning images for any topic with just your imagination.",
-  "keywords": [
-	"img",
-	"image",
-	"photo",
-	"picture",
-	"ai",
-	"art",
-	"infinite"
-  ],
-  "supports": {
-	"html": false,
-	"multiple": false
-  },
-  "textdomain": "imajinn-ai",
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:./index.css"
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "infinite-uploads/imajinn-ai",
+	"version": "0.1.0",
+	"title": "Imajinn AI",
+	"category": "media",
+	"icon": "art",
+	"description": "Generate the perfect images from a text prompt in seconds with cutting-edge AI. Creates stunning images for any topic with just your imagination.",
+	"keywords": [ "img", "image", "photo", "picture", "ai", "art", "infinite" ],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"textdomain": "imajinn-ai",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
 }
