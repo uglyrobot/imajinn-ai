@@ -4,7 +4,7 @@
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
  * Requires PHP:      7.0
- * Version:           0.1.0-beta-3
+ * Version:           0.1.0-beta-4
  * Author:            Infinite Uploads
  * Author URI:        https://infiniteuploads.com
  * Plugin URI:        https://infiniteuploads.com/imajinn/
@@ -67,7 +67,7 @@ class Imajinn_AI {
 	 */
 	function block_init() {
 		if ( current_user_can( 'upload_files' ) ) {
-			register_block_type( __DIR__ . '/build/block.json' );
+			register_block_type( __DIR__ . '/build/block.json');
 		}
 	}
 
