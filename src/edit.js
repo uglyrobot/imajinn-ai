@@ -44,7 +44,7 @@ import {
 	PanelBody,
 	PanelRow,
 	Toolbar,
-	ToolbarButton,
+	ToolbarButton, ToolbarGroup,
 } from '@wordpress/components';
 
 import {
@@ -52,7 +52,6 @@ import {
 	check,
 	close,
 	cloud,
-	gallery,
 	image,
 	postFeaturedImage,
 	upload,
@@ -93,7 +92,6 @@ export default function Edit() {
 	const [promptStyle, setPromptStyle] = useState('');
 	const [ratio, setRatio] = useState('1:1');
 	const [queryRatio, setQueryRatio] = useState(ratio);
-	const [numVariations, setNumVariations] = useState('4');
 	const [estimatedCredits, setEstimatedCredits] = useState(1);
 	const [credits, setCredits] = useState(IMAJINN.remaining_credits);
 	const [showUpgrade, setShowUpgrade] = useState(false);
@@ -105,21 +103,14 @@ export default function Edit() {
 	//calculate credit estimate
 	useEffect(() => {
 		let estimate = 1;
-		if (numVariations === '4') {
-			if (ratio === '1:1') {
-				estimate = 3;
-			} else {
-				estimate = 6;
-			}
+		if (ratio === '1:1') {
+			estimate = 1;
 		} else {
-			if (ratio === '1:1') {
-				estimate = 1;
-			} else {
-				estimate = 2;
-			}
+			estimate = 2;
 		}
+
 		setEstimatedCredits(estimate);
-	}, [numVariations, ratio]); // <-- here put the parameter to listen
+	}, [ratio]); // <-- here put the parameter to listen
 
 	//hide upgrade modal when you have credits
 	useEffect(() => {
@@ -173,7 +164,7 @@ export default function Edit() {
 			body: JSON.stringify({
 				prompt: promptStyle,
 				ratio: ratio,
-				num_variations: numVariations,
+				num_variations: 4,
 				nonce: IMAJINN.nonce,
 			}),
 		})
@@ -470,47 +461,12 @@ export default function Edit() {
 		);
 	};
 
-	const NumResultsToggle = () => {
-		return (
-			<>
-				<RadioGroup
-					// id is required for server side rendering
-					id="imajinn-num-results"
-					label={__(
-						'Select the number of images to generate.',
-						'imajinn-ai'
-					)}
-					disabled={isLoading}
-					onChange={setNumVariations}
-					checked={numVariations}
-				>
-					<Radio value="1" icon={image}>
-						1
-					</Radio>
-					<Radio value="4" icon={gallery}>
-						4
-					</Radio>
-				</RadioGroup>
-				<br/>
-				<Text>{__('Each image uses credits', 'imajinn-ai')}</Text>
-			</>
-		);
-	};
-
 	const CreditEstimate = (props) => {
 		return (
-			<Tooltip
-				text={__(
-					'Credits are based on actual server processing time.',
-					'imajinn-ai'
-				)}
-				position="top center"
-			>
-				<div>
-					<p className="credits">{props.estimatedCredits}</p>
-					<Text>{__('Estimated credits', 'imajinn-ai')}</Text>
-				</div>
-			</Tooltip>
+			<div>
+				<p className="credits">{props.estimatedCredits}</p>
+				<Text>{__('Credits', 'imajinn-ai')}</Text>
+			</div>
 		);
 	};
 
@@ -818,12 +774,12 @@ export default function Edit() {
 						<img
 							key={index}
 							src={gen.thumbnail}
-							alt={item.promptStyle}
+							alt={'Result ' + (index + 1).toString()}
 						/>
 					))}
 					<Button
 						variant="secondary"
-						label={__('Load prompt results.', 'imajinn-ai')}
+						label={__('Load prompt results', 'imajinn-ai')}
 						onClick={() => {
 							setPrompt(item.promptStyle);
 							setGenerations(item.generations);
@@ -870,37 +826,52 @@ export default function Edit() {
 
 		return (
 			<BlockControls>
-				<Toolbar className="imajinn-toolbar">
-					{isConnected && false !== credits && (
-						<>
-							<div className="credit-label">
-								{__(
-									'Credits:',
-									'imajinn-ai'
-								)}
-							</div>
-							<div className="credits">
-								{credits}
-							</div>
-							<ToolbarButton
-								className={buttonClass}
-								disabled={isRefreshing}
-								icon={<Dashicon icon="update"/>}
-								label={__('Refresh count', 'imajinn-ai')}
-								onClick={async () => {
-									setIsRefreshing(true);
-									await refreshInfo();
-									setIsRefreshing(false);
-								}}
-							/>
-						</>
-					)
-					}
-					<HelpModal/>
+				<Toolbar label={__('Imajinn AI', 'imajinn-ai')} className="imajinn-toolbar">
+					<ToolbarGroup>
+						{isConnected && false !== credits && (
+							<>
+								<div className="credit-label">
+									{__(
+										'Credits:',
+										'imajinn-ai'
+									)}
+								</div>
+								<div className="credits">
+									{credits}
+								</div>
+								<ToolbarButton
+									className={buttonClass}
+									disabled={isRefreshing}
+									icon={<Dashicon icon="update"/>}
+									label={__('Refresh count', 'imajinn-ai')}
+									onClick={async () => {
+										setIsRefreshing(true);
+										await refreshInfo();
+										setIsRefreshing(false);
+									}}
+								/>
+							</>
+						)
+						}
+						<HelpModal/>
+					</ToolbarGroup>
 				</Toolbar>
 			</BlockControls>
 		);
 	}
+
+	const GenerateButton = (props) => {
+		return (
+			<Button
+				isPrimary
+				disabled={isLoading}
+				onClick={startJob}
+			>
+				{__('Generate', 'imajinn-ai')}
+			</Button>
+		);
+	}
+
 	const placeholderInstructions = generations.length
 		? ''
 		: metadata.description;
@@ -966,9 +937,6 @@ export default function Edit() {
 						</div>
 						<Flex align="top" wrap="true">
 							<FlexItem>
-								<NumResultsToggle/>
-							</FlexItem>
-							<FlexItem>
 								<RatioToggle/>
 							</FlexItem>
 							<FlexItem>
@@ -977,13 +945,7 @@ export default function Edit() {
 								/>
 							</FlexItem>
 							<FlexItem>
-								<Button
-									isPrimary
-									disabled={isLoading}
-									onClick={startJob}
-								>
-									{__('Generate', 'imajinn-ai')}
-								</Button>
+								<GenerateButton/>
 								<UpgradeModal
 									showUpgrade={showUpgrade}
 									setShowUpgrade={setShowUpgrade}
