@@ -10,7 +10,8 @@
 	"keywords": [ "img", "image", "photo", "picture", "ai", "art", "infinite" ],
 	"supports": {
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"customClassName": false
 	},
 	"textdomain": "imajinn-ai",
 	"editorScript": "file:./index.js",

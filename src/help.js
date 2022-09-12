@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { Button, Icon, Modal } from '@wordpress/components';
+import { Button, Icon, Modal, ToolbarButton } from '@wordpress/components';
 import { help, info } from '@wordpress/icons';
 import { useState } from '@wordpress/element';
 
@@ -231,7 +231,7 @@ export function HelpModal( props ) {
 
 	return (
 		<>
-			<Button
+			<ToolbarButton
 				onClick={ openModal }
 				icon={ help }
 				label={ __( 'Help', 'imajinn-ai' ) }

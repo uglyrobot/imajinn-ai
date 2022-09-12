@@ -100,6 +100,7 @@ class Imajinn_AI {
 			'email'             => wp_get_current_user()->user_email,
 			'nonce'             => wp_create_nonce( 'imajinn-ai' ),
 			'checkout_url'      => $checkout_url,
+			'history'           => [], //TODO get saved history from DB
 		);
 		wp_register_script( 'imajinn-dummy-js-header', '' );
 		wp_enqueue_script( 'imajinn-dummy-js-header' );

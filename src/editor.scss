@@ -69,33 +69,6 @@
 	  padding: 6px;
 	}
 
-	.refreshing-button {
-	  padding-left: 0;
-
-	  .dashicon {
-		font-size: 15px;
-		color: gray;
-	  }
-
-	  &.is-refreshing .dashicon {
-		/* The animation part: */
-		animation-name: spin;
-		animation-duration: 2000ms;
-		animation-iteration-count: infinite;
-		animation-timing-function: linear;
-		@keyframes spin {
-		  from {
-			transform: rotate(0deg);
-		  }
-		  to {
-			transform: rotate(360deg);
-		  }
-		}
-	  }
-
-	}
-
-
   }
 
   .prompt-form {
@@ -206,7 +179,7 @@
   }
 }
 
-.prompt-history {
+.imajinn-history {
   .components-panel__body-title {
 	height: 50px;
 	.components-button {
@@ -226,4 +199,39 @@
 	clear: both;
   }
 
+}
+
+.imajinn-toolbar {
+  .credit-label {
+	padding: 24px 0 24px 6px;
+  }
+  .credits {
+	font-size: 18px;
+	padding: 24px 0 24px 6px;
+  }
+
+  .refreshing-button {
+	padding-left: 0;
+
+	.dashicon {
+	  color: gray;
+	}
+
+	&.is-refreshing .dashicon {
+	  /* The animation part: */
+	  animation-name: spin;
+	  animation-duration: 2000ms;
+	  animation-iteration-count: infinite;
+	  animation-timing-function: linear;
+	  @keyframes spin {
+		from {
+		  transform: rotate(0deg);
+		}
+		to {
+		  transform: rotate(360deg);
+		}
+	  }
+	}
+
+  }
 }
