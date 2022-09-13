@@ -25,25 +25,24 @@ export function PromptHelpModal( props ) {
 					title={ __( 'Basics of Prompt Engineering', 'imajinn-ai' ) }
 				>
 					<p>
-						"Prompt Engineering" is an important skill to create
-						better generations with this text to image AI. After
-						reading this document and applying these simple steps,
-						you’ll be able to generate better images with the same
-						amount of effort.
+						{ __(
+							'"Prompt Engineering" is an important skill to create  better generations with this text to image AI. After reading this document and applying these simple steps, you’ll be able to generate better images with the same amount of effort.',
+							'imajinn-ai'
+						) }
 					</p>
 					<p>
-						Note: Your prompt should be in English as the AI model
-						was only trained with English labels, and will function
-						poorly with other languages. If you speak another
-						language you can use a online translation tool, which
-						should provide excellent results as it does not have to
-						be perfect.
+						{ __(
+							'Note: Your prompt should be in English as the AI model was only trained with English labels, and will function poorly with other languages. If you speak another language you can use a online translation tool, which should provide excellent results as it does not have to be perfect.',
+							'imajinn-ai'
+						) }
 					</p>
 
-					<h3>1. Raw prompt</h3>
+					<h3>{ __( '1. Raw prompt', 'imajinn-ai' ) }</h3>
 					<p>
-						Raw prompt is the simplest way of describing what you
-						want to generate, for instance;{ ' ' }
+						{ __(
+							'Raw prompt is the simplest way of describing what you want to generate, for instance;',
+							'imajinn-ai'
+						) }
 					</p>
 					<ol>
 						<li>Panda</li>
@@ -51,26 +50,25 @@ export function PromptHelpModal( props ) {
 						<li>Skeleton</li>
 					</ol>
 					<p>
-						This is the basic building block of any prompt. Most new
-						people start by only using raw prompts, this is usually
-						a mistake as the images you generate like this tend to
-						get random and chaotic. It's best to include as much
-						detail as possible in your prompt describing exactly
-						what you want to see in the scene.
+						{ __(
+							"This is the basic building block of any prompt. Most new people start by only using raw prompts, this is usually a mistake as the images you generate like this tend to get random and chaotic. It's best to include as much detail as possible in your prompt describing exactly what you want to see in the scene.",
+							'imajinn-ai'
+						) }
 					</p>
 
-					<h3>2. Style</h3>
+					<h3>{ __( '2. Style', 'imajinn-ai' ) }</h3>
 					<p>
-						Style is a crucial part of the prompt. The AI, when
-						missing a specified style, usually chooses the one it
-						has seen the most in related images, for example, if you
-						generated landscape, it would probably generate
-						realistic or oil painting looking images. Having a well
-						chosen style + raw prompt is sometimes enough, as the
-						style influences the image the most right after the raw
-						prompt.{ ' ' }
+						{ __(
+							'Style is a crucial part of the prompt. The AI, when missing a specified style, usually chooses the one it has seen the most in related images, for example, if you generated landscape, it would probably generate realistic or oil painting looking images. Having a well chosen style + raw prompt is sometimes enough, as the style influences the image the most right after the raw prompt.',
+							'imajinn-ai'
+						) }
 					</p>
-					<p>The most commonly used styles include:</p>
+					<p>
+						{ __(
+							'The most commonly used styles include:',
+							'imajinn-ai'
+						) }
+					</p>
 					<ol>
 						<li>Realistic</li>
 						<li>Oil painting</li>
@@ -78,10 +76,10 @@ export function PromptHelpModal( props ) {
 						<li>Concept art</li>
 					</ol>
 					<p>
-						In the case of a realistic image, there are various ways
-						of making it the style, most resulting in similar
-						images. Here are some commonly used techniques of making
-						the image realistic:
+						{ __(
+							'In the case of a realistic image, there are various ways of making it the style, most resulting in similar images. Here are some commonly used techniques of making the image realistic:',
+							'imajinn-ai'
+						) }
 					</p>
 					<ol>
 						<li>a photo of + raw prompt</li>
@@ -90,57 +88,65 @@ export function PromptHelpModal( props ) {
 						<li>raw prompt, realistic</li>
 					</ol>
 					<p>
-						You can of course combine these to get more and more
-						realistic images.
+						{ __(
+							'You can of course combine these to get more and more realistic images.',
+							'imajinn-ai'
+						) }
 					</p>
 					<p>
-						To get oil painting you can just simply add “an oil
-						painting of” to your prompt. This sometimes results in
-						the image showing an oil painting in a frame, to fix
-						this you can just re-run the prompt or use raw prompt +
-						“oil painting”
+						{ __(
+							'To get oil painting you can just simply add “an oil painting of” to your prompt. This sometimes results in the image showing an oil painting in a frame, to fix this you can just re-run the prompt or use raw prompt + “oil painting”',
+							'imajinn-ai'
+						) }
 					</p>
 					<p>
-						To make a pencil drawing just simply add “a pencil
-						drawing of” to your raw prompt or make your prompt raw
-						prompt + “pencil drawing”.
+						{ __(
+							'To make a pencil drawing just simply add “a pencil drawing of” to your raw prompt or make your prompt raw prompt + “pencil drawing”.',
+							'imajinn-ai'
+						) }
 					</p>
-					<p>The same applies to landscape art.</p>
+					<p>
+						{ __(
+							'The same applies to landscape art.',
+							'imajinn-ai'
+						) }
+					</p>
 
-					<h3>3. Artist</h3>
+					<h3>{ __( '3. Artist', 'imajinn-ai' ) }</h3>
 					<p>
-						To make your style more specific, or the image more
-						coherent, you can use artists’ names in your prompt. For
-						instance, if you want a very abstract image, you can add
-						“made by Pablo Picasso” or just simply, “Picasso”.
+						{ __(
+							'To make your style more specific, or the image more coherent, you can use artists’ names in your prompt. For instance, if you want a very abstract image, you can add “made by Pablo Picasso” or just simply, “Picasso”.',
+							'imajinn-ai'
+						) }
 					</p>
 					<p>
-						Below are lists of artists in different styles that you
-						can use, but we encourage you to search for different
-						artists as it is a cool way of discovering new art.{ ' ' }
+						{ __(
+							'Below are lists of artists in different styles that you can use, but we encourage you to search for different artists as it is a cool way of discovering new art.',
+							'imajinn-ai'
+						) }
 					</p>
-					<p>Portrait:</p>
+					<p>{ __( 'Portrait:', 'imajinn-ai' ) }</p>
 					<ol>
 						<li>John Singer Sargent</li>
 						<li>Edgar Degas</li>
 						<li>Paul Cézanne</li>
 						<li>Jan van Eyck</li>
 					</ol>
-					<p>Oil painting:</p>
+					<p>{ __( 'Oil painting:', 'imajinn-ai' ) }</p>
 					<ol>
 						<li>Leonardo DaVinci</li>
 						<li>Vincent Van Gogh</li>
 						<li>Johannes Vermeer</li>
 						<li>Rembrandt</li>
 					</ol>
-					<p>Pencil/Pen drawing:</p>
+					<p>{ __( 'Pencil/Pen drawing:', 'imajinn-ai' ) }</p>
 					<ol>
 						<li>Albrecht Dürer</li>
 						<li>Leonardo da Vinci</li>
 						<li>Michelangelo</li>
 						<li>Jean-Auguste-Dominique Ingres</li>
 					</ol>
-					<p>Landscape art:</p>
+					<p>{ __( 'Landscape art:', 'imajinn-ai' ) }</p>
 					<ol>
 						<li>Thomas Moran</li>
 						<li>Claude Monet</li>
@@ -148,37 +154,38 @@ export function PromptHelpModal( props ) {
 						<li>Frederic Edwin Church</li>
 					</ol>
 					<p>
-						Mixing the artists is highly encouraged, as it can lead
-						to interesting-looking art.
+						{ __(
+							'Mixing the artists is highly encouraged, as it can lead to interesting-looking art.',
+							'imajinn-ai'
+						) }
 					</p>
-					<h3>4. Finishing touches</h3>
+					<h3>{ __( '4. Finishing touches', 'imajinn-ai' ) }</h3>
 					<p>
-						This is the part that some people take to extremes,
-						leading to longer prompts than this article. Finishing
-						touches are the final things that you add to your prompt
-						to make it look like you want. For instance, if you want
-						to make your image more artistic, add “trending on
-						artstation”. If you want to add more realistic lighting
-						add “Unreal Engine.” You can add anything you want, but
-						here are some examples:
+						{ __(
+							'This is the part that some people take to extremes, leading to longer prompts than this article. Finishing touches are the final things that you add to your prompt to make it look like you want. For instance, if you want to make your image more artistic, add “trending on artstation”. If you want to add more realistic lighting add “Unreal Engine.” You can add anything you want, but here are some examples:',
+							'imajinn-ai'
+						) }
 					</p>
 					<p>
-						Highly detailed, surrealism, trending on art station,
-						triadic color scheme, smooth, sharp focus, matte,
-						elegant, the most beautiful image ever seen,
-						illustration, digital paint, dark, gloomy, octane
-						render, 8k, 4k, washed colors, sharp, dramatic lighting,
-						beautiful, post processing, picture of the day, ambient
-						lighting, epic composition, bokeh, etc.
+						{ __(
+							'Highly detailed, surrealism, trending on art station, triadic color scheme, smooth, sharp focus, matte, elegant, the most beautiful image ever seen, illustration, digital paint, dark, gloomy, octane render, 8k, 4k, washed colors, sharp, dramatic lighting, beautiful, post processing, picture of the day, ambient lighting, epic composition, bokeh, etc.',
+							'imajinn-ai'
+						) }
 					</p>
-					<h3>5. Conclusion</h3>
+					<h3>{ __( '5. Conclusion', 'imajinn-ai' ) }</h3>
 					<p>
-						Prompt engineering allows you to have better control of
-						what the image will look like. It (if done right)
-						improves the image quality by a lot in every aspect.
+						{ __(
+							'Prompt engineering allows you to have better control of what the image will look like. It (if done right) improves the image quality by a lot in every aspect.',
+							'imajinn-ai'
+						) }
 					</p>
 
-					<h3>Some fun example prompts to get you started:</h3>
+					<h3>
+						{ __(
+							'Some fun example prompts to get you started:',
+							'imajinn-ai'
+						) }
+					</h3>
 					<ul>
 						<li>
 							A cat walks through a cyberpunk street, rain,
@@ -245,142 +252,119 @@ export function HelpModal( props ) {
 					title={ __( 'Usage Instructions', 'imajinn-ai' ) }
 				>
 					<p>
-						Imajinn AI is a powerful tool that uses the latest
-						technology in AI to generate images from text. It is a
-						great tool for writers, artists, and anyone who needs to
-						visualize their ideas.
+						{ __(
+							'Imajinn AI is a powerful tool that uses the latest technology in AI to generate images from text. It is a great tool for writers, artists, and anyone who needs to visualize their ideas.',
+							'imajinn-ai'
+						) }
 					</p>
 					<p>
-						The Imajinn AI interface is a block that you can add to
-						your post or page. You can add it by clicking on the
-						plus button in the top left corner of the editor and
-						selecting Imajinn AI. You can also add it by clicking on
-						the Imajinn AI icon in the block inserter. It does not
-						output any content on your site on its own, but allows
-						you to generate and insert images into the same location
-						in the block editor. When finished you can just close
-						the block.
+						{ __(
+							'The Imajinn AI interface is a block that you can add to your post or page. You can add it by clicking on the plus button in the top left corner of the editor and selecting Imajinn AI. You can also add it by clicking on the Imajinn AI icon in the block inserter. It does not output any content on your site on its own, but allows you to generate and insert images into the same location in the block editor. When finished you can just close the block.',
+							'imajinn-ai'
+						) }
 					</p>
 
-					<h3>Connecting</h3>
+					<h3>{ __( 'Connecting', 'imajinn-ai' ) }</h3>
 					<p>
-						Running an artificial intelligence neural network
-						requires a lot of computing power. To make this
-						possible, we run a cloud service to run the neural
-						network. This means that you need to connect to our
-						service before you can use the plugin. To connect to
-						Imajinn AI, you need to have a user account. You can
-						create one for free with just your valid email address
-						and a password, or if you already have an account, you
-						can log in with your Infinite Uploads/IMAJINN email and
-						password.
+						{ __(
+							'Running an artificial intelligence neural network requires a lot of computing power. To make this possible, we run a cloud service to run the neural network. This means that you need to connect to our service before you can use the plugin. To connect to Imajinn AI, you need to have a user account. You can create one for free with just your valid email address and a password, or if you already have an account, you can log in with your Infinite Uploads/Imajinn AI email and password.',
+							'imajinn-ai'
+						) }
 					</p>
 
-					<h3>Prompts</h3>
+					<h3>{ __( 'Prompts', 'imajinn-ai' ) }</h3>
 					<p>
-						To generate images, you need to write a prompt. A prompt
-						is a text that describes what you want the image to look
-						like. The prompt should be in English as the AI model
-						was only trained with English labels, and will function
-						poorly with other languages. The prompt can be as short
-						as a a few words, or as long as a paragraph. The longer
-						the prompt, the more detailed the image will be. Please
-						see our prompt engineering guide for more information on
-						how to write a good prompt.
+						{ __(
+							'To generate images, you need to write a prompt. A prompt is a text that describes what you want the image to look like. The prompt should be in English as the AI model was only trained with English labels, and will function poorly with other languages. The prompt can be as short as a a few words, or as long as a paragraph. The longer the prompt, the more detailed the image will be. Please see our prompt engineering guide for more information on how to write a good prompt.',
+							'imajinn-ai'
+						) }
 					</p>
 
-					<h3>Prefilled Styles</h3>
+					<h3>{ __( 'Prefilled Styles', 'imajinn-ai' ) }</h3>
 					<p>
-						To give you inspiration and make it easier to generate
-						images in specific styles, we have added some dropdowns
-						with prefilled styles that you can optionally select
-						from. When optionally choosing options here it will
-						append specific keywords to your prompt to achieve that
-						style when sent to our servers.
+						{ __(
+							'To give you inspiration and make it easier to generate images in specific styles, we have added some dropdowns with prefilled styles that you can optionally select from. When optionally choosing options here it will append specific keywords to your prompt to achieve that style when sent to our servers.',
+							'imajinn-ai'
+						) }
 					</p>
 					<ul>
 						<li>
-							<strong>Image Style</strong> - Choose from many
-							common photographic or artistic styles and mediums.
+							<strong>
+								{ __( 'Image Style', 'imajinn-ai' ) }
+							</strong>
+							-
+							{ __(
+								'Choose from many common photographic or artistic styles and mediums.',
+								'imajinn-ai'
+							) }
 						</li>
 						<li>
-							<strong>Artist Style</strong> - Choose to generate
-							your images based on the styles of some famous
-							artists.
+							<strong>
+								{ __( 'Artist Style', 'imajinn-ai' ) }
+							</strong>
+							-
+							{ __(
+								'Choose to generate your images based on the styles of some famous artists.',
+								'imajinn-ai'
+							) }
 						</li>
 						<li>
-							<strong>Modifier</strong> - Some fun and common
-							styles to give the image output that special
-							uniqueness.
+							<strong>{ __( 'Modifier', 'imajinn-ai' ) }</strong>-
+							{ __(
+								'Some fun and common styles to give the image output that special uniqueness.',
+								'imajinn-ai'
+							) }
 						</li>
 					</ul>
 
-					<h3>Output Settings</h3>
+					<h3>{ __( 'Image Ratio', 'imajinn-ai' ) }</h3>
 					<p>
-						Imajinn AI allows you to control the output of the
-						image(s). You can choose the image count and dimensions.
-						Square images use the fewest credits, while rectangular
-						images use more credits as they have more pixels and
-						take longer to process. Generally it's better to
-						generate 4 images at a time as it takes less credits to
-						generate them as a batch and you can choose the best
-						one.
+						{ __(
+							'You can control the output ratio of the generated images. Square images use the fewest credits, while rectangular images use more credits as they have more pixels and take much longer to process. The default is 1:1, which is a square image.',
+							'imajinn-ai'
+						) }
+					</p>
+					<p>
+						{ __(
+							'Additionally, the AI model was trained to generate square images, so depending on the prompt rectangular images may produce strange results such as duplication of the main subject. For example a rectangular image of a person may produce two of the same person, or multiple mouths on the same face. So it may require more prompt editing and generations to get the desired result.',
+							'imajinn-ai'
+						) }
 					</p>
 
-					<h3>Saving Images</h3>
+					<h3>{ __( 'Saving Images', 'imajinn-ai' ) }</h3>
 					<p>
-						Imajinn AI allows you to save images to your media
-						library, and optionally insert them into your post/page.
-						You can save images by clicking on the save button in
-						the bottom left corner of each image generation. You can
-						insert images into the editor in the same location as
-						the IMAJINN block by clicking on the insert button in
-						the bottom right corner. Inserting an image also saves
-						it to your media library, so you don't need to choose
-						both.
+						{ __(
+							"Imajinn AI allows you to save images to your media library, and optionally insert them into your post/page. You can save images by clicking on the save button in the bottom left corner of each image generation. You can insert images into the editor in the same location as the Imajinn block by clicking on the insert button in the bottom right corner. Inserting an image also saves it to your media library, so you don't need to choose both.",
+							'imajinn-ai'
+						) }
 					</p>
 
-					<h3>Credits</h3>
+					<h3>{ __( 'Credits', 'imajinn-ai' ) }</h3>
 					<p>
-						When you first signup for Imajinn AI, you get a chunk of
-						free credits. You can use these credits to generate
-						images and get a feel for how the plugin functions and
-						learn how to write effective prompts. Credits are based
-						on the actual processing time our servers spend. One
-						credit is equal to the approximate time it takes to
-						generate one square image. If you run out, you can
-						purchase more credits from the Imajinn AI website via
-						our plans.
+						{ __(
+							'When you first signup for Imajinn AI, you get a chunk of free credits. You can use these credits to generate images and get a feel for how the plugin functions and learn how to write effective prompts. If you run out, you can purchase more credits from the Imajinn AI website via our plans.',
+							'imajinn-ai'
+						) }
 					</p>
 					<p>
-						We display the estimated credits required to generate
-						the image(s) based on your chosen settings in the bottom
-						right corner of the block. This is generally pretty
-						accurate, but can occasionally take slightly more or
-						less credits than estimated.
+						{ __(
+							'We display the credits required to generate the images based on your chosen settings in the bottom right corner of the block. Wide or tall images require much more processing time so they require more credits.',
+							'imajinn-ai'
+						) }
 					</p>
 
-					<h3>Filters and Restrictions</h3>
+					<h3>{ __( 'Filters and Restrictions', 'imajinn-ai' ) }</h3>
 					<p>
-						To ensure that the images generated are appropriate for
-						all audiences, we have a set of filters and restrictions
-						that are applied to prompts and the image outputs. We
-						block the use of specific words and phrases in prompts,
-						and we scan all generations with an AI moderation filter
-						to block images that appear to contain nudity, or other
-						inappropriate content.
+						{ __(
+							'To ensure that the images generated are appropriate for all audiences, we have a set of filters and restrictions that are applied to prompts and the image outputs. We block the use of specific words and phrases in prompts, and we scan all generations with an AI moderation filter to block images that appear to contain nudity, or other inappropriate content.',
+							'imajinn-ai'
+						) }
 					</p>
 					<p>
-						Depending on your prompt construction, it can be a
-						fairly common occurrence for it to detect a potentially
-						inappropriate image. If this happens, you will see a
-						warning message. You can either change your prompt, or
-						try generating again. We currently don't charge credits
-						for images that are blocked by the filter, but may need
-						to change this policy in the future. We monitor prompt
-						violations and if we find that you are purposely using
-						inappropriate prompts and attempting to bypass our
-						restrictions, we may disable your account.
+						{ __(
+							"Depending on your prompt construction, it can be a fairly common occurrence for it to detect a potentially inappropriate image. If this happens, you will see a warning message. You can either change your prompt, or try generating again. We currently don't charge credits for images that are blocked by the filter, but may need to change this policy in the future. We monitor prompt violations and if we find that you are purposely using inappropriate prompts and attempting to bypass our restrictions, we may disable your account.",
+							'imajinn-ai'
+						) }
 					</p>
 
 					<Button variant="secondary" onClick={ closeModal }>
