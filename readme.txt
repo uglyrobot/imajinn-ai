@@ -15,7 +15,7 @@ Generate the perfect royalty-free images for your blog in seconds with cutting-e
 
 **Imajinn brings the magic of AI image generation to WordPress**
 
-Imajinn is a WordPress plugin that brings the power of AI image generation to your website. Similar to tools like [DALL·E 2](https://openai.com/blog/dall-e/), Imajinn lets you generate images for any topic with just your imagination. Just enter a description of what you would like to create, and Imajinn will generate a stunning image for you in seconds.
+Imajinn is a WordPress plugin that brings the power of AI image generation to your website. Similar to tools like [DALL·E 2](https://openai.com/dall-e-2/), Imajinn lets you generate images for any topic with just your imagination. Just enter a description of what you would like to create, and Imajinn will generate a stunning image for you in seconds.
 
 Running on the latest in AI technology, Imajinn is able to generate images that are indistinguishable from real photos and art. The images are royalty-free, so you can use them on your website without worrying about licensing issues. It's like having a full-time graphic design assistant on your team that follows your every command. Your only limitation is your imagination.
 

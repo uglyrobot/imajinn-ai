@@ -19,7 +19,7 @@
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '0.1.0-beta-3' );
+define( 'IMAJINN_AI_VERSION', '0.1.0-beta-4' );
 
 class Imajinn_AI {
 
@@ -89,22 +89,26 @@ class Imajinn_AI {
 	 * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
 	 */
 	function inline_script() {
-		$site_id      = $this->get_site_id();
-		$expire       = strtotime( '+1 day' );
-		$auth         = hash( 'sha256', $site_id . $expire . hash( 'sha256', $this->get_api_key() ) );
-		$checkout_url = add_query_arg( compact( [ 'site_id', 'expire', 'auth' ] ), 'https://infiniteuploads.com/imajinn/checkout/' );
+		if ( $this->is_connected() ) {
+			$site_id      = $this->get_site_id();
+			$expire       = strtotime( '+1 day' );
+			$auth         = hash( 'sha256', $site_id . $expire . hash( 'sha256', $this->get_api_key() ) );
+			$checkout_url = add_query_arg( compact( [ 'site_id', 'expire', 'auth' ] ), 'https://infiniteuploads.com/imajinn/checkout/' );
+		} else {
+			$checkout_url = 'https://infiniteuploads.com/imajinn/checkout/';
+		}
 
 		$data = array(
 			'connected'         => $this->is_connected(),
 			'remaining_credits' => $this->get_site_data( 'remaining_credits' ),
-			'email'             => wp_get_current_user()->user_email,
+			'email'             => ! $this->is_connected() ? wp_get_current_user()->user_email : null, //for prefilling the registration form
 			'nonce'             => wp_create_nonce( 'imajinn-ai' ),
 			'checkout_url'      => $checkout_url,
 			'history'           => [], //TODO get saved history from DB
 		);
-		wp_register_script( 'imajinn-dummy-js-header', '' );
-		wp_enqueue_script( 'imajinn-dummy-js-header' );
-		wp_add_inline_script( 'imajinn-dummy-js-header', 'let IMAJINN = ' . json_encode( $data ) . ';' );
+		wp_register_script( 'imajinn', '' );
+		wp_enqueue_script( 'imajinn' );
+		wp_add_inline_script( 'imajinn', 'let IMAJINN = ' . json_encode( $data ) . ';' );
 	}
 
 	/**
@@ -143,7 +147,7 @@ class Imajinn_AI {
 		$domain            = network_site_url();
 
 		$params = compact( 'email', 'password', 'signup_newsletter', 'domain' );
-		if ( $this->get_site_id() ) {
+		if ( $this->get_site_id() ) { //if it was connected before, send same site_id
 			$params['site_id'] = $this->get_site_id();
 		}
 
@@ -267,7 +271,7 @@ class Imajinn_AI {
 			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
 		}
 
-		$job_id = sanitize_text_field( $params['job_id'] );
+		$job_id = sanitize_key( $params['job_id'] );
 
 		$job = $this->api_request( sprintf( 'site/%s/generate/%s', $this->get_site_id(), $job_id ), [], 'DELETE' );
 		if ( is_wp_error( $job ) ) {
@@ -293,7 +297,7 @@ class Imajinn_AI {
 			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
 		}
 
-		$job_id = sanitize_text_field( $params['job_id'] );
+		$job_id = sanitize_key( $params['job_id'] );
 
 		$job = $this->api_request( sprintf( 'site/%s/generate/%s', $this->get_site_id(), $job_id ), [], 'GET' );
 		if ( is_wp_error( $job ) ) {
@@ -339,7 +343,7 @@ class Imajinn_AI {
 
 
 	/**
-	 * Redirects to Twitter with message and image url. Necessary because the block editor force-hides all share links.
+	 * Redirects to Twitter with message and image url. Necessary because the block editor force-hides all share links. Nonce not needed because this is a redirect.
 	 *
 	 * @return void
 	 */
@@ -353,7 +357,7 @@ class Imajinn_AI {
 		$url      = esc_url_raw( $_GET['image'] );
 		$text     = urlencode( __( 'I generated this image with the Imajinn AI WordPress plugin!', 'imajinn-ai' ) );
 		$via      = 'infiniteuploads';
-		$hashtags = 'Imajinn_AI,WordPress';
+		$hashtags = 'ImajinnThat,WordPress';
 		wp_redirect( add_query_arg( compact( 'text', 'url', 'via', 'hashtags' ), 'https://twitter.com/intent/tweet' ) );
 	}
 
@@ -413,7 +417,7 @@ class Imajinn_AI {
 		}
 
 		if ( is_wp_error( $response ) ) {
-			error_log( "IMAJINN API Error: " . var_export( $response, true ) );
+			error_log( "Imajinn API Error: " . var_export( $response, true ) );
 
 			return $response;
 		}
@@ -430,7 +434,7 @@ class Imajinn_AI {
 		}
 
 		if ( ! in_array( wp_remote_retrieve_response_code( $response ), [ 200, 201, 202, 204, 204 ], true ) ) {
-			error_log( "IMAJINN API Error: " . var_export( $body, true ) );
+			error_log( "Imajinn API Error: " . var_export( $body, true ) );
 
 			//REST API error response
 			if ( isset( $body->code ) ) {
@@ -474,7 +478,7 @@ class Imajinn_AI {
 			'site_credits_used',
 			'site_image_count',
 		];
-		$data         = array_intersect_key( $data, array_flip( $allowed_keys ) );
+		$data = array_intersect_key( $data, array_flip( $allowed_keys ) );
 
 		update_site_option( 'imajinn_data', $data );
 	}
