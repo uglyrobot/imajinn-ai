@@ -70,7 +70,7 @@ import optionData from './option-data';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+import './index.scss';
 
 /**
  * The edit function describes the structure of your block in the context of the

@@ -4,7 +4,7 @@
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
  * Requires PHP:      7.0
- * Version:           0.1.0-beta-4
+ * Version:           0.1.0
  * Author:            Infinite Uploads
  * Author URI:        https://infiniteuploads.com
  * Plugin URI:        https://infiniteuploads.com/imajinn/
@@ -45,6 +45,8 @@ class Imajinn_AI {
 
 		add_action( 'init', [ &$this, 'block_init' ] );
 		add_action( 'enqueue_block_editor_assets', [ &$this, 'inline_script' ] );
+
+		add_action( 'admin_menu', [ &$this, 'admin_menu' ] );
 
 		add_filter( 'plugin_action_links_imajinn-ai/imajinn-ai.php', [ &$this, 'plugins_list_links' ] );
 
@@ -106,9 +108,59 @@ class Imajinn_AI {
 			'checkout_url'      => $checkout_url,
 			'history'           => [], //TODO get saved history from DB
 		);
-		wp_register_script( 'imajinn', '' );
-		wp_enqueue_script( 'imajinn' );
-		wp_add_inline_script( 'imajinn', 'let IMAJINN = ' . json_encode( $data ) . ';' );
+		wp_add_inline_script( 'infinite-uploads-imajinn-ai-editor-script', 'let IMAJINN = ' . json_encode( $data ) . ';' );
+	}
+
+	public function admin_menu() {
+		$page = add_media_page( 'Imajinn AI', 'Imajinn AI', 'upload_files', 'imajinn-ai', [ &$this, 'admin_page' ] );
+		add_action( 'admin_print_styles-' . $page, [ &$this, 'admin_styles' ] );
+		add_action( 'admin_print_scripts-' . $page, [ &$this, 'admin_scripts' ] );
+	}
+
+	public function admin_styles() {
+		wp_enqueue_style( 'infinite-uploads-imajinn-ai-editor-style' );
+
+		$script_path = plugins_url( 'build/editor.css', __FILE__ );
+		$script_asset_path = dirname( __FILE__ ) . '/build/editor.asset.php';
+		$script_asset      = file_exists( $script_asset_path )
+				? require $script_asset_path
+				: array(
+						'dependencies' => array(),
+						'version'      => filemtime( $script_path ),
+				);
+		wp_enqueue_style( 'imajinn-ai', $script_path, [ 'wp-components', 'wp-block-editor', 'wp-editor', 'wp-format-library' ], $script_asset['version'] );
+	}
+
+	public function admin_scripts() {
+		$this->inline_script();
+		wp_enqueue_script( 'infinite-uploads-imajinn-ai-editor-script' );
+
+		// Enqueue scripts with @wordpress package deps extracted via `@wordpress/wp-scripts
+		// See:
+		// - https://developer.wordpress.org/block-editor/packages/packages-scripts/#webpack-config
+		// - https://developer.wordpress.org/block-editor/packages/packages-dependency-extraction-webpack-plugin/
+		$script_path       = 'build/editor.js';
+		$script_asset_path = dirname( __FILE__ ) . '/build/editor.asset.php';
+		$script_asset      = file_exists( $script_asset_path )
+			? require $script_asset_path
+			: array(
+				'dependencies' => array(),
+				'version'      => filemtime( $script_path ),
+			);
+		$script_url        = plugins_url( $script_path, __FILE__ );
+
+		wp_enqueue_script( 'imajinn-ai', $script_url, $script_asset['dependencies'], $script_asset['version'] );
+	}
+
+	function admin_page() {
+		?>
+		<div
+			id="imajinn-block-editor"
+			class="imajinn-block-editor"
+		>
+			<?php esc_html_e( 'Loading Editor...', 'imajinn-ai' ); ?>
+		</div>
+		<?php
 	}
 
 	/**

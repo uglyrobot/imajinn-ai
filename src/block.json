@@ -21,6 +21,6 @@
 		}
 	},
 	"textdomain": "imajinn-ai",
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css"
+	"editorScript": "file:./block.js",
+	"editorStyle": "file:./block.css"
 }

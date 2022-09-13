@@ -29,4 +29,5 @@ registerBlockType( metadata.name, {
 	 */
 	save,
 	icon: Genie,
+	title: metadata.title,
 } );
