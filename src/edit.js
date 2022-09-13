@@ -563,6 +563,7 @@ export default function Edit() {
 			return (
 				<Button
 					variant="primary"
+					className="imajinn-image-insert"
 					disabled={ isSaving }
 					icon={ postFeaturedImage }
 					onClick={ async () => {
@@ -584,6 +585,7 @@ export default function Edit() {
 			<div className="corner-controls">
 				<HelpModal />
 				<Button
+					className="imajinn-close-button"
 					icon={ close }
 					label={ __( 'Close Imajinn Block', 'imajinn-ai' ) }
 					onClick={ () => {

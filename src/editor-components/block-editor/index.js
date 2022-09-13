@@ -81,7 +81,7 @@ function BlockEditor({settings: _settings}) {
 									</ObserveTyping>
 								</WritingFlow>
 							</BlockTools>
-							<Popover.Slot />
+							<Popover.Slot/>
 						</SlotFillProvider>
 					</div>
 				</BlockEditorProvider>

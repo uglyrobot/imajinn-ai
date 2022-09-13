@@ -4,13 +4,13 @@
 
 .imajinn-block-editor__block-list {
 	padding-bottom: $grid-unit-60;
-	padding-top: $grid-unit-60 + 5;
+	padding-top: $grid-unit-70 * 2;
 	margin-left: auto;
-	margin-right: auto;
+	margin-right: 20px;
 
     .block-editor-block-list__block {
         margin-left: auto;
-        margin-right: 10px;
+        margin-right: auto;
     }
 
     .wp-block {
