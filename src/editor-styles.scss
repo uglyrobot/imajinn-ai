@@ -31,11 +31,18 @@ body.block-editor-page {
 	//left: 0;
 	min-height: calc(100vh - 32px);
 
-  .imajinn-close-button,
-  .imajinn-image-insert,
   .components-toolbar-group:has(.block-editor-block-settings-menu),
   .block-list-appender {
 	display: none;
+  }
+
+  .components-snackbar-list {
+	position: fixed;
+	right: 0;
+	bottom: 40px;
+	padding-left: 16px;
+	padding-right: 16px;
+	left: 160px
   }
 }
 

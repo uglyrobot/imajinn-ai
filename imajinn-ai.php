@@ -89,8 +89,10 @@ class Imajinn_AI {
 	 * Enqueue the block's assets for the editor.
 	 *
 	 * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
+	 *
+	 * @param bool $custom_editor Whether this is for the custom editor.
 	 */
-	function inline_script() {
+	function inline_script( $custom_editor = false ) {
 		if ( $this->is_connected() ) {
 			$site_id      = $this->get_site_id();
 			$expire       = strtotime( '+1 day' );
@@ -107,6 +109,7 @@ class Imajinn_AI {
 			'nonce'             => wp_create_nonce( 'imajinn-ai' ),
 			'checkout_url'      => $checkout_url,
 			'history'           => [], //TODO get saved history from DB
+			'custom_editor'     => $custom_editor,
 		);
 		wp_add_inline_script( 'infinite-uploads-imajinn-ai-editor-script', 'let IMAJINN = ' . json_encode( $data ) . ';' );
 	}
@@ -132,7 +135,7 @@ class Imajinn_AI {
 	}
 
 	public function admin_scripts() {
-		$this->inline_script();
+		$this->inline_script( true );
 		wp_enqueue_script( 'infinite-uploads-imajinn-ai-editor-script' );
 
 		// Enqueue scripts with @wordpress package deps extracted via `@wordpress/wp-scripts

@@ -16,12 +16,12 @@
 		-webkit-overflow-scrolling: touch;
 		height: auto;
 		overflow: auto;
-		top: $admin-bar-height-big + $header-height;
+		top: $admin-bar-height-big + $header-height + 20;
 
 	}
 
 	@include break-medium() {
-		top: $admin-bar-height + $header-height;
+		top: $admin-bar-height + $header-height + 20;
 	}
 
 	@include break-small() {
