@@ -896,7 +896,7 @@ export default function Edit() {
 					IMAJINN.custom_editor
 						? null
 						: __(
-								'AI Text-to-Image Generator [beta]',
+								'AI Text-to-Image Generator',
 								'imajinn-ai'
 						  )
 				}

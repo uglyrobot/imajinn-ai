@@ -21,17 +21,18 @@ Running on the latest in AI technology, Imajinn is able to generate images that 
 
 ### Imajinn AI - Plugin Features
 
-- **Generate images with AI** - Just type in a prompt and Imajinn will generate a stunning image for you to use on your site
-- **Gutenberg block** - Create images right inside your posts/pages with the Imajinn AI Block
-- **Save to library** - Save your favorite images to your WordPress media library for easy access in any theme/plugin.
-- **Insert images** - Insert your generated images into any post/page as an image block with a single click
-- **Style presets** - Customize your images with a variety of preset options like art medium, artist style, and more
-- **History** - Easily view and jump back to previous image generations to modify and customize your prompts
-- **Easy-connect** – no confusing API keys. Simply click to connect
-- **Powerful cloud servers** - Imajinn AI is powered by the most advanced cloud GPUs, so you can generate images with the highest quality and speed right from your WordPress dashboard
-- **Royalty-free images** - Use the images you generate on your site without worrying about licensing issues
-- **Unlimited users** – any WordPress user on any site can use the Imajinn Block to generate images
-- **Unlimited sites** - you can connect just one site, hundreds, or thousands...no extra license costs
+- **Generate images with AI** - Just type in a prompt and Imajinn will generate a stunning image for you to use on your site.
+- **Gutenberg block** - Create images right inside your posts/pages with the Imajinn AI Block.
+- **Save to library** - Upscale and save your favorite images to your WordPress media library for easy access in any theme/plugin.
+- **Insert images** - Insert your high resolution generated images into any post/page as an image block with a single click.
+- **Style presets** - Customize your images with a variety of preset options like art medium, artist style, and more!
+- **History** - Easily view and jump back to previous image generations to modify and customize your prompts.
+- **Media page** - Generate images outside of the Gutenberg editor for support with any theme builder.
+- **Easy-connect** – No confusing API keys. Simply click to connect
+- **Powerful cloud servers** - Imajinn AI is powered by the most advanced cloud GPUs, so you can generate images with the highest quality and speed right from your WordPress dashboard.
+- **Royalty-free images** - Use the images you generate on your site without worrying about licensing issues.
+- **Unlimited users** – Any WordPress user on any site can use the Imajinn Block to generate images.
+- **Unlimited sites** - You can connect just one site, hundreds, or thousands...no extra license costs.
 
 ★★★★★
 > “looks impressive for sure!” - WP Weekly
@@ -54,7 +55,7 @@ This plugin does not collect or share data other than your prompts and generated
 
 == Installation ==
 
-Once you install the plugin, simply insert the "Imajinn AI" Gutenberg block in any post or page. You will be prompted to create or connect to your account right in the block, and then you can start generating images right away.
+Once you install the plugin, simply insert the "Imajinn AI" Gutenberg block in any post or page editor, or visit the Media->Imajinn AI page. You will be prompted to create a free account or connect to your existing account right in the block, and then you can start generating images right away.
 
 == Frequently Asked Questions ==
 
@@ -62,11 +63,11 @@ Once you install the plugin, simply insert the "Imajinn AI" Gutenberg block in a
 
 This AI model can create some amazing images with the right guidance. It especially excels at more artistic images such as paintings, drawings, CG, etc. Think stock photos or art.
 
-It struggles a bit with photorealistic human faces and body parts, which often appear strangely deformed. This can be avoided by choosing a more artistic style or close-up portrait. Also, if you ask it to generate text the letters are usually mangled or mixed up.
+It struggles a bit with photorealistic human faces and body parts, which can appear strangely deformed. This can be avoided by choosing a more artistic style or close-up portrait. Also, if you ask it to generate text the letters are usually mangled or mixed up.
 
 = Is the Imajinn AI plugin free? =
 
-While the plugin is free and can be used on unlimited sites, it does require an account with our cloud service to power the extremely computation-heavy AI algorithms. You can sign up for a free account and receive free image credits to try it out. You can also upgrade to one of our paid plans for more image generation credits, at a fraction of the cost of stock photo sites.
+While the plugin is free and can be used on unlimited sites, it does require an account with our cloud service to power the extremely computation-heavy AI algorithms. You can sign up for an account and receive free image credits to try it out. You can also upgrade to one of our paid plans for more image generation credits, at a fraction of the cost of stock photo sites.
 
 = What is the copyright license of images I create? =
 
@@ -78,7 +79,7 @@ Connect an unlimited number of sites to your Imajinn account, and they all will 
 
 = What restrictions are there? =
 
-Our AI will have much more relaxed restrictions than ones like DALLE-2. But with great power comes great responsibility, so you must agree to abide by our restrictions for all prompts and generated images:
+Our AI has much more relaxed restrictions than ones like DALLE-2. But with great power comes great responsibility, so you must agree to abide by our restrictions for all prompts and generated images:
 
 You should not attempt to generate:
 
@@ -101,15 +102,18 @@ More specifically you agree not to use the Model or Derivatives of the Model:
 - To provide medical advice and medical results interpretation;
 - To generate or disseminate information for the purpose to be used for administration of justice, law enforcement, immigration or asylum processes, such as predicting an individual will commit fraud/crime commitment (e.g. by text profiling, drawing causal relationships between assertions made in documents, indiscriminate and arbitrarily-targeted use).
 
-We also will be filtering prompt input and screening output to try and block the creation of adult content.
+We also will be filtering prompt input and screening output to block the creation of adult content.
 
 == Screenshots ==
 
-1. The Imajinn AI block with image results.
+1. The Imajinn AI block with generated images and prompt history.
+1. Generating images from a prompt with style presets.
+1. Saving upscaled images to your WordPress media library and inserting them as an image block.
+1. Media admin page for generating images outside of Gutenberg.
 
 == Changelog ==
 
-1.0 - 2022-9-20
+1.0 - 2022-9-14
 ----------------------------------------------------------------------
 - Initial release
 
