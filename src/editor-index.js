@@ -5,9 +5,11 @@ import Editor from './editor-main';
 
 import './editor-styles.scss';
 
-domReady( function() {
+domReady( function () {
 	const settings = {};
 	//registerCoreBlocks();
-	render( <Editor settings={ settings } />, document.getElementById( 'imajinn-block-editor' ) );
+	render(
+		<Editor settings={ settings } />,
+		document.getElementById( 'imajinn-block-editor' )
+	);
 } );
-

@@ -15,5 +15,5 @@ module.exports = {
 			block: path.resolve( process.cwd(), 'src', 'index.js' ),
 			editor: path.resolve( process.cwd(), 'src', 'editor-index.js' ),
 		},
-	}
-}
+	},
+};
