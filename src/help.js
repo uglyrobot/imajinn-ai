@@ -320,13 +320,13 @@ export function HelpModal( props ) {
 					<h3>{ __( 'Image Ratio', 'imajinn-ai' ) }</h3>
 					<p>
 						{ __(
-							'You can control the output ratio of the generated images. Square images use the fewest credits, while rectangular images use more credits as they have more pixels and take much longer to process. The default is 1:1, which is a square image.',
+							'You can control the output ratio of the generated images. Square images are the default, while rectangular images have more pixels and take much longer to process.',
 							'imajinn-ai'
 						) }
 					</p>
 					<p>
 						{ __(
-							'Additionally, the AI model was trained to generate square images, so depending on the prompt rectangular images may produce strange results such as duplication of the main subject. For example a rectangular image of a person may produce two of the same person, or multiple mouths on the same face. So it may require more prompt editing and generations to get the desired result.',
+							'The AI model was trained on square images, so depending on the prompt rectangular images may produce strange results such as duplication of the main subject. For example a rectangular image of a person may produce two of the same person, or multiple mouths on the same face. So it may require more prompt editing and generation attempts to get the desired result. Rectangular images are best used for landscapes, scenes, and other objects that do not have a singular main subject.',
 							'imajinn-ai'
 						) }
 					</p>
@@ -348,7 +348,7 @@ export function HelpModal( props ) {
 					</p>
 					<p>
 						{ __(
-							'We display the credits required to generate the images based on your chosen settings in the bottom right corner of the block. Wide or tall images require much more processing time so they require more credits.',
+							'Each prompt generation uses one credit, and creates four images that you can choose to save and/or insert into your content. There is no limit to the number of images you can save.',
 							'imajinn-ai'
 						) }
 					</p>

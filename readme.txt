@@ -5,7 +5,7 @@ Tested up to: 6.0
 Stable tag: 1.0
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
-Tags: AI, images, stock photos, DALLE
+Tags: AI, images, stock photo, DALLE, image generator
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 

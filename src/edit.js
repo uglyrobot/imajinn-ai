@@ -70,7 +70,7 @@ import optionData from './option-data';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+import './index.scss';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -93,25 +93,12 @@ export default function Edit() {
 	const [ promptStyle, setPromptStyle ] = useState( '' );
 	const [ ratio, setRatio ] = useState( '1:1' );
 	const [ queryRatio, setQueryRatio ] = useState( ratio );
-	const [ estimatedCredits, setEstimatedCredits ] = useState( 1 );
 	const [ credits, setCredits ] = useState( IMAJINN.remaining_credits );
 	const [ showUpgrade, setShowUpgrade ] = useState( false );
 	const [ imageStyle, setImageStyle ] = useState( '' );
 	const [ imageArtist, setImageArtist ] = useState( '' );
 	const [ imageModifier, setImageModifier ] = useState( '' );
 	const [ saved, setSaved ] = useState( [] );
-
-	//calculate credit estimate
-	useEffect( () => {
-		let estimate = 1;
-		if ( ratio === '1:1' ) {
-			estimate = 1;
-		} else {
-			estimate = 2;
-		}
-
-		setEstimatedCredits( estimate );
-	}, [ ratio ] ); // <-- here put the parameter to listen
 
 	//hide upgrade modal when you have credits
 	useEffect( () => {
@@ -144,7 +131,7 @@ export default function Edit() {
 		}
 
 		//show upgrade modal when trying to start job with no credits
-		if ( credits - estimatedCredits <= 0 ) {
+		if ( credits - 1 <= 0 ) {
 			setShowUpgrade( true );
 			return false;
 		}
@@ -430,7 +417,7 @@ export default function Edit() {
 			ratioNames[ ratio ] +
 			' images' +
 			( '1:1' !== ratio
-				? ' - ' + __( 'uses more credits', 'imajinn-ai' )
+				? ' - ' + __( 'slightly slower to generate', 'imajinn-ai' )
 				: '' );
 		return (
 			<>
@@ -463,15 +450,6 @@ export default function Edit() {
 				<br />
 				<Text>{ label }</Text>
 			</>
-		);
-	};
-
-	const CreditEstimate = ( props ) => {
-		return (
-			<div>
-				<p className="credits">{ props.estimatedCredits }</p>
-				<Text>{ __( 'Credits', 'imajinn-ai' ) }</Text>
-			</div>
 		);
 	};
 
@@ -535,7 +513,9 @@ export default function Edit() {
 			} else {
 				return (
 					<Button
-						variant="secondary"
+						variant={
+							IMAJINN.custom_editor ? 'primary' : 'secondary'
+						}
 						disabled={ isSaving }
 						icon={ upload }
 						onClick={ async () => {
@@ -563,6 +543,7 @@ export default function Edit() {
 			return (
 				<Button
 					variant="primary"
+					className="imajinn-image-insert"
 					disabled={ isSaving }
 					icon={ postFeaturedImage }
 					onClick={ async () => {
@@ -580,10 +561,16 @@ export default function Edit() {
 	};
 
 	const TopRight = () => {
+		//skip in custom editor
+		if ( IMAJINN.custom_editor ) {
+			return null;
+		}
+
 		return (
 			<div className="corner-controls">
 				<HelpModal />
 				<Button
+					className="imajinn-close-button"
 					icon={ close }
 					label={ __( 'Close Imajinn Block', 'imajinn-ai' ) }
 					onClick={ () => {
@@ -592,6 +579,35 @@ export default function Edit() {
 				/>
 			</div>
 		);
+	};
+
+	const ImageFooter = ( { ...props } ) => {
+		if ( IMAJINN.custom_editor ) {
+			return (
+				<CardFooter>
+					<Button
+						href={ `${ ajaxurl }?action=imajinn-tweet&image=${ props.src }` }
+						target="_blank"
+						icon={ <Dashicon icon="twitter" /> }
+						label={ __( 'Share on Twitter', 'imajinn-ai' ) }
+					/>
+					<SaveButton { ...props } />
+				</CardFooter>
+			);
+		} else {
+			return (
+				<CardFooter>
+					<SaveButton { ...props } />
+					<Button
+						href={ `${ ajaxurl }?action=imajinn-tweet&image=${ props.src }` }
+						target="_blank"
+						icon={ <Dashicon icon="twitter" /> }
+						label={ __( 'Share on Twitter', 'imajinn-ai' ) }
+					/>
+					<InsertButton { ...props } />
+				</CardFooter>
+			);
+		}
 	};
 
 	const ImageResult = ( { ...props } ) => {
@@ -606,16 +622,7 @@ export default function Edit() {
 						{ ...props }
 					/>
 				</CardMedia>
-				<CardFooter>
-					<SaveButton { ...props } />
-					<Button
-						href={ `${ ajaxurl }?action=imajinn-tweet&image=${ props.src }` }
-						target="_blank"
-						icon={ <Dashicon icon="twitter" /> }
-						label="Share on Twitter"
-					/>
-					<InsertButton { ...props } />
-				</CardFooter>
+				<ImageFooter { ...props } />
 			</Card>
 		);
 	};
@@ -881,12 +888,16 @@ export default function Edit() {
 			<ImajinnToolbar />
 			<History history={ history } />
 			<Placeholder
-				icon={ Imajinn }
+				icon={ IMAJINN.custom_editor ? null : Imajinn }
 				instructions={ placeholderInstructions }
-				label={ __(
-					'AI Text-to-Image Generator [beta]',
-					'imajinn-ai'
-				) }
+				label={
+					IMAJINN.custom_editor
+						? null
+						: __(
+								'AI Text-to-Image Generator [beta]',
+								'imajinn-ai'
+						  )
+				}
 			>
 				{ ! isConnected && (
 					<Connect
@@ -938,11 +949,6 @@ export default function Edit() {
 						<Flex align="top" wrap="true">
 							<FlexItem>
 								<RatioToggle />
-							</FlexItem>
-							<FlexItem>
-								<CreditEstimate
-									estimatedCredits={ estimatedCredits }
-								/>
 							</FlexItem>
 							<FlexItem>
 								<GenerateButton />
