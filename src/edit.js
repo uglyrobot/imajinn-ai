@@ -93,25 +93,12 @@ export default function Edit() {
 	const [ promptStyle, setPromptStyle ] = useState( '' );
 	const [ ratio, setRatio ] = useState( '1:1' );
 	const [ queryRatio, setQueryRatio ] = useState( ratio );
-	const [ estimatedCredits, setEstimatedCredits ] = useState( 1 );
 	const [ credits, setCredits ] = useState( IMAJINN.remaining_credits );
 	const [ showUpgrade, setShowUpgrade ] = useState( false );
 	const [ imageStyle, setImageStyle ] = useState( '' );
 	const [ imageArtist, setImageArtist ] = useState( '' );
 	const [ imageModifier, setImageModifier ] = useState( '' );
 	const [ saved, setSaved ] = useState( [] );
-
-	//calculate credit estimate
-	useEffect( () => {
-		let estimate = 1;
-		if ( ratio === '1:1' ) {
-			estimate = 1;
-		} else {
-			estimate = 2;
-		}
-
-		setEstimatedCredits( estimate );
-	}, [ ratio ] ); // <-- here put the parameter to listen
 
 	//hide upgrade modal when you have credits
 	useEffect( () => {
@@ -144,7 +131,7 @@ export default function Edit() {
 		}
 
 		//show upgrade modal when trying to start job with no credits
-		if ( credits - estimatedCredits <= 0 ) {
+		if ( credits - 1 <= 0 ) {
 			setShowUpgrade( true );
 			return false;
 		}
@@ -430,7 +417,7 @@ export default function Edit() {
 			ratioNames[ ratio ] +
 			' images' +
 			( '1:1' !== ratio
-				? ' - ' + __( 'uses more credits', 'imajinn-ai' )
+				? ' - ' + __( 'slightly slower to generate', 'imajinn-ai' )
 				: '' );
 		return (
 			<>
@@ -463,15 +450,6 @@ export default function Edit() {
 				<br />
 				<Text>{ label }</Text>
 			</>
-		);
-	};
-
-	const CreditEstimate = ( props ) => {
-		return (
-			<div>
-				<p className="credits">{ props.estimatedCredits }</p>
-				<Text>{ __( 'Credits', 'imajinn-ai' ) }</Text>
-			</div>
 		);
 	};
 
@@ -971,11 +949,6 @@ export default function Edit() {
 						<Flex align="top" wrap="true">
 							<FlexItem>
 								<RatioToggle />
-							</FlexItem>
-							<FlexItem>
-								<CreditEstimate
-									estimatedCredits={ estimatedCredits }
-								/>
 							</FlexItem>
 							<FlexItem>
 								<GenerateButton />
