@@ -581,19 +581,22 @@ export default function Edit() {
 	};
 
 	const TopRight = () => {
+		//skip in custom editor
+		if (IMAJINN.custom_editor) {
+			return null;
+		}
+
 		return (
 			<div className="corner-controls">
 				<HelpModal/>
-				{!IMAJINN.custom_editor && (
-					<Button
-						className="imajinn-close-button"
-						icon={close}
-						label={__('Close Imajinn Block', 'imajinn-ai')}
-						onClick={() => {
-							deleteBlock();
-						}}
-					/>
-				)}
+				<Button
+					className="imajinn-close-button"
+					icon={close}
+					label={__('Close Imajinn Block', 'imajinn-ai')}
+					onClick={() => {
+						deleteBlock();
+					}}
+				/>
 			</div>
 		);
 	};
