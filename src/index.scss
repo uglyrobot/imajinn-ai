@@ -19,6 +19,10 @@
 
 .wp-block-infinite-uploads-imajinn-ai {
 
+  .components-spinner {
+	background-color: inherit;
+  }
+
   .components-placeholder__label svg {
 	fill: #000;
   }
@@ -167,9 +171,11 @@
 
   .imajinn-loading {
 	margin: 40px auto;
+
 	.components-button {
 	  margin-left: 5px;
 	}
+
 	.imajinn-spinner {
 	  width: 100px;
 	  height: 100px;
@@ -182,6 +188,7 @@
 .imajinn-history {
   .components-panel__body-title {
 	height: 50px;
+
 	.components-button {
 	  margin-top: 7px;
 	  float: right;
@@ -205,6 +212,7 @@
   .credit-label {
 	padding: 24px 0 24px 6px;
   }
+
   .credits {
 	font-size: 18px;
 	padding: 24px 0 24px 6px;

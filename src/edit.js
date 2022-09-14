@@ -334,7 +334,7 @@ export default function Edit() {
 				url: data.url,
 				width: data.width,
 				height: data.height,
-				sizeSlug: 'full',
+				sizeSlug: data.size,
 				alt: promptStyle,
 				title: promptStyle,
 			} );
@@ -520,7 +520,9 @@ export default function Edit() {
 						icon={ upload }
 						onClick={ async () => {
 							setIsSaving( true );
-							await saveImage( props.genindex );
+							if ( ! ( await saveImage( props.genindex ) ) ) {
+								setIsSaving( false );
+							}
 						} }
 					>
 						{ __( 'Save', 'imajinn-ai' ) }

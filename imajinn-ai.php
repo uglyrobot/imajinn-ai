@@ -387,13 +387,21 @@ class Imajinn_AI {
 		$prompt  = sanitize_text_field( $params['prompt'] );
 		$post_id = absint( $params['post_id'] );
 
+		$size = 'full';
+		//make api call to upscale the image
+		$upscaled_result = $this->api_request( sprintf( 'site/%s/upscale', $this->get_site_id() ), compact( 'image' ) );
+		if ( ! is_wp_error( $upscaled_result ) && ! empty( $upscaled_result->image ) ) {
+			$image = $upscaled_result->image;
+			$size = 'large';
+		}
+
 		$attachment_id = media_sideload_image( $image, $post_id, $prompt, 'id' );
 		if ( is_wp_error( $attachment_id ) ) {
 			wp_send_json_error( $attachment_id );
 		}
 
-		list( $url, $width, $height ) = wp_get_attachment_image_src( $attachment_id, 'full' );
-		wp_send_json_success( compact( 'attachment_id', 'url', 'width', 'height' ) );
+		list( $url, $width, $height ) = wp_get_attachment_image_src( $attachment_id, $size );
+		wp_send_json_success( compact( 'attachment_id', 'url', 'width', 'height', 'size' ) );
 	}
 
 
