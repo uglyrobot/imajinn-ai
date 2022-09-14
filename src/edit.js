@@ -520,7 +520,7 @@ export default function Edit() {
 						icon={ upload }
 						onClick={ async () => {
 							setIsSaving( true );
-							if ( ! await saveImage( props.genindex ) ) {
+							if ( ! ( await saveImage( props.genindex ) ) ) {
 								setIsSaving( false );
 							}
 						} }
