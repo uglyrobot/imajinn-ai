@@ -13,7 +13,7 @@ function Sidebar() {
 		<div
 			className="imajinn-sidebar"
 			role="region"
-			aria-label={ __( 'Block Editor advanced settings.' ) }
+			aria-label={ __( 'Imajinn sidebar', 'imajinn-ai' ) }
 			tabIndex="-1"
 		>
 			<Panel>
