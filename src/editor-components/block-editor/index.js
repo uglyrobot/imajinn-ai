@@ -78,16 +78,14 @@ function BlockEditor( { settings: _settings } ) {
 					</Sidebar.InspectorFill>
 					<div className="editor-styles-wrapper">
 						<BlockEditorKeyboardShortcuts />
-						<SlotFillProvider>
-							<BlockTools>
-								<WritingFlow>
-									<ObserveTyping>
-										<BlockList className="imajinn-block-editor__block-list" />
-									</ObserveTyping>
-								</WritingFlow>
-							</BlockTools>
-							<Popover.Slot />
-						</SlotFillProvider>
+						<BlockTools>
+							<WritingFlow>
+								<ObserveTyping>
+									<BlockList className="imajinn-block-editor__block-list" />
+								</ObserveTyping>
+							</WritingFlow>
+						</BlockTools>
+						<Popover.Slot />
 					</div>
 				</BlockEditorProvider>
 			</ShortcutProvider>

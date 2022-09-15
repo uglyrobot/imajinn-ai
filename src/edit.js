@@ -895,10 +895,7 @@ export default function Edit() {
 				label={
 					IMAJINN.custom_editor
 						? null
-						: __(
-								'AI Text-to-Image Generator',
-								'imajinn-ai'
-						  )
+						: __( 'AI Text-to-Image Generator', 'imajinn-ai' )
 				}
 			>
 				{ ! isConnected && (

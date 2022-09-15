@@ -1,23 +1,23 @@
 {
-  "name": "imajinn-ai",
-  "version": "0.1.0",
-  "description": "Generate and use beautiful art and images from a text prompt using cutting-edge AI.",
-  "author": "UglyRobot, LLC",
-  "license": "GPL-2.0-or-later",
-  "main": "build/index.js",
-  "scripts": {
-    "build": "wp-scripts build",
-    "format": "wp-scripts format",
-    "lint:css": "wp-scripts lint-style",
-    "lint:js": "wp-scripts lint-js",
-    "packages-update": "wp-scripts packages-update",
-    "plugin-zip": "wp-scripts plugin-zip",
-    "start": "wp-scripts start"
-  },
-  "devDependencies": {
-    "@wordpress/base-styles": "^4.8.0",
-    "@wordpress/editor": "^12.16.0",
-    "@wordpress/interface": "^4.16.0",
-    "@wordpress/scripts": "^24.0.0"
-  }
+	"name": "imajinn-ai",
+	"version": "1.0",
+	"description": "Generate and use beautiful art and images from a text prompt using cutting-edge AI.",
+	"author": "UglyRobot, LLC",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start"
+	},
+	"devDependencies": {
+		"@wordpress/base-styles": "^4.8.0",
+		"@wordpress/editor": "^12.16.0",
+		"@wordpress/interface": "^4.16.0",
+		"@wordpress/scripts": "^24.0.0"
+	}
 }
