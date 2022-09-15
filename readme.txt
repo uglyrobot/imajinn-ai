@@ -1,11 +1,11 @@
-=== Imajinn AI ===
+=== Imajinn - Magical AI Image Generation like DALL·E 2 ===
 
 Requires at least: 5.9
 Tested up to: 6.0
 Stable tag: 1.0
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
-Tags: AI, images, stock photo, DALLE, image generator
+Tags: AI, images, stock photos, DALLE, image generator, art
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
