@@ -1,32 +1,36 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Deploy to WordPress.org
 
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [ published ]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: WordPress Plugin Deploy
-      id: deploy
-      uses: 10up/action-wordpress-plugin-deploy@stable
-      with:
-        generate-zip: true
-      env:
-        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+      - name: Build the plugin
+        run: |
+          npm install
+          npm run build
 
-    - name: Create Github release
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: ${{github.workspace}}/${{ github.event.repository.name }}.zip
-        body: ${{ github.event.head_commit.message }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        artifactContentType: application/zip
+      - name: WordPress Plugin Deploy
+        id: deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        with:
+          generate-zip: true
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ${{ steps.deploy.outputs.zip-path }}
+          asset_name: ${{ github.event.repository.name }}.zip
+          asset_content_type: application/zip
