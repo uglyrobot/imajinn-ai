@@ -2,10 +2,10 @@
 
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.0
+Stable tag: 1.0.1
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
-Tags: AI, images, stock photos, DALLE, image generator, art
+Tags: AI, DALLE, image generator, stock photos, images, art, Diffusion
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,11 @@ We also will be filtering prompt input and screening output to block the creatio
 
 == Changelog ==
 
+1.0.1 - 2022-9-15
+----------------------------------------------------------------------
+- Fix missing prompt history in standalone media page
+- Optimize size of admin css and js
+
 1.0 - 2022-9-14
 ----------------------------------------------------------------------
 - Initial release
@@ -125,7 +130,3 @@ Imajinn AI is built and maintained by the team behind Infinite Uploads - a premi
 [Contribute to the plugin's development on Github!](https://github.com/uglyrobot/imajinn-ai/)
 
 Enjoy!
-
-== Contact and Credits ==
-
-Built by the cloud architects and WordPress engineers at [Infinite Uploads](https://infiniteuploads.com/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=iup_readme&utm_term=credits).
