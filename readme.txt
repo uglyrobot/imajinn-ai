@@ -2,7 +2,7 @@
 
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.0.1
+Stable tag: 1.1
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
 Tags: AI, DALLE, image generator, stock photos, images, art, Diffusion
@@ -113,8 +113,13 @@ We also will be filtering prompt input and screening output to block the creatio
 
 == Changelog ==
 
+1.1 - 2022-9-16
+------------
+- Save prompt history between sessions
+
 1.0.1 - 2022-9-15
 ----------------------------------------------------------------------
+- ----------------------------------------------------------
 - Fix missing prompt history in standalone media page
 - Optimize size of admin css and js
 
