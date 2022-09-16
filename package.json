@@ -1,6 +1,5 @@
 {
 	"name": "imajinn-ai",
-	"version": "1.1",
 	"description": "Generate and use beautiful art and images from a text prompt using cutting-edge AI.",
 	"author": "UglyRobot, LLC",
 	"license": "GPL-2.0-or-later",
