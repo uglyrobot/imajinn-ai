@@ -125,7 +125,7 @@ export default function Edit() {
 	const blockProps = useBlockProps();
 
 	//function to make an ajax call to the server to get the image
-	const startJob = (init_image) => {
+	const startJob = (initImage, thisQueryRatio) => {
 		//Check credit status in case we bought more
 		if (credits <= 0) {
 			refreshInfo();
@@ -137,10 +137,15 @@ export default function Edit() {
 			return false;
 		}
 
+		const thisInitImage = initImage || null;
+		const thisRatio = thisQueryRatio || ratio;
+
+		console.log('Starting job with ratio: ' + thisRatio);
+		console.log('Starting job with init image: ' + thisInitImage);
 		setJobId(null);
 		setGenerations([]);
 		setSaved([]);
-		setQueryRatio(ratio);
+		setQueryRatio(thisRatio);
 		setIsLoading(true);
 		setError(null);
 		setProgress(0);
@@ -152,9 +157,9 @@ export default function Edit() {
 			},
 			body: JSON.stringify({
 				prompt: promptStyle,
-				ratio: ratio,
+				ratio: thisRatio,
 				num_variations: 4,
-				init_image: init_image,
+				init_image: thisInitImage,
 				nonce: IMAJINN.nonce,
 			}),
 		})
@@ -487,12 +492,15 @@ export default function Edit() {
 
 	const VariationsButton = (props) => {
 
+		let url = generations[props.genindex].jpg;
+
 		return (
 			<Button
 				icon={gallery}
 				label={__('Generate Variations', 'imajinn-ai')}
 				onClick={() => {
-					startJob(props.src);
+					setRatio(queryRatio);
+					startJob(url, queryRatio);
 				}}
 			/>
 		);
@@ -893,7 +901,7 @@ export default function Edit() {
 
 	const GenerateButton = (props) => {
 		return (
-			<Button isPrimary disabled={isLoading} onClick={startJob}>
+			<Button isPrimary disabled={isLoading} onClick={() => {startJob();}}>
 				{__('Generate', 'imajinn-ai')}
 			</Button>
 		);
