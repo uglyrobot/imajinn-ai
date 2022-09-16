@@ -60,6 +60,7 @@ import {
 import metadata from './block.json';
 import { Imajinn, ImajinnSpinner } from './images';
 import { HelpModal, PromptHelpModal } from './help';
+import { ImageModal } from './image-modal';
 import { LicenseModal } from './license';
 import { Connect } from './connect';
 import optionData from './option-data';
@@ -593,6 +594,7 @@ export default function Edit() {
 						icon={ <Dashicon icon="twitter" /> }
 						label={ __( 'Share on Twitter', 'imajinn-ai' ) }
 					/>
+					<ImageModal { ...props } prompt={prompt} setPrompt={setPrompt} />
 					<SaveButton { ...props } />
 				</CardFooter>
 			);
