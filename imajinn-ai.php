@@ -307,7 +307,9 @@ class Imajinn_AI {
 
 		$num_variations = absint( $params['num_variations'] );
 
-		$job = $this->api_request( sprintf( 'site/%s/generate', $this->get_site_id() ), compact( 'prompt', 'ratio', 'num_variations' ) );
+		$init_image = esc_url_raw( $params['init_image'] );
+
+		$job = $this->api_request( sprintf( 'site/%s/generate', $this->get_site_id() ), compact( 'prompt', 'ratio', 'num_variations', 'init_image' ) );
 		if ( is_wp_error( $job ) ) {
 			wp_send_json_error( $job );
 		}
