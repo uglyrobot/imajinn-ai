@@ -210,7 +210,7 @@ export default function Edit() {
 					setGenerations( result.data.generations );
 					setHistory( ( history ) => [
 						{
-							promptStyle,
+							prompt: promptStyle,
 							ratio,
 							generations: result.data.generations,
 						},
@@ -418,7 +418,7 @@ export default function Edit() {
 			ratioNames[ ratio ] +
 			' images' +
 			( '1:1' !== ratio
-				? ' - ' + __( 'slightly slower to generate', 'imajinn-ai' )
+				? ' - ' + __( 'slower to generate', 'imajinn-ai' )
 				: '' );
 		return (
 			<>
@@ -789,16 +789,17 @@ export default function Edit() {
 						<img
 							key={ index }
 							src={ gen.thumbnail }
-							alt={ 'Result ' + ( index + 1 ).toString() }
+							alt={ sprintf( __( 'Result %d', 'imajinn-ai'), ( index + 1 ).toString() ) }
 						/>
 					) ) }
 					<Button
 						variant="secondary"
 						label={ __( 'Load prompt results', 'imajinn-ai' ) }
 						onClick={ () => {
-							setPrompt( item.promptStyle );
+							setPrompt( item.prompt );
 							setGenerations( item.generations );
 							setRatio( item.ratio );
+							setQueryRatio( item.ratio );
 							setImageStyle( '' );
 							setImageArtist( '' );
 							setImageModifier( '' );
@@ -809,7 +810,7 @@ export default function Edit() {
 				</h2>
 				<PanelRow>
 					<Text numberOfLines={ 2 } truncate>
-						{ item.promptStyle }
+						{ item.prompt }
 					</Text>
 				</PanelRow>
 			</PanelBody>
@@ -818,7 +819,7 @@ export default function Edit() {
 		return (
 			<InspectorControls key="setting">
 				<Panel
-					header={ __( 'Generation History' ) }
+					header={ __( 'Generation History', 'imajinn-ai' ) }
 					className="imajinn-history"
 				>
 					{ list }

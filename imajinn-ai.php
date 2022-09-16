@@ -4,7 +4,7 @@
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
  * Requires PHP:      7.0
- * Version:           1.0.1
+ * Version:           1.1
  * Author:            Infinite Uploads
  * Author URI:        https://infiniteuploads.com
  * Plugin URI:        https://infiniteuploads.com/imajinn/
@@ -19,7 +19,7 @@
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '1.0.1' );
+define( 'IMAJINN_AI_VERSION', '1.1' );
 
 class Imajinn_AI {
 
@@ -46,9 +46,12 @@ class Imajinn_AI {
 		add_action( 'init', [ &$this, 'block_init' ] );
 		add_action( 'enqueue_block_editor_assets', [ &$this, 'inline_script' ] );
 
+		add_action( 'init', [ &$this, 'register_post_type' ] );
+
 		add_action( 'admin_menu', [ &$this, 'admin_menu' ] );
 
 		add_filter( 'plugin_action_links_imajinn-ai/imajinn-ai.php', [ &$this, 'plugins_list_links' ] );
+		add_filter( 'network_admin_plugin_action_links_imajinn-ai/imajinn-ai.php', [ &$this, 'plugins_list_links' ] );
 
 		add_action( 'wp_ajax_imajinn-connect', [ &$this, 'ajax_connect' ] );
 		add_action( 'wp_ajax_imajinn-refresh', [ &$this, 'ajax_refresh' ] );
@@ -69,8 +72,31 @@ class Imajinn_AI {
 	 */
 	function block_init() {
 		if ( current_user_can( 'upload_files' ) ) {
-			register_block_type( __DIR__ . '/build/block.json');
+			register_block_type( __DIR__ . '/build/block.json' );
 		}
+	}
+
+	/**
+	 * Register our prompt history post type for internal use.
+	 * This is used to store the history of prompts that have been used.
+	 *
+	 * @return void
+	 */
+	public function register_post_type() {
+		register_post_type( 'imajinn_prompt', [
+				'public'              => false,
+				'show_ui'             => false,
+				'show_in_menu'        => false,
+				'show_in_nav_menus'   => false,
+				'show_in_admin_bar'   => false,
+				'can_export'          => true,
+				'has_archive'         => false,
+				'exclude_from_search' => true,
+				'publicly_queryable'  => false,
+				'capability_type'     => 'post',
+				'supports'            => false,
+				'rewrite'             => false,
+		] );
 	}
 
 	/**
@@ -78,8 +104,9 @@ class Imajinn_AI {
 	 */
 	function plugins_list_links( $actions ) {
 		// Create the link.
-		$custom_links            = [];
-		$custom_links['support'] = '<a href="' . esc_url( 'https://infiniteuploads.com/support/?utm_source=imajinn_plugin&utm_medium=plugin&utm_campaign=imajinn_plugin&utm_term=support&utm_content=meta' ) . '">' . esc_html__( 'Support', 'imajinn-ai' ) . '</a>';
+		$custom_links             = [];
+		$custom_links['support']  = '<a href="' . esc_url( 'https://infiniteuploads.com/support/?utm_source=imajinn_plugin&utm_medium=plugin&utm_campaign=imajinn_plugin&utm_term=support&utm_content=meta' ) . '">' . esc_html__( 'Support', 'imajinn-ai' ) . '</a>';
+		$custom_links['generate'] = '<a href="' . admin_url( 'upload.php?page=imajinn-ai' ) . '">' . esc_html__( 'Generate', 'imajinn-ai' ) . '</a>';
 
 		// Adds the links to the beginning of the array.
 		return array_merge( $custom_links, $actions );
@@ -102,14 +129,27 @@ class Imajinn_AI {
 			$checkout_url = 'https://infiniteuploads.com/imajinn/checkout/';
 		}
 
+		//get history from post type
+		$history = [];
+		$posts = get_posts( [
+			'post_type'      => 'imajinn_prompt',
+			'post_status'    => 'publish',
+			'posts_per_page' => 20,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		] );
+		foreach ( $posts as $post ) {
+			$history[] = json_decode( $post->post_content, true );
+		}
+
 		$data = array(
-			'connected'         => $this->is_connected(),
-			'remaining_credits' => $this->get_site_data( 'remaining_credits' ),
-			'email'             => ! $this->is_connected() ? wp_get_current_user()->user_email : null, //for prefilling the registration form
-			'nonce'             => wp_create_nonce( 'imajinn-ai' ),
-			'checkout_url'      => $checkout_url,
-			'history'           => [], //TODO get saved history from DB
-			'custom_editor'     => $custom_editor,
+				'connected'         => $this->is_connected(),
+				'remaining_credits' => $this->get_site_data( 'remaining_credits' ),
+				'email'             => ! $this->is_connected() ? wp_get_current_user()->user_email : null, //for prefilling the registration form
+				'nonce'             => wp_create_nonce( 'imajinn-ai' ),
+				'checkout_url'      => $checkout_url,
+				'history'           => $history,
+				'custom_editor'     => $custom_editor,
 		);
 		wp_add_inline_script( 'infinite-uploads-imajinn-ai-editor-script', 'let IMAJINN = ' . json_encode( $data ) . ';' );
 	}
@@ -123,7 +163,7 @@ class Imajinn_AI {
 	public function admin_styles() {
 		wp_enqueue_style( 'infinite-uploads-imajinn-ai-editor-style' );
 
-		$script_path = plugins_url( 'build/editor.css', __FILE__ );
+		$script_path       = plugins_url( 'build/editor.css', __FILE__ );
 		$script_asset_path = dirname( __FILE__ ) . '/build/editor.asset.php';
 		$script_asset      = file_exists( $script_asset_path )
 				? require $script_asset_path
@@ -145,11 +185,11 @@ class Imajinn_AI {
 		$script_path       = 'build/editor.js';
 		$script_asset_path = dirname( __FILE__ ) . '/build/editor.asset.php';
 		$script_asset      = file_exists( $script_asset_path )
-			? require $script_asset_path
-			: array(
-				'dependencies' => array(),
-				'version'      => filemtime( $script_path ),
-			);
+				? require $script_asset_path
+				: array(
+						'dependencies' => array(),
+						'version'      => filemtime( $script_path ),
+				);
 		$script_url        = plugins_url( $script_path, __FILE__ );
 
 		wp_enqueue_script( 'imajinn-ai', $script_url, $script_asset['dependencies'], $script_asset['version'] );
@@ -158,8 +198,8 @@ class Imajinn_AI {
 	function admin_page() {
 		?>
 		<div
-			id="imajinn-block-editor"
-			class="imajinn-block-editor"
+				id="imajinn-block-editor"
+				class="imajinn-block-editor"
 		>
 			<?php esc_html_e( 'Loading Editor...', 'imajinn-ai' ); ?>
 		</div>
@@ -173,16 +213,7 @@ class Imajinn_AI {
 	 */
 	public function ajax_connect() {
 		// check caps
-		if ( ! current_user_can( 'upload_files' ) ) {
-			wp_send_json_error( new WP_Error( 'permissions', esc_html__( "You don't have permission to upload files.", 'imajinn-ai' ) ) );
-		}
-
-		$params = json_decode( file_get_contents( 'php://input' ), true );
-
-		//check nonce
-		if ( ! wp_verify_nonce( $params['nonce'], 'imajinn-ai' ) ) {
-			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
-		}
+		$params = $this->check_ajax();
 
 		$email = sanitize_text_field( $params['email'] );
 		if ( empty( $email ) || ! is_email( $email ) ) {
@@ -225,16 +256,7 @@ class Imajinn_AI {
 	 */
 	public function ajax_refresh() {
 		// check caps
-		if ( ! current_user_can( 'upload_files' ) ) {
-			wp_send_json_error( new WP_Error( 'permissions', esc_html__( "You don't have permission to upload files.", 'imajinn-ai' ) ) );
-		}
-
-		$params = json_decode( file_get_contents( 'php://input' ), true );
-
-		//check nonce
-		if ( ! wp_verify_nonce( $params['nonce'], 'imajinn-ai' ) ) {
-			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
-		}
+		$params = $this->check_ajax();
 
 		$result = $this->api_request( sprintf( 'site/%s', $this->get_site_id() ), [], 'GET' );
 		if ( is_wp_error( $result ) ) {
@@ -253,16 +275,7 @@ class Imajinn_AI {
 	 */
 	public function ajax_get_account_url() {
 		// check caps
-		if ( ! current_user_can( 'upload_files' ) ) {
-			wp_send_json_error( new WP_Error( 'permissions', esc_html__( "You don't have permission to upload files.", 'imajinn-ai' ) ) );
-		}
-
-		$params = json_decode( file_get_contents( 'php://input' ), true );
-
-		//check nonce
-		if ( ! wp_verify_nonce( $params['nonce'], 'imajinn-ai' ) ) {
-			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
-		}
+		$params = $this->check_ajax();
 
 		$result = $this->api_request( 'account', [], 'GET' );
 		if ( is_wp_error( $result ) ) {
@@ -279,16 +292,7 @@ class Imajinn_AI {
 	 */
 	public function ajax_start_job() {
 		// check caps
-		if ( ! current_user_can( 'upload_files' ) ) {
-			wp_send_json_error( new WP_Error( 'permissions', esc_html__( "You don't have permission to upload files.", 'imajinn-ai' ) ) );
-		}
-
-		$params = json_decode( file_get_contents( 'php://input' ), true );
-
-		//check nonce
-		if ( ! wp_verify_nonce( $params['nonce'], 'imajinn-ai' ) ) {
-			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
-		}
+		$params = $this->check_ajax();
 
 		$prompt = sanitize_text_field( $params['prompt'] );
 		if ( empty( $prompt ) ) {
@@ -310,21 +314,23 @@ class Imajinn_AI {
 
 		$this->update_data( $job );
 
+		$generations = $job->generations;
+
+		//save to history post type
+		wp_insert_post( [
+				'post_type'    => 'imajinn_prompt',
+				'post_status'  => 'draft',
+				'post_title'   => $prompt,
+				'post_name'    => $job->job_id,
+				'post_content' => json_encode( compact( 'prompt', 'ratio', 'num_variations', 'generations' ) ),
+		] );
+
 		wp_send_json_success( $job );
 	}
 
 	function ajax_cancel_job() {
 		// check caps
-		if ( ! current_user_can( 'upload_files' ) ) {
-			wp_send_json_error( new WP_Error( 'permissions', esc_html__( "You don't have permission to upload files.", 'imajinn-ai' ) ) );
-		}
-
-		$params = json_decode( file_get_contents( 'php://input' ), true );
-
-		//check nonce
-		if ( ! wp_verify_nonce( $params['nonce'], 'imajinn-ai' ) ) {
-			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
-		}
+		$params = $this->check_ajax();
 
 		$job_id = sanitize_key( $params['job_id'] );
 
@@ -335,22 +341,21 @@ class Imajinn_AI {
 
 		$this->update_data( $job );
 
+		//update the history post type
+		$post = get_page_by_path( $job->job_id, OBJECT, 'imajinn_prompt' );
+		if ( $post ) {
+			wp_update_post( [
+					'ID'           => $post->ID,
+					'post_status'  => 'succeeded' == $job->status ? 'publish' : 'trash',
+					'post_content' => json_encode( array_merge( json_decode( $post->post_content, true ), [ 'generations' => $job->generations ] ) ),
+			] );
+		}
+
 		wp_send_json_success( $job );
 	}
 
 	function ajax_check_job() {
-
-		// check caps
-		if ( ! current_user_can( 'upload_files' ) ) {
-			wp_send_json_error( new WP_Error( 'permissions', esc_html__( "You don't have permission to upload files.", 'imajinn-ai' ) ) );
-		}
-
-		$params = json_decode( file_get_contents( 'php://input' ), true );
-
-		//check nonce
-		if ( ! wp_verify_nonce( $params['nonce'], 'imajinn-ai' ) ) {
-			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
-		}
+		$params = $this->check_ajax();
 
 		$job_id = sanitize_key( $params['job_id'] );
 
@@ -360,6 +365,18 @@ class Imajinn_AI {
 		}
 
 		$this->update_data( $job );
+
+		if ( 'starting' !== $job->status && 'processing' !== $job->status ) {
+			//update the history post type
+			$post = get_page_by_path( $job->job_id, OBJECT, 'imajinn_prompt' );
+			if ( $post ) {
+				wp_update_post( [
+						'ID'           => $post->ID,
+						'post_status'  => 'succeeded' == $job->status ? 'publish' : 'trash',
+						'post_content' => json_encode( array_merge( json_decode( $post->post_content, true ), [ 'generations' => $job->generations ] ) ),
+				] );
+			}
+		}
 
 		if ( 'failed' == $job->status ) {
 			wp_send_json_error( new WP_Error( 'api_error', $job->failed_reason, $job ) );
@@ -371,16 +388,7 @@ class Imajinn_AI {
 	function ajax_save_image() {
 
 		// check caps
-		if ( ! current_user_can( 'upload_files' ) ) {
-			wp_send_json_error( new WP_Error( 'permissions', esc_html__( "You don't have permission to upload files.", 'imajinn-ai' ) ) );
-		}
-
-		$params = json_decode( file_get_contents( 'php://input' ), true );
-
-		//check nonce
-		if ( ! wp_verify_nonce( $params['nonce'], 'imajinn-ai' ) ) {
-			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
-		}
+		$params = $this->check_ajax();
 
 		$params  = json_decode( file_get_contents( 'php://input' ), true );
 		$image   = esc_url_raw( $params['url'] );
@@ -392,7 +400,7 @@ class Imajinn_AI {
 		$upscaled_result = $this->api_request( sprintf( 'site/%s/upscale', $this->get_site_id() ), compact( 'image' ) );
 		if ( ! is_wp_error( $upscaled_result ) && ! empty( $upscaled_result->image ) ) {
 			$image = $upscaled_result->image;
-			$size = 'large';
+			$size  = 'large';
 		}
 
 		$attachment_id = media_sideload_image( $image, $post_id, $prompt, 'id' );
@@ -437,8 +445,8 @@ class Imajinn_AI {
 		$url = IMAJINN_API_URL . ltrim( $path, '/' );
 
 		$headers = array(
-			'Accept'       => 'application/json',
-			'Content-Type' => 'application/json',
+				'Accept'       => 'application/json',
+				'Content-Type' => 'application/json',
 		);
 
 		if ( $this->get_api_key() ) {
@@ -446,10 +454,10 @@ class Imajinn_AI {
 		}
 
 		$args = array(
-			'headers'   => $headers,
-			'sslverify' => true,
-			'method'    => strtoupper( $method ),
-			'timeout'   => 30,
+				'headers'   => $headers,
+				'sslverify' => true,
+				'method'    => strtoupper( $method ),
+				'timeout'   => 30,
 		);
 
 		//log if WP_DEBUG is true
@@ -536,14 +544,35 @@ class Imajinn_AI {
 
 		//filter array
 		$allowed_keys = [
-			'remaining_credits',
-			'total_images',
-			'site_credits_used',
-			'site_image_count',
+				'remaining_credits',
+				'total_images',
+				'site_credits_used',
+				'site_image_count',
 		];
-		$data = array_intersect_key( $data, array_flip( $allowed_keys ) );
+		$data         = array_intersect_key( $data, array_flip( $allowed_keys ) );
 
 		update_site_option( 'imajinn_data', $data );
+	}
+
+	/**
+	 * Perform a cap and CSRF check then return json params.
+	 *
+	 * @return mixed
+	 */
+	private function check_ajax() {
+		// check caps
+		if ( ! current_user_can( 'upload_files' ) ) {
+			wp_send_json_error( new WP_Error( 'permissions', esc_html__( "You don't have permission to upload files.", 'imajinn-ai' ) ) );
+		}
+
+		$params = json_decode( file_get_contents( 'php://input' ), true );
+
+		//check nonce
+		if ( ! wp_verify_nonce( $params['nonce'], 'imajinn-ai' ) ) {
+			wp_send_json_error( new WP_Error( 'nonce', esc_html__( 'Nonce verification failed. Refresh the page and try again.', 'imajinn-ai' ) ) );
+		}
+
+		return $params;
 	}
 }
 
