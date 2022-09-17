@@ -24,6 +24,7 @@ import {
 	__experimentalRadioGroup as RadioGroup,
 	__experimentalText as Text,
 	Button,
+	ButtonGroup,
 	Card,
 	CardFooter,
 	CardMedia,
@@ -56,6 +57,9 @@ import {
 	image,
 	postFeaturedImage,
 	upload,
+	gallery,
+	commentAuthorAvatar,
+	share,
 } from '@wordpress/icons';
 import metadata from './block.json';
 import { Imajinn, ImajinnSpinner } from './images';
@@ -99,6 +103,7 @@ export default function Edit() {
 	const [ imageArtist, setImageArtist ] = useState( '' );
 	const [ imageModifier, setImageModifier ] = useState( '' );
 	const [ saved, setSaved ] = useState( [] );
+	const [ faceFixed, setFaceFixed ] = useState( [] );
 
 	//hide upgrade modal when you have credits
 	useEffect( () => {
@@ -124,7 +129,7 @@ export default function Edit() {
 	const blockProps = useBlockProps();
 
 	//function to make an ajax call to the server to get the image
-	const startJob = () => {
+	const startJob = ( initImage, thisQueryRatio ) => {
 		//Check credit status in case we bought more
 		if ( credits <= 0 ) {
 			refreshInfo();
@@ -136,10 +141,14 @@ export default function Edit() {
 			return false;
 		}
 
+		const thisInitImage = initImage || null;
+		const thisRatio = thisQueryRatio || ratio;
+
 		setJobId( null );
 		setGenerations( [] );
+		setFaceFixed( [] );
 		setSaved( [] );
-		setQueryRatio( ratio );
+		setQueryRatio( thisRatio );
 		setIsLoading( true );
 		setError( null );
 		setProgress( 0 );
@@ -151,8 +160,9 @@ export default function Edit() {
 			},
 			body: JSON.stringify( {
 				prompt: promptStyle,
-				ratio: ratio,
+				ratio: thisRatio,
 				num_variations: 4,
+				init_image: thisInitImage,
 				nonce: IMAJINN.nonce,
 			} ),
 		} )
@@ -387,6 +397,49 @@ export default function Edit() {
 		return false;
 	};
 
+	const faceFix = async ( genIndex ) => {
+		let image = generations[ genIndex ].jpg;
+
+		//save the attachment
+		const response = await fetch(
+			`${ ajaxurl }?action=imajinn-face-repair`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify( {
+					image: image,
+					nonce: IMAJINN.nonce,
+				} ),
+			}
+		);
+		const result = await response.json();
+		if ( result.success ) {
+			setFaceFixed( ( faceFixed ) => [
+				...faceFixed,
+				{ index: genIndex },
+			] );
+			//insert the new image array into the generations
+			setGenerations( ( generations ) => {
+				generations[ genIndex ] = result.data.image;
+				return [ ...generations ];
+			} );
+			wp.data.dispatch( 'core/notices' ).createNotice(
+				'success', // Can be one of: success, info, warning, error.
+				__( 'Face repair completed.', 'imajinn-ai' ), // Text string to display.
+				{
+					type: 'snackbar',
+					isDismissible: true, // Whether the user can dismiss the notice.
+					actions: [],
+				}
+			);
+			return result.data;
+		}
+
+		return false;
+	};
+
 	const deleteBlock = () => {
 		const { removeBlocks } = wp.data.dispatch( 'core/block-editor' );
 		const block_ids = wp.data
@@ -483,6 +536,60 @@ export default function Edit() {
 		}
 	};
 
+	const VariationsButton = ( props ) => {
+		let url = generations[ props.genindex ].jpg;
+
+		return (
+			<Button
+				icon={ gallery }
+				label={ __( 'Generate Variations', 'imajinn-ai' ) }
+				onClick={ () => {
+					setRatio( queryRatio );
+					startJob( url, queryRatio );
+				} }
+			/>
+		);
+	};
+
+	const FaceFixButton = ( props ) => {
+		const [ isFixing, setIsFixing ] = useState( false );
+		const [ isFixed, setIsFixed ] = useState( false );
+
+		useEffect( () => {
+			if ( faceFixed.some( ( e ) => e.index === props.genindex ) ) {
+				setIsFixed( true );
+				setIsFixing( false );
+			} else {
+				setIsFixed( false );
+				setIsFixing( false );
+			}
+		}, [ faceFixed ] );
+
+		if ( isFixing ) {
+			return (
+				<Button
+					disabled
+					icon={ <Spinner /> }
+					label={ __( 'Repairing', 'imajinn-ai' ) }
+				/>
+			);
+		} else {
+			return (
+				<Button
+					disabled={ isFixed }
+					icon={ commentAuthorAvatar }
+					label={ __( 'Face Repair', 'imajinn-ai' ) }
+					onClick={ async () => {
+						setIsFixing( true );
+						if ( ! ( await faceFix( props.genindex ) ) ) {
+							setIsFixing( false );
+						}
+					} }
+				/>
+			);
+		}
+	};
+
 	const SaveButton = ( props ) => {
 		const [ isSaving, setIsSaving ] = useState( false );
 		const [ isSaved, setIsSaved ] = useState( false );
@@ -535,6 +642,10 @@ export default function Edit() {
 	const InsertButton = ( props ) => {
 		const [ isSaving, setIsSaving ] = useState( false );
 
+		if ( IMAJINN.custom_editor ) {
+			return null;
+		}
+
 		if ( isSaving ) {
 			return (
 				<Button disabled>
@@ -584,32 +695,24 @@ export default function Edit() {
 	};
 
 	const ImageFooter = ( { ...props } ) => {
-		if ( IMAJINN.custom_editor ) {
-			return (
-				<CardFooter>
+		return (
+			<CardFooter>
+				<ButtonGroup className="imajinn-image-actions">
 					<Button
 						href={ `${ ajaxurl }?action=imajinn-tweet&image=${ props.src }` }
 						target="_blank"
-						icon={ <Dashicon icon="twitter" /> }
+						icon={ share }
 						label={ __( 'Share on Twitter', 'imajinn-ai' ) }
 					/>
+					<VariationsButton { ...props } />
+					<FaceFixButton { ...props } />
+				</ButtonGroup>
+				<ButtonGroup>
 					<SaveButton { ...props } />
-				</CardFooter>
-			);
-		} else {
-			return (
-				<CardFooter>
-					<SaveButton { ...props } />
-					<Button
-						href={ `${ ajaxurl }?action=imajinn-tweet&image=${ props.src }` }
-						target="_blank"
-						icon={ <Dashicon icon="twitter" /> }
-						label={ __( 'Share on Twitter', 'imajinn-ai' ) }
-					/>
 					<InsertButton { ...props } />
-				</CardFooter>
-			);
-		}
+				</ButtonGroup>
+			</CardFooter>
+		);
 	};
 
 	const ImageResult = ( { ...props } ) => {
@@ -776,6 +879,10 @@ export default function Edit() {
 	};
 
 	const History = ( props ) => {
+		if ( ! isConnected ) {
+			return null;
+		}
+
 		if ( props.history <= 0 ) {
 			return null;
 		}
@@ -787,7 +894,10 @@ export default function Edit() {
 						<img
 							key={ index }
 							src={ gen.thumbnail }
-							alt={ sprintf( __( 'Result %d', 'imajinn-ai'), ( index + 1 ).toString() ) }
+							alt={ sprintf(
+								__( 'Result %d', 'imajinn-ai' ),
+								( index + 1 ).toString()
+							) }
 						/>
 					) ) }
 					<Button
@@ -801,6 +911,8 @@ export default function Edit() {
 							setImageStyle( '' );
 							setImageArtist( '' );
 							setImageModifier( '' );
+							setSaved( [] );
+							setFaceFixed( [] );
 						} }
 					>
 						{ __( 'Load', 'imajinn-ai' ) }
@@ -876,7 +988,13 @@ export default function Edit() {
 
 	const GenerateButton = ( props ) => {
 		return (
-			<Button isPrimary disabled={ isLoading } onClick={ startJob }>
+			<Button
+				isPrimary
+				disabled={ isLoading }
+				onClick={ () => {
+					startJob();
+				} }
+			>
 				{ __( 'Generate', 'imajinn-ai' ) }
 			</Button>
 		);

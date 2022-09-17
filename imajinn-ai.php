@@ -4,7 +4,7 @@
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
  * Requires PHP:      7.0
- * Version:           1.1
+ * Version:           1.2
  * Author:            Infinite Uploads
  * Author URI:        https://infiniteuploads.com
  * Plugin URI:        https://infiniteuploads.com/imajinn/
@@ -19,7 +19,7 @@
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '1.1' );
+define( 'IMAJINN_AI_VERSION', '1.2' );
 
 class Imajinn_AI {
 
@@ -59,6 +59,7 @@ class Imajinn_AI {
 		add_action( 'wp_ajax_imajinn-start-job', [ &$this, 'ajax_start_job' ] );
 		add_action( 'wp_ajax_imajinn-check-job', [ &$this, 'ajax_check_job' ] );
 		add_action( 'wp_ajax_imajinn-cancel-job', [ &$this, 'ajax_cancel_job' ] );
+		add_action( 'wp_ajax_imajinn-face-repair', [ &$this, 'ajax_face_repair' ] );
 		add_action( 'wp_ajax_imajinn-save-image', [ &$this, 'ajax_save_image' ] );
 		add_action( 'wp_ajax_imajinn-tweet', [ &$this, 'ajax_tweet_url' ] );
 	}
@@ -307,7 +308,9 @@ class Imajinn_AI {
 
 		$num_variations = absint( $params['num_variations'] );
 
-		$job = $this->api_request( sprintf( 'site/%s/generate', $this->get_site_id() ), compact( 'prompt', 'ratio', 'num_variations' ) );
+		$init_image = esc_url_raw( $params['init_image'] );
+
+		$job = $this->api_request( sprintf( 'site/%s/generate', $this->get_site_id() ), compact( 'prompt', 'ratio', 'num_variations', 'init_image' ) );
 		if ( is_wp_error( $job ) ) {
 			wp_send_json_error( $job );
 		}
@@ -390,7 +393,6 @@ class Imajinn_AI {
 		// check caps
 		$params = $this->check_ajax();
 
-		$params  = json_decode( file_get_contents( 'php://input' ), true );
 		$image   = esc_url_raw( $params['url'] );
 		$prompt  = sanitize_text_field( $params['prompt'] );
 		$post_id = absint( $params['post_id'] );
@@ -410,6 +412,22 @@ class Imajinn_AI {
 
 		list( $url, $width, $height ) = wp_get_attachment_image_src( $attachment_id, $size );
 		wp_send_json_success( compact( 'attachment_id', 'url', 'width', 'height', 'size' ) );
+	}
+
+	function ajax_face_repair() {
+
+		// check caps
+		$params = $this->check_ajax();
+
+		$image   = esc_url_raw( $params['image'] );
+
+		//make api call to fix the image
+		$result = $this->api_request( sprintf( 'site/%s/face_repair', $this->get_site_id() ), compact( 'image' ) );
+		if ( is_wp_error( $result ) ) {
+			wp_send_json_error( $result );
+		}
+
+		wp_send_json_success( $result );
 	}
 
 

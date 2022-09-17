@@ -183,6 +183,19 @@
 	  margin: 0 auto;
 	}
   }
+
+  .components-card-footer {
+	padding: calc(10px) calc(10px);
+
+	.imajinn-image-insert {
+	  margin-left: 10px;
+	}
+
+	.components-button-group.imajinn-image-actions .components-button {
+	  box-shadow: none;
+	}
+  }
+
 }
 
 .imajinn-history {
@@ -205,7 +218,6 @@
   .components-panel__row {
 	clear: both;
   }
-
 }
 
 .imajinn-toolbar {
@@ -241,5 +253,13 @@
 	  }
 	}
 
+  }
+}
+
+.media_page_imajinn-ai {
+  background-color: #fff;
+
+  #wpfooter {
+	display: none;
   }
 }
