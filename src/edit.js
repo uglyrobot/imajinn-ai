@@ -879,6 +879,10 @@ export default function Edit() {
 	};
 
 	const History = ( props ) => {
+		if ( ! isConnected ) {
+			return null;
+		}
+
 		if ( props.history <= 0 ) {
 			return null;
 		}

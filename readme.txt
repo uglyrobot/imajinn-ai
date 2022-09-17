@@ -15,11 +15,11 @@ Generate the perfect royalty-free images for your blog in seconds with cutting-e
 
 **Imajinn brings the magic of AI image generation to WordPress**
 
-Imajinn is a WordPress plugin that brings the power of AI image generation to your website. Similar to tools like [DALL·E 2](https://openai.com/dall-e-2/), Imajinn lets you generate images for any topic with just your imagination. Just enter a description of what you would like to create, and Imajinn will generate a stunning image for you in seconds.
+Imajinn is a WordPress plugin that brings the power of AI image generation to your website. Similar to tools like [DALL·E 2](https://openai.com/dall-e-2/), Midjourney, and Stable Diffusion, Imajinn lets you generate images for any topic with just your imagination. Just enter a description of what you would like to create, and Imajinn will generate a stunning image for you in seconds.
 
 Running on the latest in AI technology, Imajinn is able to generate images that are indistinguishable from real photos and art. The images are royalty-free, so you can use them on your website without worrying about licensing issues. It's like having a full-time graphic design assistant on your team that follows your every command. Your only limitation is your imagination.
 
-### Imajinn AI - Plugin Features
+#### Imajinn AI - Plugin Features
 
 - **Generate images with AI** - Just type in a prompt and Imajinn will generate a stunning image for you to use on your site.
 - **Gutenberg block** - Create images right inside your posts/pages with the Imajinn AI Block.
@@ -35,6 +35,8 @@ Running on the latest in AI technology, Imajinn is able to generate images that 
 - **Royalty-free images** - Use the images you generate on your site without worrying about licensing issues.
 - **Unlimited users** – Any WordPress user on any site can use the Imajinn Block to generate images.
 - **Unlimited sites** - You can connect just one site, hundreds, or thousands...no extra license costs.
+
+#### Sparking the WordPress world's Imajinn-ation:
 
 ★★★★★
 > “looks impressive for sure!” - WP Weekly
@@ -58,6 +60,8 @@ This plugin does not collect or share data other than your prompts and generated
 == Installation ==
 
 Once you install the plugin, simply insert the "Imajinn AI" Gutenberg block in any post or page editor, or visit the Media->Imajinn AI page. You will be prompted to create a free account or connect to your existing account right in the block, and then you can start generating images right away.
+
+Running an artificial intelligence neural network requires a lot of computing power. To make this possible, we run a cloud service to run the neural network. This means that you need to connect to our service before you can use the plugin. To connect to Imajinn AI, you need to have a user account. You can create one for free with just your valid email address and a password, or if you already have an account, you can log in with your Infinite Uploads/Imajinn AI email and password.
 
 == Frequently Asked Questions ==
 
@@ -121,6 +125,7 @@ We also will be filtering prompt input and screening output to block the creatio
 ----------------------------------------------------------------------
 - New: Generate variations of an image with a similar style and layout.
 - New: AI-based facial restoration to restore facial details and enhance colors with a good balance of realness and fidelity.
+- Fix: Hide history when plugin is not connected.
 
 1.1 - 2022-9-16
 ----------------------------------------------------------------------
