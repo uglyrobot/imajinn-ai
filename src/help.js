@@ -338,6 +338,32 @@ export function HelpModal( props ) {
 							'imajinn-ai'
 						) }
 					</p>
+					<p>
+						{ __(
+							'When you save or insert an image, it can take a few seconds because we send it to our servers to be upscaled using our advanced AI models so that you get a high resolution optimized image in your media library with no watermarks.',
+							'imajinn-ai'
+						) }
+					</p>
+
+					<h3>{ __( 'Image Actions', 'imajinn-ai' ) }</h3>
+					<p>
+						{ __(
+							'For each image result for a generation, you can perform some actions on the image. You can share the image on social media, generate a set of variations, or perform a face repair.',
+							'imajinn-ai'
+						) }
+					</p>
+					<p>
+						{ __(
+							"If you've found an image you like, you can click the Generate Variations button to generate a set of images with similar styles and layout to give you more options to choose from. This will take into account any modifications you've made to the prompt, while still roughly following the original image. Creating variations uses one credit just like a normal generation.",
+							'imajinn-ai'
+						) }
+					</p>
+					<p>
+						{ __(
+							"If you've generated an image of a person and the face looks slightly deformed or unrealistic, you can click the Face Repair button to try and repair any issues with the face. This processes the image on our servers with AI-based facial restoration to restore facial details and enhance colors with a good balance of realness and fidelity. It can't fix every problem with a face, but it can help with some common issues. This tool is most effective for photographic or realistic art; if you try to use it on more abstract artistic faces results may be strange. Face repairs are not stored in your prompt history so that you can easily undo, and do not use any credits.",
+							'imajinn-ai'
+						) }
+					</p>
 
 					<h3>{ __( 'Credits', 'imajinn-ai' ) }</h3>
 					<p>

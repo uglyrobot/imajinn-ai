@@ -1,11 +1,11 @@
-=== Imajinn - Magical AI Image Generation like DALL·E 2 ===
+=== Imajinn - Magical AI Image Generation like DALL·E ===
 
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.1
+Stable tag: 1.2
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
-Tags: AI, DALLE, image generator, stock photos, images, art, Diffusion
+Tags: AI, DALLE, image generator, stock photos, art, diffusion
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,8 @@ Running on the latest in AI technology, Imajinn is able to generate images that 
 - **Insert images** - Insert your high resolution generated images into any post/page as an image block with a single click.
 - **Style presets** - Customize your images with a variety of preset options like art medium, artist style, and more!
 - **History** - Easily view and jump back to previous image generations to modify and customize your prompts.
+- **Create variations** - Generate more variations of your favorite images with a similar style and layout.
+- **Face repair** - AI-based facial restoration to restore facial details and enhance colors with a good balance of realness and fidelity.
 - **Media page** - Generate images outside of the Gutenberg editor for support with any theme builder.
 - **Easy-connect** – No confusing API keys. Simply click to connect
 - **Powerful cloud servers** - Imajinn AI is powered by the most advanced cloud GPUs, so you can generate images with the highest quality and speed right from your WordPress dashboard.
@@ -108,18 +110,24 @@ We also will be filtering prompt input and screening output to block the creatio
 
 1. The Imajinn AI block with generated images and prompt history.
 1. Generating images from a prompt with style presets.
-1. Saving upscaled images to your WordPress media library and inserting them as an image block.
+1. Saving high-resolution images to your WordPress media library and inserting them as an image block.
 1. Media admin page for generating images outside of Gutenberg.
+1. Generate variations of an image with a similar style and layout.
+1. AI-based facial restoration to restore facial details and enhance colors with a good balance of realness and fidelity.
 
 == Changelog ==
 
+1.2 - 2022-9-16
+----------------------------------------------------------------------
+- New: Generate variations of an image with a similar style and layout.
+- New: AI-based facial restoration to restore facial details and enhance colors with a good balance of realness and fidelity.
+
 1.1 - 2022-9-16
-------------
-- Save prompt history between sessions
+----------------------------------------------------------------------
+- Save prompt history between sessions for easy reuse and modification.
 
 1.0.1 - 2022-9-15
 ----------------------------------------------------------------------
-- ----------------------------------------------------------
 - Fix missing prompt history in standalone media page
 - Optimize size of admin css and js
 
