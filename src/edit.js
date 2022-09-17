@@ -707,15 +707,9 @@ export default function Edit() {
 					/>
 					<VariationsButton { ...props } />
 					<FaceFixButton { ...props } />
+					<ImageModal { ...props } prompt={prompt} setPrompt={setPrompt} />
 				</ButtonGroup>
 				<ButtonGroup>
-					<ImageModal { ...props } prompt={prompt} setPrompt={setPrompt} />
-					<SaveButton { ...props } />
-				</CardFooter>
-			);
-		} else {
-			return (
-				<CardFooter>
 					<SaveButton { ...props } />
 					<InsertButton { ...props } />
 				</ButtonGroup>
