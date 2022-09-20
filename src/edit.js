@@ -64,7 +64,7 @@ import {
 import metadata from './block.json';
 import { Imajinn, ImajinnSpinner } from './images';
 import { HelpModal, PromptHelpModal } from './help';
-import { ImageModal } from './image-modal';
+import { InpaintingModal } from './inpainting-modal';
 import { LicenseModal } from './license';
 import { Connect } from './connect';
 import optionData from './option-data';
@@ -130,20 +130,25 @@ export default function Edit() {
 	const blockProps = useBlockProps();
 
 	//function to make an ajax call to the server to get the image
-	const startJob = ( initImage, thisQueryRatio ) => {
+	const startJob = ( initImage, mask, thisQueryRatio, maskPrompt ) => {
 		//Check credit status in case we bought more
 		if ( credits <= 0 ) {
 			refreshInfo();
 		}
 
 		//show upgrade modal when trying to start job with no credits
-		if ( credits - 1 <= 0 ) {
+		if ( credits - 1 < 0 ) {
 			setShowUpgrade( true );
 			return false;
 		}
 
 		const thisInitImage = initImage || null;
+		const thisMask = mask || null;
 		const thisRatio = thisQueryRatio || ratio;
+		//if we have a masked prompt, use that with styles
+		const thisPrompt = maskPrompt ? [ maskPrompt, imageStyle, imageArtist, imageModifier ]
+			.filter( Boolean )
+			.join( ', ' ) : promptStyle;
 
 		setJobId( null );
 		setGenerations( [] );
@@ -160,10 +165,11 @@ export default function Edit() {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify( {
-				prompt: promptStyle,
+				prompt: thisPrompt,
 				ratio: thisRatio,
 				num_variations: 4,
 				init_image: thisInitImage,
+				mask: thisMask,
 				nonce: IMAJINN.nonce,
 			} ),
 		} )
@@ -546,7 +552,7 @@ export default function Edit() {
 				label={ __( 'Generate Variations', 'imajinn-ai' ) }
 				onClick={ () => {
 					setRatio( queryRatio );
-					startJob( url, queryRatio );
+					startJob( url, null, queryRatio );
 				} }
 			/>
 		);
@@ -707,7 +713,7 @@ export default function Edit() {
 					/>
 					<VariationsButton { ...props } />
 					<FaceFixButton { ...props } />
-					<ImageModal { ...props } prompt={prompt} setPrompt={setPrompt} />
+					<InpaintingModal { ...props } src={generations[ props.genindex ].jpg} prompt={prompt} setPrompt={setPrompt} queryRatio={queryRatio} setRatio={setRatio} startJob={startJob} />
 				</ButtonGroup>
 				<ButtonGroup>
 					<SaveButton { ...props } />
@@ -763,6 +769,7 @@ export default function Edit() {
 					genindex={ index }
 					width={ width }
 					height={ height }
+					ratio={ queryRatio }
 					label={ 'Result ' + ( index + 1 ).toString() }
 				/>
 			</FlexBlock>
@@ -1029,6 +1036,7 @@ export default function Edit() {
 						<div className="prompt-form">
 							<TextareaControl
 								disabled={ isLoading }
+								rows={ 3 }
 								maxLength={ 450 }
 								value={ prompt }
 								label={

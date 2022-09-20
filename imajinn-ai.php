@@ -4,7 +4,7 @@
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
  * Requires PHP:      7.0
- * Version:           1.2
+ * Version:           1.3-beta-1
  * Author:            Infinite Uploads
  * Author URI:        https://infiniteuploads.com
  * Plugin URI:        https://infiniteuploads.com/imajinn/
@@ -19,7 +19,7 @@
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '1.2' );
+define( 'IMAJINN_AI_VERSION', '1.3-beta-1' );
 
 class Imajinn_AI {
 
@@ -172,7 +172,7 @@ class Imajinn_AI {
 						'dependencies' => array(),
 						'version'      => filemtime( $script_path ),
 				);
-		wp_enqueue_style( 'imajinn-ai', $script_path, [ 'wp-components', 'wp-block-editor', 'wp-editor', 'wp-format-library' ], $script_asset['version'] );
+		wp_enqueue_style( 'imajinn-ai', $script_path, [ 'wp-components', 'wp-block-editor', 'wp-editor', 'wp-format-library' ], IMAJINN_AI_VERSION );
 	}
 
 	public function admin_scripts() {
@@ -297,7 +297,7 @@ class Imajinn_AI {
 
 		$prompt = sanitize_text_field( $params['prompt'] );
 		if ( empty( $prompt ) ) {
-			wp_send_json_error( new WP_Error( 'bad_prompt', esc_html__( 'Please enter a detailed prompt for generation at least 10 characters long.', 'imajinn-ai' ) ) );
+			wp_send_json_error( new WP_Error( 'bad_prompt', esc_html__( 'Please enter a detailed prompt for generation at least one word long.', 'imajinn-ai' ) ) );
 		}
 		$prompt = substr( $prompt, 0, 500 ); //max 500 chars
 
@@ -310,7 +310,9 @@ class Imajinn_AI {
 
 		$init_image = esc_url_raw( $params['init_image'] );
 
-		$job = $this->api_request( sprintf( 'site/%s/generate', $this->get_site_id() ), compact( 'prompt', 'ratio', 'num_variations', 'init_image' ) );
+		$mask = trim( $params['mask'] );
+
+		$job = $this->api_request( sprintf( 'site/%s/generate', $this->get_site_id() ), compact( 'prompt', 'ratio', 'num_variations', 'init_image', 'mask' ) );
 		if ( is_wp_error( $job ) ) {
 			wp_send_json_error( $job );
 		}
