@@ -221,6 +221,19 @@
   .components-panel__row {
 	clear: both;
   }
+
+
+
+}
+
+/* Inpainting Modal */
+
+button.brush-sm svg {
+  width: 16px;
+}
+
+button.brush-md svg {
+  width: 20px;
 }
 
 .imajinn-toolbar {
