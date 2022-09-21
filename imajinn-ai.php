@@ -60,6 +60,7 @@ class Imajinn_AI {
 		add_action( 'wp_ajax_imajinn-check-job', [ &$this, 'ajax_check_job' ] );
 		add_action( 'wp_ajax_imajinn-cancel-job', [ &$this, 'ajax_cancel_job' ] );
 		add_action( 'wp_ajax_imajinn-face-repair', [ &$this, 'ajax_face_repair' ] );
+		add_action( 'wp_ajax_imajinn-create-prompts', [ &$this, 'ajax_create_prompts' ] );
 		add_action( 'wp_ajax_imajinn-save-image', [ &$this, 'ajax_save_image' ] );
 		add_action( 'wp_ajax_imajinn-tweet', [ &$this, 'ajax_tweet_url' ] );
 	}
@@ -412,6 +413,22 @@ class Imajinn_AI {
 
 		list( $url, $width, $height ) = wp_get_attachment_image_src( $attachment_id, $size );
 		wp_send_json_success( compact( 'attachment_id', 'url', 'width', 'height', 'size' ) );
+	}
+
+	function ajax_create_prompts() {
+
+		// check caps
+		$params = $this->check_ajax();
+
+		$prompt  = sanitize_text_field( $params['prompt'] );
+
+		//make api call to fix the image
+		$result = $this->api_request( sprintf( 'site/%s/prompts', $this->get_site_id() ), compact( 'prompt' ) );
+		if ( is_wp_error( $result ) ) {
+			wp_send_json_error( $result );
+		}
+
+		wp_send_json_success( $result );
 	}
 
 	function ajax_face_repair() {

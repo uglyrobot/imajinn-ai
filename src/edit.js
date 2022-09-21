@@ -64,6 +64,7 @@ import {
 import metadata from './block.json';
 import { Imajinn, ImajinnSpinner } from './images';
 import { HelpModal, PromptHelpModal } from './help';
+import { PromptModal } from './prompt-modal';
 import { LicenseModal } from './license';
 import { Connect } from './connect';
 import optionData from './option-data';
@@ -1045,6 +1046,7 @@ export default function Edit() {
 								onChange={ ( text ) => setPrompt( text ) }
 							/>
 							<div className={ 'styles-form' }>
+								<PromptModal prompt={prompt} setPrompt={setPrompt} setPromptStyle={setPromptStyle}/>
 								<StyleSelect />
 								<ArtistSelect />
 								<ModifierSelect />
