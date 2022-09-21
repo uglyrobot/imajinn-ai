@@ -428,6 +428,10 @@ class Imajinn_AI {
 			wp_send_json_error( $result );
 		}
 
+		if ( 'failed' == $result->status ) {
+			wp_send_json_error( new WP_Error( 'api_error', $result->failed_reason, $result ) );
+		}
+
 		wp_send_json_success( $result );
 	}
 
@@ -442,6 +446,10 @@ class Imajinn_AI {
 		$result = $this->api_request( sprintf( 'site/%s/face_repair', $this->get_site_id() ), compact( 'image' ) );
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error( $result );
+		}
+
+		if ( 'failed' == $result->status ) {
+			wp_send_json_error( new WP_Error( 'api_error', $result->failed_reason, $result ) );
 		}
 
 		wp_send_json_success( $result );

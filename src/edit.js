@@ -461,6 +461,8 @@ export default function Edit() {
 		}
 	};
 
+	const focusSelect = ( event ) => event.target.select();
+
 	const RatioToggle = () => {
 		const ratioNames = {
 			'1:1': __( 'Square', 'imajinn-ai' ),
@@ -1044,9 +1046,10 @@ export default function Edit() {
 								}
 								className="text-prompt"
 								onChange={ ( text ) => setPrompt( text ) }
+								onFocus={ focusSelect }
 							/>
 							<div className={ 'styles-form' }>
-								<PromptModal prompt={prompt} setPrompt={setPrompt} setPromptStyle={setPromptStyle}/>
+								<PromptModal prompt={prompt} setPrompt={setPrompt} setPromptStyle={setPromptStyle} startJob={startJob} setError={setError}/>
 								<StyleSelect />
 								<ArtistSelect />
 								<ModifierSelect />

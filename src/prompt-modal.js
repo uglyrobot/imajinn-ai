@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
-import { Button, Icon, Modal, Dashicon, Spinner } from '@wordpress/components';
+import { Button, Icon, Modal, Spinner, Panel, PanelBody, PanelRow } from '@wordpress/components';
 import { useState } from '@wordpress/element';
+import { Genie } from "./images";
 
 export function PromptModal( props ) {
 	const [ isOpen, setOpen ] = useState( false );
@@ -29,39 +30,63 @@ export function PromptModal( props ) {
 		const result = await response.json();
 		setIsSubmitting( false );
 		if ( result.success ) {
-			console.log( result.data.prompts )
 			setPrompts( result.data.prompts );
 			openModal();
+		} else {
+			props.setError( result.data[ 0 ].message );
+			closeModal();
 		}
 
 		return false;
 	};
 
+	const promptList = prompts.map( ( item, index ) => (
+
+			<PanelBody  key={ index.toString() } opened={ true }>
+				<PanelRow>
+					{ item }
+					<Button
+						variant="primary"
+						onClick={ () => {
+							props.setPromptStyle( item )
+							props.setPrompt( item )
+							props.startJob()
+							closeModal()
+						} }
+					>
+						{ __( 'Generate', 'imajinn-ai' ) }
+					</Button>
+				</PanelRow>
+			</PanelBody>
+	) );
+
 	return (
 		<>
 			<Button
 				disabled={ isSubmitting }
-				variant="secondary"
-				className="prompt-creator"
+				className="prompt-genie"
+				label={ __( 'Prompt Genie: AI generated prompt masterpiece', 'imajinn-ai' ) }
 				onClick={ () => {
+					if ( ! props.prompt ) {
+						props.setError( __( 'Please enter a prompt subject before using the prompt genie', 'imajinn-ai' ) );
+						return;
+					} else {
+						props.setError( '' );
+					}
+
 					createPrompts( props.prompt )
 				} }
-				icon={ isSubmitting ? <Spinner /> : <Dashicon icon="art" /> }
-				>
-				{ __( 'Prompt Bot', 'imajinn-ai' ) }
-				</Button>
+				icon={ isSubmitting ? <Spinner /> : <Genie /> }
+				/>
 			{ isOpen && (
 				<Modal
 					{ ...props }
 					onRequestClose={ closeModal }
-					style={ { maxWidth: '800px' } }
-					icon={ <Dashicon icon="art" /> }
+					style={ { maxWidth: '900px' } }
+					icon={ <Genie /> }
 					title={ __( 'AI Generated Prompt Ideas', 'imajinn-ai' ) }
 				>
-
-					<Button variant="secondary" onClick={ closeModal }>
-						{ __( 'Cancel', 'imajinn-ai' ) }
-					</Button>
+					<Panel>{ promptList }</Panel>
 				</Modal>
 			) }
 		</>
