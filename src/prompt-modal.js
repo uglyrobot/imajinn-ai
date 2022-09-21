@@ -7,11 +7,13 @@ export function PromptModal( props ) {
 	const [ isOpen, setOpen ] = useState( false );
 	const [ isSubmitting, setIsSubmitting ] = useState( false );
 	const [ prompts, setPrompts ] = useState( [] );
+	const [ currentPrompt, setCurrentPrompt ] = useState( null );
 	const openModal = () => setOpen( true );
 	const closeModal = () => setOpen( false );
 
 	const createPrompts = async ( prompt ) => {
 		setIsSubmitting( true );
+		props.clearStyles();
 
 		//save the attachment
 		const response = await fetch(
@@ -31,6 +33,7 @@ export function PromptModal( props ) {
 		setIsSubmitting( false );
 		if ( result.success ) {
 			setPrompts( result.data.prompts );
+			setCurrentPrompt( prompt );
 			openModal();
 		} else {
 			props.setError( result.data[ 0 ].message );
@@ -44,13 +47,15 @@ export function PromptModal( props ) {
 
 			<PanelBody  key={ index.toString() } opened={ true }>
 				<PanelRow>
-					{ item }
+					<span><em>{ props.prompt }</em>{ item.replace( props.prompt, '' ) }</span>
 					<Button
 						variant="primary"
+						isSmall
+						className={ "genie-generate" }
 						onClick={ () => {
 							props.setPromptStyle( item )
-							props.setPrompt( item )
-							props.startJob()
+							//props.setPrompt( item )
+							props.startJob( null, null, null, item );
 							closeModal()
 						} }
 					>
@@ -69,12 +74,15 @@ export function PromptModal( props ) {
 				onClick={ () => {
 					if ( ! props.prompt ) {
 						props.setError( __( 'Please enter a prompt subject before using the prompt genie', 'imajinn-ai' ) );
-						return;
 					} else {
 						props.setError( '' );
+						if ( props.prompt === currentPrompt ) {
+							openModal();
+						} else {
+							createPrompts( props.prompt );
+						}
 					}
 
-					createPrompts( props.prompt )
 				} }
 				icon={ isSubmitting ? <Spinner /> : <Genie /> }
 				/>

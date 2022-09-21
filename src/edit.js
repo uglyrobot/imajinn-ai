@@ -1013,6 +1013,12 @@ export default function Edit() {
 		? ''
 		: metadata.description;
 
+	const clearStyles = () => {
+		setImageStyle( '' );
+		setImageArtist( '' );
+		setImageModifier( '' );
+	}
+
 	return (
 		<figure { ...blockProps }>
 			<ImajinnToolbar />
@@ -1056,7 +1062,7 @@ export default function Edit() {
 								onFocus={ focusSelect }
 							/>
 							<div className={ 'styles-form' }>
-								<PromptModal prompt={prompt} setPrompt={setPrompt} setPromptStyle={setPromptStyle} startJob={startJob} setError={setError}/>
+								<PromptModal {...{prompt, setPrompt, setPromptStyle, startJob, setError, clearStyles}}/>
 								<StyleSelect />
 								<ArtistSelect />
 								<ModifierSelect />
@@ -1068,11 +1074,7 @@ export default function Edit() {
 										'clear the image style selects',
 										'imajinn-ai'
 									) }
-									onClick={ () => {
-										setImageStyle( '' );
-										setImageArtist( '' );
-										setImageModifier( '' );
-									} }
+									onClick={ clearStyles }
 								/>
 							</div>
 						</div>
