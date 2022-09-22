@@ -6,7 +6,7 @@ import {
 	Dashicon,
 } from '@wordpress/components';
 import { __, _x } from '@wordpress/i18n';
-const ImageFooter = ({ saved,...props }) => {
+const ImageFooter = ({ genindex,saveImage, saved,...props }) => {
     if (IMAJINN.custom_editor) {
         return (
             <CardFooter>
@@ -16,20 +16,20 @@ const ImageFooter = ({ saved,...props }) => {
                     icon={<Dashicon icon="twitter" />}
                     label={__('Share on Twitter', 'imajinn-ai')}
                 />
-                <SaveButton {...props} saved={saved}/>
+                <SaveButton {...props} saved={saved} saveImage={saveImage}/>
             </CardFooter>
         );
     } else {
         return (
             <CardFooter>
-                <SaveButton {...props} />
+                <SaveButton {...props} saved={saved} saveImage={saveImage}/>
                 <Button
                     href={`${ajaxurl}?action=imajinn-tweet&image=${props.src}`}
                     target="_blank"
                     icon={<Dashicon icon="twitter" />}
                     label={__('Share on Twitter', 'imajinn-ai')}
                 />
-                <InsertButton {...props} />
+                <InsertButton {...props} genindex={genindex}/>
             </CardFooter>
         );
     }

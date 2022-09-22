@@ -1,6 +1,6 @@
 import { SelectControl, TreeSelect } from '@wordpress/components';
 import { __, _x } from '@wordpress/i18n';
-export const StyleSelect = ({ isLoading, imageStyle, optionData }) => {
+export const StyleSelect = ({ setImageStyle, isLoading, imageStyle, optionData }) => {
     return (
         <TreeSelect
             disabled={ isLoading }
@@ -16,7 +16,9 @@ export const StyleSelect = ({ isLoading, imageStyle, optionData }) => {
     );
 };
 
-export const ArtistSelect = ({ isLoading, imageArtist, optionData } ) => {
+
+
+export const ArtistSelect = ({ setImageArtist, isLoading, imageArtist, optionData } ) => {
     return (
         <SelectControl
             __next36pxDefaultSize
@@ -32,7 +34,7 @@ export const ArtistSelect = ({ isLoading, imageArtist, optionData } ) => {
     );
 };
 
-export const ModifierSelect = ({ isLoading, imageModifier, optionData }) => {
+export const ModifierSelect = ({ setImageModifier, isLoading, imageModifier, optionData }) => {
     return (
         <SelectControl
             __next36pxDefaultSize

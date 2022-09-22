@@ -58,7 +58,7 @@ import ImajinnToolbar from './editor-components/ImaginnToolbar';
 import { ArtistSelect, ModifierSelect, StyleSelect } from './editor-components/selects';
 import ErrorNotice from './editor-components/ErrorNotice';
 import ResultsFlex from './editor-components/ResultsFlex';
-import SaveButton from './editor-components/SaveButton';
+import GeneratingSpinner from './editor-components/GeneratingSpinner';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -90,11 +90,9 @@ export default function Edit() {
 	const [saved, setSaved] = useState([]);
 	const [selectedImage, setSelectedImage] = useState(null)
 	useEffect(() => {
-		// if(!imageStyle || !imageArtist || !imageModifier){
-		// 	return;
-		// }else{
-		setChanged(!changed)
-		// }
+		return ()=>{
+			setChanged(false)
+		}
 	}, [imageStyle, imageArtist, imageModifier])
 
 	//hide upgrade modal when you have credits
@@ -119,6 +117,8 @@ export default function Edit() {
 	}, [prompt, imageStyle, imageArtist, imageModifier]); // <-- here put the parameter to listen
 
 	const blockProps = useBlockProps();
+
+
 
 	//function to make an ajax call to the server to get the image
 	const startJob = () => {
@@ -161,11 +161,16 @@ export default function Edit() {
 					setCredits(result.data.remaining_credits);
 					setProgress(result.data.progress);
 					checkJobLoop(result.data.job_id);
+					
 				} else {
 					setIsLoading(false);
 					setJobId(null);
 					setStatus(null);
 					setError(result.data[0].message);
+				}
+
+				if(!isLoading){
+					setChanged(true)
 				}
 			})
 			.catch((error) => {
@@ -308,42 +313,6 @@ export default function Edit() {
 		}
 	};
 
-	const insertImageBlock = async (genIndex) => {
-		let data = false;
-		//if already saved load up that data
-		if (saved.some((e) => e.index === genIndex)) {
-			data = saved.find((e) => e.index === genIndex).data;
-		} else {
-			data = await saveImage(genIndex);
-		}
-
-		if (data) {
-			const thisIndex = wp.data
-				.select('core/block-editor')
-				.getBlocks()
-				.map(function (block) {
-					return block.name == 'imajinn-ai/text2image';
-				})
-				.indexOf(true);
-
-			const newBlock = wp.blocks.createBlock('core/image', {
-				id: data.attachment_id,
-				url: data.url,
-				width: data.width,
-				height: data.height,
-				sizeSlug: data.size,
-				alt: promptStyle,
-				title: promptStyle,
-			});
-			wp.data
-				.dispatch('core/block-editor')
-				.insertBlocks(newBlock, thisIndex);
-			return true;
-		}
-
-		return false;
-	};
-
 	const saveImage = async (genIndex) => {
 		let url = generations[genIndex].jpg;
 
@@ -392,119 +361,6 @@ export default function Edit() {
 		removeBlocks(block_ids);
 	};
 
-
-
-
-
-	// a spinner to show when the image is loading
-	const GeneratingSpinner = () => {
-		const label =
-			'processing' === status
-				? sprintf(__('Generating %s%%', 'imajinn-ai'), progress)
-				: __('Queued', 'imajinn-ai');
-
-		if (isLoading) {
-			return (
-				<div className="imajinn-loading">
-					<ImajinnSpinner />
-					<div>
-						<Text>{label}</Text>
-						<Button
-							isDestructive
-							variant="link"
-							onClick={() => {
-								cancelJob();
-							}}
-						>
-							{__('Cancel')}
-						</Button>
-					</div>
-				</div>
-			);
-		} else {
-			return null;
-		}
-	};
-
-	// const SaveButton = (props) => {
-	// 	const [isSaving, setIsSaving] = useState(false);
-	// 	const [isSaved, setIsSaved] = useState(false);
-
-	// 	useEffect(() => {
-	// 		if (saved.some((e) => e.index === props.genindex)) {
-	// 			setIsSaved(true);
-	// 			setIsSaving(false);
-	// 		} else {
-	// 			setIsSaved(false);
-	// 			setIsSaving(false);
-	// 		}
-	// 	}, [saved]);
-
-	// 	if (isSaved) {
-	// 		return (
-	// 			<Button disabled icon={check}>
-	// 				{__('Saved', 'imajinn-ai')}
-	// 			</Button>
-	// 		);
-	// 	} else {
-	// 		if (isSaving) {
-	// 			return (
-	// 				<Button disabled>
-	// 					<Spinner /> {__('Saving', 'imajinn-ai')}
-	// 				</Button>
-	// 			);
-	// 		} else {
-	// 			return (
-	// 				<Button
-	// 					variant={
-	// 						IMAJINN.custom_editor ? 'primary' : 'secondary'
-	// 					}
-	// 					disabled={isSaving}
-	// 					icon={upload}
-	// 					onClick={async () => {
-	// 						setIsSaving(true);
-	// 						if (!(await saveImage(props.genindex))) {
-	// 							setIsSaving(false);
-	// 						}
-	// 					}}
-	// 				>
-	// 					{__('Save', 'imajinn-ai')}
-	// 				</Button>
-	// 			);
-	// 		}
-	// 	}
-	// };
-
-	// const InsertButton = (props) => {
-	// 	const [isSaving, setIsSaving] = useState(false);
-
-	// 	if (isSaving) {
-	// 		return (
-	// 			<Button disabled>
-	// 				<Spinner />
-	// 			</Button>
-	// 		);
-	// 	} else {
-	// 		return (
-	// 			<Button
-	// 				variant="primary"
-	// 				className="imajinn-image-insert"
-	// 				disabled={isSaving}
-	// 				icon={postFeaturedImage}
-	// 				onClick={async () => {
-	// 					setIsSaving(true);
-	// 					const result = await insertImageBlock(props.genindex);
-	// 					if (!result) {
-	// 						setIsSaving(false);
-	// 					}
-	// 				}}
-	// 			>
-	// 				{__('Insert', 'imajinn-ai')}
-	// 			</Button>
-	// 		);
-	// 	}
-	// };
-
 	const TopRight = () => {
 		//skip in custom editor
 		if (IMAJINN.custom_editor) {
@@ -525,12 +381,6 @@ export default function Edit() {
 			</div>
 		);
 	};
-
-
-
-
-
-
 
 	const UpgradeModal = (props) => {
 		const [isOpen, setOpen] = useState(props.showUpgrade);
@@ -588,7 +438,7 @@ export default function Edit() {
 
 	return (
 		<>
-			<ViewImage image={selectedImage} />
+			{selectedImage&&<ViewImage image={selectedImage} setImage={setSelectedImage}/>}
 			<figure {...blockProps}>
 				<ImajinnToolbar refreshInfo={refreshInfo} isConnected={isConnected} credits={credits}/>
 				<History history={history} />
@@ -609,8 +459,8 @@ export default function Edit() {
 					{isConnected && (
 						<>
 							{hasError&&<ErrorNotice hasError={hasError}/>}
-							<GeneratingSpinner />
-							<ResultsFlex saved={saved} generations={generations} queryRatio={queryRatio}/>
+							{isLoading&&<GeneratingSpinner status={status} progress={progress} cancelJob={cancelJob}/>}
+							<ResultsFlex saveImage={saveImage} setSelectedImage={setSelectedImage} saved={saved} generations={generations} queryRatio={queryRatio}/>
 							<div className="prompt-form">
 								<TextareaControl
 									disabled={isLoading}
@@ -629,9 +479,9 @@ export default function Edit() {
 									onChange={(text) => setPrompt(text)}
 								/>
 								<div className={'styles-form'}>
-									<StyleSelect isLoading={isLoading} imageStyle={imageStyle} optionData={optionData}/>
-									<ArtistSelect isLoading={isLoading} imageArtist={imageArtist} optionData={optionData}/>
-									<ModifierSelect isLoading={isLoading} imageModifier={imageModifier} optionData={optionData}/>
+									<StyleSelect setImageStyle={setImageStyle} isLoading={isLoading} imageStyle={imageStyle} optionData={optionData}/>
+									<ArtistSelect setImageArtist={setImageArtist} isLoading={isLoading} imageArtist={imageArtist} optionData={optionData}/>
+									<ModifierSelect setImageModifier={setImageModifier} isLoading={isLoading} imageModifier={imageModifier} optionData={optionData}/>
 									<Button
 										icon={close}
 										disabled={isLoading}

@@ -5,261 +5,289 @@
  */
 
 .editor-styles-wrapper .wp-block-infinite-uploads-imajinn-ai p {
-  font-size: 120%;
+	font-size: 120%;
 }
 
 .imajinn-upgrade-modal-buttons {
-  text-align: right;
+	text-align: right;
 
-  a, button {
-	float: right;
-	margin-left: 10px;
-  }
+	a,
+	button {
+		float: right;
+		margin-left: 10px;
+	}
 }
 
 .wp-block-infinite-uploads-imajinn-ai {
 
-  .components-spinner {
-	background-color: inherit;
-  }
-
-  .components-placeholder__label svg {
-	fill: #000;
-  }
-
-  .components-notice {
-	width: 100%;
-	margin-bottom: 10px;
-  }
-
-  .results-grid {
-	gap: calc(16px);
-	margin-bottom: 20px;
-  }
-
-  img.generation-zoom {
-	transition: transform .2s; /* Animation */
-	&:hover {
-	  transform: scale(1.25); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-	  z-index: 100;
-	  position: absolute;
-	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-	  border-radius: 3px;
-	}
-  }
-
-  .components-placeholder__fieldset .components-button, button {
-	margin: 0;
-  }
-
-  button.ratio-3-2 svg {
-	transform: rotate(90deg) scaleX(-1);
-  }
-
-  .credits {
-	margin: 0;
-	font-size: 20px !important;
-	font-weight: lighter;
-  }
-
-  .corner-controls {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	display: flex;
-	align-items: center;
-
-	div {
-	  padding: 6px;
+	.components-spinner {
+		background-color: inherit;
 	}
 
-  }
+	.components-placeholder__label svg {
+		fill: #000;
+	}
 
-  .prompt-form {
-	width: 100%;
-	margin-bottom: 5px;
+	.components-notice {
+		width: 100%;
+		margin-bottom: 10px;
+	}
 
-	.styles-form {
-	  display: flex;
-	  align-items: flex-end;
-	  justify-content: flex-start;
-	  flex-wrap: wrap;
-	  margin-bottom: 20px;
+	.results-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		place-items: center;
+		gap: 16px;
+		width: 100%;
+		margin-bottom: 20px;
+	}
 
-	  .components-base-control {
-		width: 175px;
-		margin-right: 20px;
-		display: inline-block;
+	img.generation-zoom {
+		transition: transform .2s;
 
-		&:last-of-type {
-		  margin-right: 0;
+		/* Animation */
+		&:hover {
+			transform: scale(1.25);
+			/* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+			z-index: 100;
+			position: absolute;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+			border-radius: 3px;
 		}
-	  }
+	}
 
-	  .components-button {
+	.components-placeholder__fieldset .components-button,
+	button {
+		margin: 0;
+	}
+
+	button.ratio-3-2 svg {
+		transform: rotate(90deg) scaleX(-1);
+	}
+
+	.credits {
+		margin: 0;
+		font-size: 20px !important;
+		font-weight: lighter;
+	}
+
+	.corner-controls {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		display: flex;
+		align-items: center;
+
+		div {
+			padding: 6px;
+		}
+
+	}
+
+	.prompt-form {
+		width: 100%;
 		margin-bottom: 5px;
 
-		svg {
-		  height: 15px;
+		.styles-form {
+			display: flex;
+			align-items: flex-end;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+			margin-bottom: 20px;
+
+			.components-base-control {
+				width: 175px;
+				margin-right: 20px;
+				display: inline-block;
+
+				&:last-of-type {
+					margin-right: 0;
+				}
+			}
+
+			.components-button {
+				margin-bottom: 5px;
+
+				svg {
+					height: 15px;
+				}
+			}
 		}
-	  }
-	}
-  }
-
-  .text-prompt {
-	width: 100%;
-  }
-
-  .prompt-tips {
-	padding: 0;
-	width: 20px;
-	height: 20px;
-
-	svg {
-	  width: 20px;
-	  height: 20px;
-	}
-  }
-
-  .imajinn-footer, .imajinn-footer button {
-	text-align: right;
-	font-size: calc(13px);
-	color: gray;
-
-	.dashicon {
-	  font-size: 13px;
-	  line-height: 1.9; //ugly hack
-	  height: 13px;
-	  width: 13px;
 	}
 
-	a {
-	  margin-right: 10px;
+	.text-prompt {
+		width: 100%;
 	}
 
-	.imajinn-credits {
-	  display: inline-block;
-	}
-  }
+	.prompt-tips {
+		padding: 0;
+		width: 20px;
+		height: 20px;
 
-  .connect-wrapper {
-	align-content: space-between;
-	margin-top: 10px;
-	align-items: end;
-
-	.components-base-control__help {
-	  font-size: 80%;
-	}
-  }
-
-  .components-placeholder__fieldset .components-button.connect-button {
-	margin-bottom: calc(8px);
-  }
-
-  .license-links {
-	margin-left: 30px;
-	margin-bottom: 10px;
-
-	.components-external-link {
-	  margin-right: 12px;
-	}
-  }
-
-  .components-notice .components-external-link {
-	margin-left: 5px;
-  }
-
-  .imajinn-loading {
-	margin: 40px auto;
-
-	.components-button {
-	  margin-left: 5px;
+		svg {
+			width: 20px;
+			height: 20px;
+		}
 	}
 
-	.imajinn-spinner {
-	  width: 100px;
-	  height: 100px;
-	  display: block;
-	  margin: 0 auto;
-	}
-  }
+	.imajinn-footer,
+	.imajinn-footer button {
+		text-align: right;
+		font-size: calc(13px);
+		color: gray;
 
-  .components-card-footer {
-	padding: calc(10px) calc(10px);
+		.dashicon {
+			font-size: 13px;
+			line-height: 1.9; //ugly hack
+			height: 13px;
+			width: 13px;
+		}
 
-	.imajinn-image-insert {
-	  margin-left: 10px;
+		a {
+			margin-right: 10px;
+		}
+
+		.imajinn-credits {
+			display: inline-block;
+		}
 	}
 
-	.components-button-group.imajinn-image-actions .components-button {
-	  box-shadow: none;
+	.connect-wrapper {
+		align-content: space-between;
+		margin-top: 10px;
+		align-items: end;
+
+		.components-base-control__help {
+			font-size: 80%;
+		}
 	}
-  }
+
+	.components-placeholder__fieldset .components-button.connect-button {
+		margin-bottom: calc(8px);
+	}
+
+	.license-links {
+		margin-left: 30px;
+		margin-bottom: 10px;
+
+		.components-external-link {
+			margin-right: 12px;
+		}
+	}
+
+	.components-notice .components-external-link {
+		margin-left: 5px;
+	}
+
+	.imajinn-loading {
+		margin: 40px auto;
+
+		.components-button {
+			margin-left: 5px;
+		}
+
+		.imajinn-spinner {
+			width: 100px;
+			height: 100px;
+			display: block;
+			margin: 0 auto;
+		}
+	}
+
+	.components-card-footer {
+		padding: calc(10px) calc(10px);
+
+		.imajinn-image-insert {
+			margin-left: 10px;
+		}
+
+		.components-button-group.imajinn-image-actions .components-button {
+			box-shadow: none;
+		}
+	}
 
 }
 
 .imajinn-history {
-  .components-panel__body-title {
-	height: 50px;
+	.components-panel__body-title {
+		height: 50px;
 
-	.components-button {
-	  margin-top: 7px;
-	  float: right;
-	  margin-right: 10px;
+		.components-button {
+			margin-top: 7px;
+			float: right;
+			margin-right: 10px;
+		}
+
+		img {
+			height: 50px;
+			width: 50px;
+			float: left;
+		}
 	}
 
-	img {
-	  height: 50px;
-	  width: 50px;
-	  float: left;
+	.components-panel__row {
+		clear: both;
 	}
-  }
-
-  .components-panel__row {
-	clear: both;
-  }
 }
 
 .imajinn-toolbar {
-  .credit-label {
-	padding: 24px 0 24px 6px;
-  }
-
-  .credits {
-	font-size: 18px;
-	padding: 24px 0 24px 6px;
-  }
-
-  .refreshing-button {
-	padding-left: 0;
-
-	.dashicon {
-	  color: gray;
+	.credit-label {
+		padding: 24px 0 24px 6px;
 	}
 
-	&.is-refreshing .dashicon {
-	  /* The animation part: */
-	  animation-name: spin;
-	  animation-duration: 2000ms;
-	  animation-iteration-count: infinite;
-	  animation-timing-function: linear;
-	  @keyframes spin {
-		from {
-		  transform: rotate(0deg);
-		}
-		to {
-		  transform: rotate(360deg);
-		}
-	  }
+	.credits {
+		font-size: 18px;
+		padding: 24px 0 24px 6px;
 	}
 
-  }
+	.refreshing-button {
+		padding-left: 0;
+
+		.dashicon {
+			color: gray;
+		}
+
+		&.is-refreshing .dashicon {
+			/* The animation part: */
+			animation-name: spin;
+			animation-duration: 2000ms;
+			animation-iteration-count: infinite;
+			animation-timing-function: linear;
+
+			@keyframes spin {
+				from {
+					transform: rotate(0deg);
+				}
+
+				to {
+					transform: rotate(360deg);
+				}
+			}
+		}
+
+	}
 }
 
 .media_page_imajinn-ai {
-  background-color: #fff;
+	background-color: #fff;
 
-  #wpfooter {
-	display: none;
-  }
+	#wpfooter {
+		display: none;
+	}
+}
+
+@media screen and (max-width:1756px) {
+	.wp-block-infinite-uploads-imajinn-ai {
+		.results-grid {
+			grid-template-columns: 3fr 3fr;
+		}
+	}
+}
+
+@media screen and (max-width:1120px) {
+	.wp-block-infinite-uploads-imajinn-ai {
+		.results-grid {
+			grid-template-columns: 1fr !important;
+		}
+	}
 }

@@ -1,4 +1,13 @@
 import {useState, useEffect} from 'react'
+import {
+	Button,
+	Spinner,
+} from '@wordpress/components';
+import {
+	check,
+	upload,
+} from '@wordpress/icons';
+import { __, _x } from '@wordpress/i18n';
 const SaveButton = (props) => {
     const [isSaving, setIsSaving] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
@@ -36,7 +45,7 @@ const SaveButton = (props) => {
                     icon={upload}
                     onClick={async () => {
                         setIsSaving(true);
-                        if (!(await saveImage(props.genindex))) {
+                        if (!(await props.saveImage(props.genindex))) {
                             setIsSaving(false);
                         }
                     }}
