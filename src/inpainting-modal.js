@@ -57,14 +57,14 @@ export function InpaintingModal(props) {
 		<Button
 			onClick={openModal}
 			icon={brush}
-			label={__('Inpainting', 'imajinn-ai')}
+			label={__('Touchup (beta)', 'imajinn-ai')}
 		/>
 		{isOpen && (<Modal
 			{...props}
 			onRequestClose={closeModal}
 			style={{width: 'min-content', maxHeight: '98%', minWidth: '576px'}}
 			shouldCloseOnClickOutside={true}
-			title={__('Image Editor', 'imajinn-ai')}
+			title={__('Inpainting Image Editor (beta)', 'imajinn-ai')}
 			__experimentalHideHeader={true}
 		>
 			<Card style={{margin: '0 auto 10px auto', width: 'fit-content'}}>
