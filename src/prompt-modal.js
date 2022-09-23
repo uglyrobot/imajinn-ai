@@ -1,9 +1,9 @@
 import { __ } from '@wordpress/i18n';
-import { Button, Icon, Modal, Spinner, Panel, PanelBody, PanelRow } from '@wordpress/components';
+import { Button, BaseControl, Modal, Spinner, Panel, PanelBody, PanelRow } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { Genie } from "./images";
 
-export function PromptModal( props ) {
+export function PromptGenieModal( props ) {
 	const [ isOpen, setOpen ] = useState( false );
 	const [ isSubmitting, setIsSubmitting ] = useState( false );
 	const [ prompts, setPrompts ] = useState( [] );
@@ -45,7 +45,7 @@ export function PromptModal( props ) {
 
 	const promptList = prompts.map( ( item, index ) => (
 
-			<PanelBody  key={ index.toString() } opened={ true }>
+			<PanelBody key={ index.toString() } opened={ true }>
 				<PanelRow>
 					<span><em>{ props.prompt }</em>{ item.replace( props.prompt, '' ) }</span>
 					<Button
@@ -53,9 +53,8 @@ export function PromptModal( props ) {
 						isSmall
 						className={ "genie-generate" }
 						onClick={ () => {
-							props.setPromptStyle( item )
-							//props.setPrompt( item )
-							props.startJob( null, null, null, item );
+							props.setPromptStyle( item.replace( props.prompt, '' ) )
+							props.startJob( null, null, null, null, item.replace( props.prompt, '' ) );
 							closeModal()
 						} }
 					>
@@ -65,33 +64,57 @@ export function PromptModal( props ) {
 			</PanelBody>
 	) );
 
+	const GenieButton = () => {
+		if (isSubmitting) {
+			return (
+				<Button
+					disabled
+					icon={ <Spinner /> }
+					label={ __( 'Generating prompt masterpieces...', 'imajinn-ai' ) }
+				/>
+			);
+		} else {
+			return (
+				<Button
+					variant="secondary"
+					id="imajinn-prompt-genie-button"
+					label={__('Prompt Genie: AI generated prompt masterpiece', 'imajinn-ai')}
+					onClick={() => {
+						if (!props.prompt) {
+							props.setError(__('Please enter a prompt before summoning the prompt genie!', 'imajinn-ai'));
+						} else {
+							props.setError('');
+							if (props.prompt === currentPrompt) {
+								openModal();
+							} else {
+								createPrompts(props.prompt);
+							}
+						}
+
+					}}
+					icon={<Genie/>}
+				>
+					{__('Summon', 'imajinn-ai')}
+				</Button>
+			);
+		}
+	}
 	return (
 		<>
-			<Button
-				disabled={ isSubmitting }
+			<BaseControl
+				label={ __( 'Prompt Genie', 'imajinn-ai' ) }
+				id="imajinn-prompt-genie-button"
 				className="prompt-genie"
-				label={ __( 'Prompt Genie: AI generated prompt masterpiece', 'imajinn-ai' ) }
-				onClick={ () => {
-					if ( ! props.prompt ) {
-						props.setError( __( 'Please enter a prompt subject before using the prompt genie', 'imajinn-ai' ) );
-					} else {
-						props.setError( '' );
-						if ( props.prompt === currentPrompt ) {
-							openModal();
-						} else {
-							createPrompts( props.prompt );
-						}
-					}
-
-				} }
-				icon={ isSubmitting ? <Spinner /> : <Genie /> }
-				/>
+			>
+				<div>
+					<GenieButton />
+				</div>
+			</BaseControl>
 			{ isOpen && (
 				<Modal
 					{ ...props }
 					onRequestClose={ closeModal }
-					style={ { maxWidth: '900px' } }
-					icon={ <Genie /> }
+					style={ { maxWidth: '90%' } }
 					title={ __( 'AI Generated Prompt Ideas', 'imajinn-ai' ) }
 				>
 					<Panel>{ promptList }</Panel>

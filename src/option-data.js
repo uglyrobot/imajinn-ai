@@ -285,7 +285,7 @@ export default {
 	artists: [
 		{
 			value: '',
-			label: __( 'No Artist', 'imajinn-ai' ),
+			label: '',
 		},
 		{
 			value: 'by Albert Bierstadt',
@@ -352,6 +352,10 @@ export default {
 			label: __( 'Stanley Artgerm', 'imajinn-ai' ),
 		},
 		{
+			value: 'by Thomas Kinkade',
+			label: __( 'Thomas Kinkade', 'imajinn-ai' ),
+		},
+		{
 			value: 'by Vincent van Gogh',
 			label: __( 'Vincent van Gogh', 'imajinn-ai' ),
 		},
@@ -359,7 +363,7 @@ export default {
 	modifiers: [
 		{
 			value: '',
-			label: __( 'No Modifier', 'imajinn-ai' ),
+			label: '',
 		},
 		{
 			value: 'in the style of steampunk',
@@ -378,7 +382,7 @@ export default {
 			label: __( 'Detailed & Intricate', 'imajinn-ai' ),
 		},
 		{
-			value: 'n a symbolic and meaningful style, insanely detailed and intricate, hypermaximalist, elegant, ornate, hyper realistic, super detailed',
+			value: 'in a symbolic and meaningful style, insanely detailed and intricate, hypermaximalist, elegant, ornate, hyper realistic, super detailed',
 			label: __( 'Symbolic & Meaningful', 'imajinn-ai' ),
 		},
 		{

@@ -296,10 +296,14 @@ class Imajinn_AI {
 		// check caps
 		$params = $this->check_ajax();
 
-		$prompt = sanitize_text_field( $params['prompt'] );
-		if ( empty( $prompt ) ) {
+		$orig_prompt = sanitize_text_field( $params['prompt'] );
+		if ( empty( $orig_prompt ) || strlen( $orig_prompt ) < 3 ) {
 			wp_send_json_error( new WP_Error( 'bad_prompt', esc_html__( 'Please enter a detailed prompt for generation at least one word long.', 'imajinn-ai' ) ) );
 		}
+
+		$prompt_style = trim( sanitize_text_field( $params['prompt_style'] ), " \t\n\r\0\x0B,/." );
+
+		$prompt = $orig_prompt . ' ' . $prompt_style;
 		$prompt = substr( $prompt, 0, 500 ); //max 500 chars
 
 		$ratio = sanitize_text_field( $params['ratio'] );
@@ -322,13 +326,17 @@ class Imajinn_AI {
 
 		$generations = $job->generations;
 
+		//rename vars for saving
+		$full_prompt = $prompt;
+		$prompt = $orig_prompt;
+
 		//save to history post type
 		wp_insert_post( [
 				'post_type'    => 'imajinn_prompt',
 				'post_status'  => 'draft',
-				'post_title'   => $prompt,
+				'post_title'   => $full_prompt,
 				'post_name'    => $job->job_id,
-				'post_content' => json_encode( compact( 'prompt', 'ratio', 'num_variations', 'generations' ) ),
+				'post_content' => json_encode( compact( 'prompt', 'prompt_style', 'ratio', 'num_variations', 'generations' ) ),
 		] );
 
 		wp_send_json_success( $job );
@@ -376,11 +384,13 @@ class Imajinn_AI {
 			//update the history post type
 			$post = get_page_by_path( $job->job_id, OBJECT, 'imajinn_prompt' );
 			if ( $post ) {
+				$history = array_merge( json_decode( $post->post_content, true ), [ 'generations' => $job->generations ] );
 				wp_update_post( [
 						'ID'           => $post->ID,
 						'post_status'  => 'succeeded' == $job->status ? 'publish' : 'trash',
-						'post_content' => json_encode( array_merge( json_decode( $post->post_content, true ), [ 'generations' => $job->generations ] ) ),
+						'post_content' => json_encode( $history ),
 				] );
+				$job->history = $history; //return this so we can add to history array
 			}
 		}
 

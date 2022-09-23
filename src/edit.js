@@ -39,6 +39,7 @@ import {
 	SelectControl,
 	Spinner,
 	TextareaControl,
+	TextControl,
 	Tooltip,
 	TreeSelect,
 	Panel,
@@ -64,7 +65,7 @@ import {
 import metadata from './block.json';
 import { Imajinn, ImajinnSpinner } from './images';
 import { HelpModal, PromptHelpModal } from './help';
-import { PromptModal } from './prompt-modal';
+import { PromptGenieModal } from './prompt-modal';
 import { InpaintingModal } from './inpainting-modal';
 import { LicenseModal } from './license';
 import { Connect } from './connect';
@@ -119,19 +120,19 @@ export default function Edit() {
 		IMAJINN.history = history; //update global in case block is inserted again
 	}, [ history ] );
 
-	//add our styles to the prompt string
+	//add our styles to the prompt string on changing the dropdowns
 	useEffect( () => {
 		setPromptStyle(
-			[ prompt, imageStyle, imageArtist, imageModifier ]
+			[ imageStyle, imageArtist, imageModifier ]
 				.filter( Boolean )
 				.join( ', ' )
 		);
-	}, [ prompt, imageStyle, imageArtist, imageModifier ] ); // <-- here put the parameter to listen
+	}, [ imageStyle, imageArtist, imageModifier ] ); // <-- here put the parameter to listen
 
 	const blockProps = useBlockProps();
 
 	//function to make an ajax call to the server to get the image
-	const startJob = ( initImage, mask, thisQueryRatio, maskPrompt ) => {
+	const startJob = ( initImage, mask, thisQueryRatio, customPrompt, customStyle ) => {
 		//Check credit status in case we bought more
 		if ( credits <= 0 ) {
 			refreshInfo();
@@ -146,10 +147,8 @@ export default function Edit() {
 		const thisInitImage = initImage || null;
 		const thisMask = mask || null;
 		const thisRatio = thisQueryRatio || ratio;
-		//if we have a masked prompt, use that with styles
-		const thisPrompt = maskPrompt ? [ maskPrompt, imageStyle, imageArtist, imageModifier ]
-			.filter( Boolean )
-			.join( ', ' ) : promptStyle;
+		const thisPrompt = customPrompt ? customPrompt : prompt;
+		const thisPromptStyle = customStyle ? customStyle : promptStyle;
 
 		setJobId( null );
 		setGenerations( [] );
@@ -167,6 +166,7 @@ export default function Edit() {
 			},
 			body: JSON.stringify( {
 				prompt: thisPrompt,
+				prompt_style: thisPromptStyle,
 				ratio: thisRatio,
 				num_variations: 4,
 				init_image: thisInitImage,
@@ -226,11 +226,7 @@ export default function Edit() {
 				if ( result.data.status === 'succeeded' ) {
 					setGenerations( result.data.generations );
 					setHistory( ( history ) => [
-						{
-							prompt: promptStyle,
-							ratio,
-							generations: result.data.generations,
-						},
+						result.data.history,
 						...history,
 					] );
 				} else if ( result.data.status === 'failed' ) {
@@ -353,8 +349,8 @@ export default function Edit() {
 				width: data.width,
 				height: data.height,
 				sizeSlug: data.size,
-				alt: promptStyle,
-				title: promptStyle,
+				alt: prompt,
+				title: prompt,
 			} );
 			wp.data
 				.dispatch( 'core/block-editor' )
@@ -378,7 +374,7 @@ export default function Edit() {
 				},
 				body: JSON.stringify( {
 					url: url,
-					prompt: promptStyle,
+					prompt: prompt,
 					post_id: wp.data.select( 'core/editor' ).getCurrentPostId(),
 					nonce: IMAJINN.nonce,
 				} ),
@@ -716,7 +712,7 @@ export default function Edit() {
 					/>
 					<VariationsButton { ...props } />
 					<FaceFixButton { ...props } />
-					<InpaintingModal { ...props } src={generations[ props.genindex ].jpg} prompt={prompt} setPrompt={setPrompt} queryRatio={queryRatio} setRatio={setRatio} startJob={startJob} />
+					<InpaintingModal { ...props } src={generations[ props.genindex ].jpg} { ...{prompt, setPrompt, queryRatio, setRatio, startJob} } />
 				</ButtonGroup>
 				<ButtonGroup>
 					<SaveButton { ...props } />
@@ -847,7 +843,7 @@ export default function Edit() {
 			<TreeSelect
 				disabled={ isLoading }
 				label={ __( 'Select an image style', 'imajinn-ai' ) }
-				noOptionLabel={ __( 'No Style', 'imajinn-ai' ) }
+				noOptionLabel="&nbsp;"
 				selectedId={ imageStyle }
 				onChange={ ( value ) => {
 					setImageStyle( value );
@@ -864,7 +860,7 @@ export default function Edit() {
 				__next36pxDefaultSize
 				allowReset
 				disabled={ isLoading }
-				label={ __( 'Select an Artist style to mimic', 'imajinn-ai' ) }
+				label={ __( 'Select an Artist style', 'imajinn-ai' ) }
 				value={ imageArtist }
 				onChange={ ( value ) => {
 					setImageArtist( value );
@@ -895,7 +891,7 @@ export default function Edit() {
 			return null;
 		}
 
-		if ( props.history <= 0 ) {
+		if ( props.history.length <= 0 ) {
 			return null;
 		}
 
@@ -913,13 +909,12 @@ export default function Edit() {
 						variant="secondary"
 						label={ __( 'Load prompt results', 'imajinn-ai' ) }
 						onClick={ () => {
+							clearStyles();
 							setPrompt( item.prompt );
+							setPromptStyle( item.prompt_style );
 							setGenerations( item.generations );
 							setRatio( item.ratio );
 							setQueryRatio( item.ratio );
-							setImageStyle( '' );
-							setImageArtist( '' );
-							setImageModifier( '' );
 							setSaved( [] );
 							setFaceFixed( [] );
 						} }
@@ -1017,6 +1012,7 @@ export default function Edit() {
 		setImageStyle( '' );
 		setImageArtist( '' );
 		setImageModifier( '' );
+		setPromptStyle( '' );
 	}
 
 	return (
@@ -1045,7 +1041,7 @@ export default function Edit() {
 						<div className="prompt-form">
 							<TextareaControl
 								disabled={ isLoading }
-								rows={ 3 }
+								rows={ 2 }
 								maxLength={ 450 }
 								value={ prompt }
 								label={
@@ -1061,8 +1057,9 @@ export default function Edit() {
 								onChange={ ( text ) => setPrompt( text ) }
 								onFocus={ focusSelect }
 							/>
+							<Text className={"prompt-style"} numberOfLines={2} truncate>{ promptStyle }</Text>
 							<div className={ 'styles-form' }>
-								<PromptModal {...{prompt, setPrompt, setPromptStyle, startJob, setError, clearStyles}}/>
+								<PromptGenieModal {...{prompt, setPrompt, setPromptStyle, startJob, setError, clearStyles}}/>
 								<StyleSelect />
 								<ArtistSelect />
 								<ModifierSelect />

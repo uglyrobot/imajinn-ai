@@ -109,7 +109,7 @@ export function InpaintingModal(props) {
 				label={
 					<>
 						{ __(
-							'Change the main subject of the prompt to your replacement and leave any styles in place:',
+							'Change the main subject of the prompt to your replacement, leave any styles:',
 							'imajinn-ai'
 						) }
 					</>
