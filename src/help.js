@@ -401,13 +401,13 @@ export function TouchupHelpModal( props ) {
 
 					<p>
 						{ __(
-							'The Touchup feature (or "Inpainting") allows you to customize and make modifications to an image in a more precise way. It allows you to remove or replace parts of the image with new content generated from your prompt. This is useful for removing unwanted objects like watermarks, signatures, or duplicates. You can also use it to add new objects to the image, such as a new background or foreground. Touchup is useful because it really allows you to create exactly the image you want by choosing exactly where each element in the image goes. It allows a lot more control to create a complex image you have in mind, even if it is too specific to get right with one initial prompt.',
+							'The Touchup feature allows you to customize and make modifications to an image in a more precise way. It allows you to remove or replace parts of the image with new content generated from your prompt. This is useful for removing unwanted objects like watermarks, signatures, or duplicates. Or you can also use it to add new objects to the image, such as a new object or background. Touchup allows you to create the exact image you want by choosing where each element in the image goes. You can create the complex image you have in mind, even if it is too specific to get right with one initial prompt.',
 							'imajinn-ai'
 						) }
 					</p>
 
 					<p>
-						{ __( 'Touchup works by choosing an image as an input, masking an area with the brush that you want to modify, then adjusts your prompt to describe what you want in that area. However, this can be quite difficult to work with if you don’t use it right, because sometimes you select an area and put in the prompt, but the image doesn\'t change. So, here are some tips to help you get the best results from Touchup.', 'imajinn-ai' ) }
+						{ __( 'Touchup works by choosing an image as an input, masking an area with the brush that you want to modify, then adjusting your prompt to describe what you want in that area. However, this can be quite difficult to work with if you don’t use it right, because sometimes you select an area and put in the prompt, but the image doesn\'t change. So, here are some tips to help you get the best results from Touchup.', 'imajinn-ai' ) }
 					</p>
 
 					<h3>{ __( 'Best Practices', 'imajinn-ai' ) }</h3>

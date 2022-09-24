@@ -2,10 +2,10 @@
 
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.2
+Stable tag: 1.3
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
-Tags: AI, DALLE, image generator, stock photos, art, diffusion
+Tags: AI, DALLE, image generator, stock photos, art, stable diffusion
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,13 +25,15 @@ Running on the latest in AI technology, Imajinn is able to generate images that 
 - **Gutenberg block** - Create images right inside your posts/pages with the Imajinn AI Block.
 - **Save to library** - Upscale and save your favorite images to your WordPress media library for easy access in any theme/plugin.
 - **Insert images** - Insert your high resolution generated images into any post/page as an image block with a single click.
+- **Prompt Genie** - Summon the genie to use AI to turn your boring prompts into amazingly artistic images.
 - **Style presets** - Customize your images with a variety of preset options like art medium, artist style, and more!
 - **History** - Easily view and jump back to previous image generations to modify and customize your prompts.
 - **Create variations** - Generate more variations of your favorite images with a similar style and layout.
 - **Face repair** - AI-based facial restoration to restore facial details and enhance colors with a good balance of realness and fidelity.
+- **Touchup (Inpainting)** - Customize your images by using a brush to add new details or remove unwanted objects.
 - **Media page** - Generate images outside of the Gutenberg editor for support with any theme builder.
 - **Easy-connect** – No confusing API keys. Simply click to connect
-- **Powerful cloud servers** - Imajinn AI is powered by the most advanced cloud GPUs, so you can generate images with the highest quality and speed right from your WordPress dashboard.
+- **Powerful cloud servers** - Imajinn AI is powered by the most advanced A100 cloud GPUs, so you can generate images with the highest quality and speed right from your WordPress dashboard.
 - **Royalty-free images** - Use the images you generate on your site without worrying about licensing issues.
 - **Unlimited users** – Any WordPress user on any site can use the Imajinn Block to generate images.
 - **Unlimited sites** - You can connect just one site, hundreds, or thousands...no extra license costs.
@@ -52,6 +54,16 @@ Running on the latest in AI technology, Imajinn is able to generate images that 
 
 ★★★★★
 > “VERY impressive...Love the 3:2 option (obvious need but missing from most other AI image tools). Easy, no-fuss install. Great documentation. The array of config options are intuitive, and actually make a big difference in output. And it's FAST!” - J. Paul Hendricks
+
+### Prompt Genie
+
+Prompt Genie is a powerful AI tool that can help you generate better prompts for your images. Just enter a few simple words to describe what you would like to create, then summon Prompt Genie to use it's custom-trained machine learning model to turn your boring prompts into amazingly artistic images. Prompt Genie is a great way to create fantastic images with Imajinn without having to learn the complex skill of prompt building that's necessary to use other tools like DALLE or Stable Diffusion.
+
+### Touchup (Inpainting)
+
+Touchup mode allows you to customize and make modifications to an image in a more precise way by allowing you to remove or replace parts of the image with new content generated from your prompt. This is useful for removing unwanted objects like watermarks, signatures, or duplicates. Or you can use it to add new objects to the image, such as a forground item or background. Touchup allows you to create the exact image you want by choosing where each element in the image goes. You can create that complex image you have in mind, even if it is too specific to get right with one initial prompt.
+
+Touchup works by choosing an image as an input, masking an area with the brush that you want to modify, then adjusting your prompt to describe what you want in that area.
 
 ### Privacy
 
@@ -120,6 +132,12 @@ We also will be filtering prompt input and screening output to block the creatio
 1. AI-based facial restoration to restore facial details and enhance colors with a good balance of realness and fidelity.
 
 == Changelog ==
+
+1.3 - 2022-9-24
+----------------------------------------------------------------------
+- Prompt Genie: Summon the genie to use AI to turn your boring prompts into amazingly artistic images.
+- Touchup (Inpainting): Customize your images by using a brush to add new details or remove unwanted objects.
+- Various other bug fixes and style improvements.
 
 1.2 - 2022-9-16
 ----------------------------------------------------------------------
