@@ -39,6 +39,7 @@ import {
 	SelectControl,
 	Spinner,
 	TextareaControl,
+	TextControl,
 	Tooltip,
 	TreeSelect,
 	Panel,
@@ -64,6 +65,8 @@ import {
 import metadata from './block.json';
 import { Imajinn, ImajinnSpinner } from './images';
 import { HelpModal, PromptHelpModal } from './help';
+import { PromptGenieModal } from './prompt-modal';
+import { InpaintingModal } from './inpainting-modal';
 import { LicenseModal } from './license';
 import { Connect } from './connect';
 import optionData from './option-data';
@@ -117,32 +120,35 @@ export default function Edit() {
 		IMAJINN.history = history; //update global in case block is inserted again
 	}, [ history ] );
 
-	//add our styles to the prompt string
+	//add our styles to the prompt string on changing the dropdowns
 	useEffect( () => {
 		setPromptStyle(
-			[ prompt, imageStyle, imageArtist, imageModifier ]
+			[ imageStyle, imageArtist, imageModifier ]
 				.filter( Boolean )
 				.join( ', ' )
 		);
-	}, [ prompt, imageStyle, imageArtist, imageModifier ] ); // <-- here put the parameter to listen
+	}, [ imageStyle, imageArtist, imageModifier ] ); // <-- here put the parameter to listen
 
 	const blockProps = useBlockProps();
 
 	//function to make an ajax call to the server to get the image
-	const startJob = ( initImage, thisQueryRatio ) => {
+	const startJob = ( initImage, mask, thisQueryRatio, customPrompt, customStyle ) => {
 		//Check credit status in case we bought more
 		if ( credits <= 0 ) {
 			refreshInfo();
 		}
 
 		//show upgrade modal when trying to start job with no credits
-		if ( credits - 1 <= 0 ) {
+		if ( credits - 1 < 0 ) {
 			setShowUpgrade( true );
 			return false;
 		}
 
 		const thisInitImage = initImage || null;
+		const thisMask = mask || null;
 		const thisRatio = thisQueryRatio || ratio;
+		const thisPrompt = customPrompt ? customPrompt : prompt;
+		const thisPromptStyle = customStyle ? customStyle : promptStyle;
 
 		setJobId( null );
 		setGenerations( [] );
@@ -159,10 +165,12 @@ export default function Edit() {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify( {
-				prompt: promptStyle,
+				prompt: thisPrompt,
+				prompt_style: thisPromptStyle,
 				ratio: thisRatio,
 				num_variations: 4,
 				init_image: thisInitImage,
+				mask: thisMask,
 				nonce: IMAJINN.nonce,
 			} ),
 		} )
@@ -218,11 +226,7 @@ export default function Edit() {
 				if ( result.data.status === 'succeeded' ) {
 					setGenerations( result.data.generations );
 					setHistory( ( history ) => [
-						{
-							prompt: promptStyle,
-							ratio,
-							generations: result.data.generations,
-						},
+						result.data.history,
 						...history,
 					] );
 				} else if ( result.data.status === 'failed' ) {
@@ -345,8 +349,8 @@ export default function Edit() {
 				width: data.width,
 				height: data.height,
 				sizeSlug: data.size,
-				alt: promptStyle,
-				title: promptStyle,
+				alt: prompt,
+				title: prompt,
 			} );
 			wp.data
 				.dispatch( 'core/block-editor' )
@@ -370,7 +374,7 @@ export default function Edit() {
 				},
 				body: JSON.stringify( {
 					url: url,
-					prompt: promptStyle,
+					prompt: prompt,
 					post_id: wp.data.select( 'core/editor' ).getCurrentPostId(),
 					nonce: IMAJINN.nonce,
 				} ),
@@ -460,6 +464,8 @@ export default function Edit() {
 		}
 	};
 
+	const focusSelect = ( event ) => event.target.select();
+
 	const RatioToggle = () => {
 		const ratioNames = {
 			'1:1': __( 'Square', 'imajinn-ai' ),
@@ -545,7 +551,7 @@ export default function Edit() {
 				label={ __( 'Generate Variations', 'imajinn-ai' ) }
 				onClick={ () => {
 					setRatio( queryRatio );
-					startJob( url, queryRatio );
+					startJob( url, null, queryRatio );
 				} }
 			/>
 		);
@@ -606,15 +612,19 @@ export default function Edit() {
 
 		if ( isSaved ) {
 			return (
-				<Button disabled icon={ check }>
-					{ __( 'Saved', 'imajinn-ai' ) }
+				<Button disabled icon={ check } label={ __( 'Saved', 'imajinn-ai' ) }>
+					{ IMAJINN.custom_editor ? __( 'Saved', 'imajinn-ai' ) : '' }
 				</Button>
 			);
 		} else {
 			if ( isSaving ) {
 				return (
-					<Button disabled>
-						<Spinner /> { __( 'Saving', 'imajinn-ai' ) }
+					<Button
+						disabled
+						style={ ! IMAJINN.custom_editor ? { maxWidth: '36px' } : {} }
+						icon={ <Spinner /> }
+						label={ __( 'Saving', 'imajinn-ai' ) }>
+						 { IMAJINN.custom_editor ? __( 'Saving', 'imajinn-ai' ) : '' }
 					</Button>
 				);
 			} else {
@@ -625,6 +635,7 @@ export default function Edit() {
 						}
 						disabled={ isSaving }
 						icon={ upload }
+						label={ __( 'Save to Media Library', 'imajinn-ai' ) }
 						onClick={ async () => {
 							setIsSaving( true );
 							if ( ! ( await saveImage( props.genindex ) ) ) {
@@ -632,7 +643,7 @@ export default function Edit() {
 							}
 						} }
 					>
-						{ __( 'Save', 'imajinn-ai' ) }
+						{ IMAJINN.custom_editor ? __( 'Save', 'imajinn-ai' ) : '' }
 					</Button>
 				);
 			}
@@ -706,6 +717,7 @@ export default function Edit() {
 					/>
 					<VariationsButton { ...props } />
 					<FaceFixButton { ...props } />
+					<InpaintingModal { ...props } src={generations[ props.genindex ].jpg} { ...{prompt, setPrompt, queryRatio, setRatio, startJob} } />
 				</ButtonGroup>
 				<ButtonGroup>
 					<SaveButton { ...props } />
@@ -736,14 +748,14 @@ export default function Edit() {
 		const [ width, setWidth ] = useState( '400px' );
 		const [ height, setHeight ] = useState( '400px' );
 		useEffect( () => {
-			setWidth( generations.length === 1 ? '400px' : '300px' );
+			setWidth( generations.length === 1 ? '400px' : '350px' );
 			if ( queryRatio === '3:2' ) {
-				setHeight( generations.length === 1 ? '266px' : '200px' );
+				setHeight( generations.length === 1 ? '266px' : '233px' );
 			} else if ( queryRatio === '2:3' ) {
 				setHeight( '450px' );
 				setWidth( '300px' );
 			} else {
-				setHeight( generations.length === 1 ? '400px' : '300px' );
+				setHeight( generations.length === 1 ? '400px' : '350px' );
 			}
 		}, [ generations, queryRatio ] ); // <-- here put the parameter to listen
 
@@ -761,6 +773,7 @@ export default function Edit() {
 					genindex={ index }
 					width={ width }
 					height={ height }
+					ratio={ queryRatio }
 					label={ 'Result ' + ( index + 1 ).toString() }
 				/>
 			</FlexBlock>
@@ -835,7 +848,7 @@ export default function Edit() {
 			<TreeSelect
 				disabled={ isLoading }
 				label={ __( 'Select an image style', 'imajinn-ai' ) }
-				noOptionLabel={ __( 'No Style', 'imajinn-ai' ) }
+				noOptionLabel="&nbsp;"
 				selectedId={ imageStyle }
 				onChange={ ( value ) => {
 					setImageStyle( value );
@@ -852,7 +865,7 @@ export default function Edit() {
 				__next36pxDefaultSize
 				allowReset
 				disabled={ isLoading }
-				label={ __( 'Select an Artist style to mimic', 'imajinn-ai' ) }
+				label={ __( 'Select an Artist style', 'imajinn-ai' ) }
 				value={ imageArtist }
 				onChange={ ( value ) => {
 					setImageArtist( value );
@@ -883,7 +896,7 @@ export default function Edit() {
 			return null;
 		}
 
-		if ( props.history <= 0 ) {
+		if ( props.history.length <= 0 ) {
 			return null;
 		}
 
@@ -894,23 +907,19 @@ export default function Edit() {
 						<img
 							key={ index }
 							src={ gen.thumbnail }
-							alt={ sprintf(
-								__( 'Result %d', 'imajinn-ai' ),
-								( index + 1 ).toString()
-							) }
+							alt={ sprintf( __( 'Result %d', 'imajinn-ai'), ( index + 1 ).toString() ) }
 						/>
 					) ) }
 					<Button
 						variant="secondary"
 						label={ __( 'Load prompt results', 'imajinn-ai' ) }
 						onClick={ () => {
+							clearStyles();
 							setPrompt( item.prompt );
+							setPromptStyle( item.prompt_style );
 							setGenerations( item.generations );
 							setRatio( item.ratio );
 							setQueryRatio( item.ratio );
-							setImageStyle( '' );
-							setImageArtist( '' );
-							setImageModifier( '' );
 							setSaved( [] );
 							setFaceFixed( [] );
 						} }
@@ -979,6 +988,11 @@ export default function Edit() {
 								/>
 							</>
 						) }
+						<ToolbarButton
+							onClick={ visitAccount }
+							icon={ <Dashicon icon={"admin-users"} /> }
+							label={ __( 'Account / Upgrade', 'imajinn-ai' ) }
+						/>
 						<HelpModal />
 					</ToolbarGroup>
 				</Toolbar>
@@ -1003,6 +1017,13 @@ export default function Edit() {
 	const placeholderInstructions = generations.length
 		? ''
 		: metadata.description;
+
+	const clearStyles = () => {
+		setImageStyle( '' );
+		setImageArtist( '' );
+		setImageModifier( '' );
+		setPromptStyle( '' );
+	}
 
 	return (
 		<figure { ...blockProps }>
@@ -1030,6 +1051,7 @@ export default function Edit() {
 						<div className="prompt-form">
 							<TextareaControl
 								disabled={ isLoading }
+								rows={ 2 }
 								maxLength={ 450 }
 								value={ prompt }
 								label={
@@ -1043,8 +1065,11 @@ export default function Edit() {
 								}
 								className="text-prompt"
 								onChange={ ( text ) => setPrompt( text ) }
+								onFocus={ focusSelect }
 							/>
+							<Text className={"prompt-style"} numberOfLines={2} truncate>{ promptStyle }</Text>
 							<div className={ 'styles-form' }>
+								<PromptGenieModal {...{prompt, setPrompt, setPromptStyle, startJob, setError, clearStyles, isLoading}}/>
 								<StyleSelect />
 								<ArtistSelect />
 								<ModifierSelect />
@@ -1056,11 +1081,7 @@ export default function Edit() {
 										'clear the image style selects',
 										'imajinn-ai'
 									) }
-									onClick={ () => {
-										setImageStyle( '' );
-										setImageArtist( '' );
-										setImageModifier( '' );
-									} }
+									onClick={ clearStyles }
 								/>
 							</div>
 						</div>

@@ -4,7 +4,7 @@
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
  * Requires PHP:      7.0
- * Version:           1.2
+ * Version:           1.3-beta-1
  * Author:            Infinite Uploads
  * Author URI:        https://infiniteuploads.com
  * Plugin URI:        https://infiniteuploads.com/imajinn/
@@ -19,7 +19,7 @@
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '1.2' );
+define( 'IMAJINN_AI_VERSION', '1.3-beta-1' );
 
 class Imajinn_AI {
 
@@ -60,6 +60,7 @@ class Imajinn_AI {
 		add_action( 'wp_ajax_imajinn-check-job', [ &$this, 'ajax_check_job' ] );
 		add_action( 'wp_ajax_imajinn-cancel-job', [ &$this, 'ajax_cancel_job' ] );
 		add_action( 'wp_ajax_imajinn-face-repair', [ &$this, 'ajax_face_repair' ] );
+		add_action( 'wp_ajax_imajinn-create-prompts', [ &$this, 'ajax_create_prompts' ] );
 		add_action( 'wp_ajax_imajinn-save-image', [ &$this, 'ajax_save_image' ] );
 		add_action( 'wp_ajax_imajinn-tweet', [ &$this, 'ajax_tweet_url' ] );
 	}
@@ -172,7 +173,7 @@ class Imajinn_AI {
 						'dependencies' => array(),
 						'version'      => filemtime( $script_path ),
 				);
-		wp_enqueue_style( 'imajinn-ai', $script_path, [ 'wp-components', 'wp-block-editor', 'wp-editor', 'wp-format-library' ], $script_asset['version'] );
+		wp_enqueue_style( 'imajinn-ai', $script_path, [ 'wp-components', 'wp-block-editor', 'wp-editor', 'wp-format-library' ], IMAJINN_AI_VERSION );
 	}
 
 	public function admin_scripts() {
@@ -295,10 +296,14 @@ class Imajinn_AI {
 		// check caps
 		$params = $this->check_ajax();
 
-		$prompt = sanitize_text_field( $params['prompt'] );
-		if ( empty( $prompt ) ) {
-			wp_send_json_error( new WP_Error( 'bad_prompt', esc_html__( 'Please enter a detailed prompt for generation at least 10 characters long.', 'imajinn-ai' ) ) );
+		$orig_prompt = sanitize_text_field( $params['prompt'] );
+		if ( empty( $orig_prompt ) || strlen( $orig_prompt ) < 3 ) {
+			wp_send_json_error( new WP_Error( 'bad_prompt', esc_html__( 'Please enter a detailed prompt for generation at least one word long.', 'imajinn-ai' ) ) );
 		}
+
+		$prompt_style = trim( sanitize_text_field( $params['prompt_style'] ), " \t\n\r\0\x0B,/." );
+
+		$prompt = $orig_prompt . ' ' . $prompt_style;
 		$prompt = substr( $prompt, 0, 500 ); //max 500 chars
 
 		$ratio = sanitize_text_field( $params['ratio'] );
@@ -310,7 +315,9 @@ class Imajinn_AI {
 
 		$init_image = esc_url_raw( $params['init_image'] );
 
-		$job = $this->api_request( sprintf( 'site/%s/generate', $this->get_site_id() ), compact( 'prompt', 'ratio', 'num_variations', 'init_image' ) );
+		$mask = trim( $params['mask'] );
+
+		$job = $this->api_request( sprintf( 'site/%s/generate', $this->get_site_id() ), compact( 'prompt', 'ratio', 'num_variations', 'init_image', 'mask' ) );
 		if ( is_wp_error( $job ) ) {
 			wp_send_json_error( $job );
 		}
@@ -319,13 +326,17 @@ class Imajinn_AI {
 
 		$generations = $job->generations;
 
+		//rename vars for saving
+		$full_prompt = $prompt;
+		$prompt = $orig_prompt;
+
 		//save to history post type
 		wp_insert_post( [
 				'post_type'    => 'imajinn_prompt',
 				'post_status'  => 'draft',
-				'post_title'   => $prompt,
+				'post_title'   => $full_prompt,
 				'post_name'    => $job->job_id,
-				'post_content' => json_encode( compact( 'prompt', 'ratio', 'num_variations', 'generations' ) ),
+				'post_content' => json_encode( compact( 'prompt', 'prompt_style', 'ratio', 'num_variations', 'generations' ) ),
 		] );
 
 		wp_send_json_success( $job );
@@ -373,11 +384,13 @@ class Imajinn_AI {
 			//update the history post type
 			$post = get_page_by_path( $job->job_id, OBJECT, 'imajinn_prompt' );
 			if ( $post ) {
+				$history = array_merge( json_decode( $post->post_content, true ), [ 'generations' => $job->generations ] );
 				wp_update_post( [
 						'ID'           => $post->ID,
 						'post_status'  => 'succeeded' == $job->status ? 'publish' : 'trash',
-						'post_content' => json_encode( array_merge( json_decode( $post->post_content, true ), [ 'generations' => $job->generations ] ) ),
+						'post_content' => json_encode( $history ),
 				] );
+				$job->history = $history; //return this so we can add to history array
 			}
 		}
 
@@ -392,7 +405,6 @@ class Imajinn_AI {
 
 		// check caps
 		$params = $this->check_ajax();
-
 		$image   = esc_url_raw( $params['url'] );
 		$prompt  = sanitize_text_field( $params['prompt'] );
 		$post_id = absint( $params['post_id'] );
@@ -414,6 +426,26 @@ class Imajinn_AI {
 		wp_send_json_success( compact( 'attachment_id', 'url', 'width', 'height', 'size' ) );
 	}
 
+	function ajax_create_prompts() {
+
+		// check caps
+		$params = $this->check_ajax();
+
+		$prompt  = sanitize_text_field( $params['prompt'] );
+
+		//make api call to fix the image
+		$result = $this->api_request( sprintf( 'site/%s/prompts', $this->get_site_id() ), compact( 'prompt' ) );
+		if ( is_wp_error( $result ) ) {
+			wp_send_json_error( $result );
+		}
+
+		if ( 'failed' == $result->status ) {
+			wp_send_json_error( new WP_Error( 'api_error', $result->failed_reason, $result ) );
+		}
+
+		wp_send_json_success( $result );
+	}
+
 	function ajax_face_repair() {
 
 		// check caps
@@ -425,6 +457,10 @@ class Imajinn_AI {
 		$result = $this->api_request( sprintf( 'site/%s/face_repair', $this->get_site_id() ), compact( 'image' ) );
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error( $result );
+		}
+
+		if ( 'failed' == $result->status ) {
+			wp_send_json_error( new WP_Error( 'api_error', $result->failed_reason, $result ) );
 		}
 
 		wp_send_json_success( $result );

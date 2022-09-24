@@ -17,6 +17,7 @@
 		"@wordpress/scripts": "^24.0.0"
 	},
 	"dependencies": {
+		"@win11react/react-canvas-draw": "^1.2.2",
 		"@wordpress/base-styles": "^4.8.0",
 		"@wordpress/editor": "^12.16.0",
 		"@wordpress/interface": "^4.16.0"

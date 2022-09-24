@@ -175,53 +175,11 @@ export function PromptHelpModal( props ) {
 					<h3>{ __( '5. Conclusion', 'imajinn-ai' ) }</h3>
 					<p>
 						{ __(
-							'Prompt engineering allows you to have better control of what the image will look like. It (if done right) improves the image quality by a lot in every aspect.',
+							'Prompt engineering allows you to have better control of what the image will look like. It (if done right) improves the image quality by a lot in every aspect. But if you want to keep it simple, just use our Prompt Genie or style presets.',
 							'imajinn-ai'
 						) }
 					</p>
 
-					<h3>
-						{ __(
-							'Some fun example prompts to get you started:',
-							'imajinn-ai'
-						) }
-					</h3>
-					<ul>
-						<li>
-							A cat walks through a cyberpunk street, rain,
-							poster, artstation, neon, futuristic, stunning,
-							highly detailed, digital painting
-						</li>
-						<li>
-							a portrait of a family of dwarfs in middle earth, by
-							Albert Bierstadt, 8K
-						</li>
-						<li>
-							a <em>[beach|jungle|scene of your choice]</em>,
-							highly detailed oil painting, unreal 5 render,
-							rhads, Bruce Pennington, Studio Ghibli, tim
-							hildebrandt, digital art, octane render, beautiful
-							composition, award-winning photograph, masterpiece
-						</li>
-						<li>
-							a close up view of a man looking like Elon Musk.
-							rockets launching in the background, highly detailed
-							oil painting, render, rhads, Bruce Pennington,
-							Studio Ghibli, tim hildebrandt, digital art, octane
-							render, beautiful composition, trending on
-							artstation, award-winning photograph,
-							masterpiece,8k, high quality sharp anime classic
-							anime from 2010 in style of Hayao Miyazaki
-						</li>
-						<li>
-							a headless astronaut in space suit, holding space
-							helmet in hands, extremely detailed oil painting,
-							unreal 5 render, rhads, Bruce Pennington, tim
-							hildebrandt, digital art, octane render, beautiful
-							composition, trending on artstation, award-winning
-							photograph, masterpiece
-						</li>
-					</ul>
 					<Button variant="secondary" onClick={ closeModal }>
 						{ __( 'Close', 'imajinn-ai' ) }
 					</Button>
@@ -280,6 +238,17 @@ export function HelpModal( props ) {
 						) }
 					</p>
 
+					<h3>{ __( 'Prompt Genie', 'imajinn-ai' ) }</h3>
+					<p>
+						{ __(
+							'Because writing prompts is hard, we have created a tool called Prompt Genie that can help you turn your simple prompts into amazing masterpieces. Prompt Genie uses a custom AI model to transform your prompt into ten different powerful options to generate an image in beautiful artistic styles. Simply enter your simple prompt like "a dog running on a beach", then click on the Prompt Genie button. After a few moments it will present you with ten different expanded prompts to choose from. You can then select the one you like best and click on the Generate button to generate a set of images. If you want to try a different prompt, just click on the Prompt Genie button again and choose a new option.',
+							'imajinn-ai'
+						) }
+					</p>
+					<p>
+						{ __( "Summoning Prompt Genie does not use any of your credits, so you can summon it as many times as you like. However each time you generate a set of images from one of it's prompts you will use one credit like normal.", 'imajinn-ai' ) }
+					</p>
+
 					<h3>{ __( 'Prefilled Styles', 'imajinn-ai' ) }</h3>
 					<p>
 						{ __(
@@ -320,7 +289,7 @@ export function HelpModal( props ) {
 					<h3>{ __( 'Image Ratio', 'imajinn-ai' ) }</h3>
 					<p>
 						{ __(
-							'You can control the output ratio of the generated images. Square images are the default, while rectangular images have more pixels and take much longer to process.',
+							'You can control the output ratio of the generated images. Square images are the default, while rectangular images have more pixels and take longer to process.',
 							'imajinn-ai'
 						) }
 					</p>
@@ -334,7 +303,7 @@ export function HelpModal( props ) {
 					<h3>{ __( 'Saving Images', 'imajinn-ai' ) }</h3>
 					<p>
 						{ __(
-							"Imajinn AI allows you to save images to your media library, and optionally insert them into your post/page. You can save images by clicking on the save button in the bottom left corner of each image generation. You can insert images into the editor in the same location as the Imajinn block by clicking on the insert button in the bottom right corner. Inserting an image also saves it to your media library, so you don't need to choose both.",
+							"Imajinn AI allows you to save images to your media library, and optionally insert them into your post/page. You can save images by clicking on the save button in the bottom right corner of each image generation. You can insert images into the editor in the same location as the Imajinn block by clicking on the insert button in the bottom right corner. Inserting an image also saves it to your media library, so you don't need to choose both.",
 							'imajinn-ai'
 						) }
 					</p>
@@ -348,7 +317,7 @@ export function HelpModal( props ) {
 					<h3>{ __( 'Image Actions', 'imajinn-ai' ) }</h3>
 					<p>
 						{ __(
-							'For each image result for a generation, you can perform some actions on the image. You can share the image on social media, generate a set of variations, or perform a face repair.',
+							'For each image result for a generation, you can perform some actions on the image. You can share the image on social media, generate a set of variations, perform a face repair, or enter touchup mode.',
 							'imajinn-ai'
 						) }
 					</p>
@@ -364,6 +333,18 @@ export function HelpModal( props ) {
 							'imajinn-ai'
 						) }
 					</p>
+					<p>
+						{ __(
+							'The Touchup button (or "Inpainting") allows you to customize and make modifications to the image in a more precise way. It allows you to remove or replace parts of the image with new content generated from your prompt. This is useful for removing unwanted objects like watermarks, signatures, and duplicate objects. You can also use it to add new objects to the image, such as a new background or foreground. Using touchup can be a bit tricky, so be sure to read the tips popup inside of the image editor so you can make good use of your credits.',
+							'imajinn-ai'
+						) }
+					</p>
+
+					<h3>{ __( 'Prompt History', 'imajinn-ai' ) }</h3>
+					<p>
+						{ __( 'Imajinn saves your prompt history to your site so that you can easily access previous prompts and their results later. Currently the editor will show the last 20 generated prompts and their image results. To jump back in time simply click the Load button next to an item. You can then edit, save, adjust the prompt, styles, or any other action you can normally do after generating a set of images.', 'imajinn-ai' ) }
+					</p>
+
 
 					<h3>{ __( 'Credits', 'imajinn-ai' ) }</h3>
 					<p>
@@ -392,6 +373,83 @@ export function HelpModal( props ) {
 							'imajinn-ai'
 						) }
 					</p>
+
+					<Button variant="secondary" onClick={ closeModal }>
+						{ __( 'Close', 'imajinn-ai' ) }
+					</Button>
+				</Modal>
+			) }
+		</>
+	);
+}
+
+export function TouchupHelpModal( props ) {
+	const [ isOpen, setOpen ] = useState( false );
+	const openModal = () => setOpen( true );
+	const closeModal = () => setOpen( false );
+
+	return (
+		<>
+			<Button
+				onClick={ openModal }
+				icon={ info }
+			>
+				{ __( 'Touchup (beta)', 'imajinn-ai' ) }
+			</Button>
+			{ isOpen && (
+				<Modal
+					{ ...props }
+					onRequestClose={ closeModal }
+					style={ { maxWidth: '900px' } }
+					icon={ <Icon icon={ info } /> }
+					title={ __( 'Touchup (Inpainting) Instructions', 'imajinn-ai' ) }
+				>
+
+					<p>
+						{ __(
+							'The Touchup feature allows you to customize and make modifications to an image in a more precise way. It allows you to remove or replace parts of the image with new content generated from your prompt. This is useful for removing unwanted objects like watermarks, signatures, or duplicates. Or you can also use it to add new objects to the image, such as a new object or background. Touchup allows you to create the exact image you want by choosing where each element in the image goes. You can create the complex image you have in mind, even if it is too specific to get right with one initial prompt.',
+							'imajinn-ai'
+						) }
+					</p>
+
+					<p>
+						{ __( 'Touchup works by choosing an image as an input, masking an area with the brush that you want to modify, then adjusting your prompt to describe what you want in that area. However, this can be quite difficult to work with if you don’t use it right, because sometimes you select an area and put in the prompt, but the image doesn\'t change. So, here are some tips to help you get the best results from Touchup.', 'imajinn-ai' ) }
+					</p>
+
+					<h3>{ __( 'Best Practices', 'imajinn-ai' ) }</h3>
+
+					<h4>{ __( 'Prompt Modification', 'imajinn-ai' ) }</h4>
+					<p>
+						{ __(
+							'The most important thing to keep in mind is whether you should describe the entire image you want or only what you want to add. For example, let’s say you want to change an image of an empty shoreline to add a boat floating on the water. You select an area where you want the boat to go, and your prompt in most cases shouldn’t be “a boat”. Instead it should be “Shoreline with a boat floating on the water”. This is because Imajinn needs to know what the context of the entire image should look like, and then it will fill in the area you selected with the boat. If you just say “a boat”, you are more likely to just get an erased area.',
+							'imajinn-ai'
+						) }
+					</p>
+					<p>{ __( 'There are some cases when you do want to describe only the thing you want to add instead of the final result. For example, if you are trying to simply erase parts of the image, it may work better to describe "a gray background", or whatever it should be replaced with. Also if you are building an image step-by-step and there are a lot of different subjects, focus your prompt on the section you are painting and generalize the rest of the image as detailed below.', 'imajinn-ai' ) }</p>
+					<p>
+						{ __(
+							'When modifying the prompt, there is no need to get too poetic or descriptive because most of the image and its styles are already still there and taken into account, unless you paint out a very large portion of the image. Also if Prompt Genie or our style selectors were used initially, the styles will already be applied to your modified prompt. If you entered your own styles and modifiers to the prompt field, it is best to leave them there so they will be applied to the selected area. Be careful not to change or add styles in the modified prompt that will clash with the rest of the image.',
+							'imajinn-ai'
+						) }
+					</p>
+
+					<h4>{ __( 'Step-by-Step Image Building', 'imajinn-ai' ) }</h4>
+					<p>
+						{ __(
+							'If you are trying to create a complex image with lots of subjects like people, animals, or objects, it can be impossible to do this with just one long prompt. Instead you can use Touchup to add new elements to the image one-by-one. For example, if you are building a landscape, you can use Touchup to add a new tree, mountain, or different characters one at a time. In this case as you add more objects, you should not describe the entire image in your modified prompt, but instead describe the new object you are adding, and summarize or skip the rest. For example, if you were adding a "girl with a dog", you would not put "girl with a dog, boy dancing, other boy with red shirt sitting" as then Imajinn would loose focus on what you want to put in the masked area. Instead summarize the existing objects like "a bunch of children including a girl with a dog".',
+							'imajinn-ai'
+						) }
+					</p>
+
+					<h4>{ __( 'Other Tips', 'imajinn-ai' ) }</h4>
+					<p>{ __( 'When you are making adjustments to part of an existing object, make sure you mask enough of that object so that Imajinn can make a smooth transition between old and new. For example to add a hat to a person, include the top of their head in the masked area. If you want a person next to a cat to be petting the cat, mask their entire arm and part of the cat where their hand would go before prompting “person petting a cat”.', 'imajinn-ai' ) }</p>
+					<p>
+						{ __( 'Be careful with shadows and reflections. Be sure to select not just the object but its shadow and reflection so that the replacement will look more realistic.', 'imajinn-ai' ) }
+					</p>
+					<p>
+						{ __( 'Size matters! Try to select larger areas to replace rather than smaller ones, because the smaller the area is, the less likely it is to actually do anything. Also, the contextual size of the new object to the rest of the image is important too. For example, if you try to replace a cat with an elephant, the size does not make sense to Imajinn, so either nothing will happen or you\'ll only get a piece of the elephant. Either stick with similar sized replacements, or make the prompt ask for a "tiny elephant".', 'imajinn-ai' ) }
+					</p>
+
 
 					<Button variant="secondary" onClick={ closeModal }>
 						{ __( 'Close', 'imajinn-ai' ) }
