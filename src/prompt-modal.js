@@ -123,7 +123,7 @@ export function PromptGenieModal( props ) {
 					{ ...props }
 					onRequestClose={ closeModal }
 					style={ { maxWidth: '90%' } }
-					icon={ <Genie /> }
+					icon={ <Genie iconSize={20} /> }
 					title={ __( 'AI Generated Prompt Ideas', 'imajinn-ai' ) }
 				>
 					<Panel>{ promptList }</Panel>

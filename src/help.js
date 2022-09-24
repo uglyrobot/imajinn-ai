@@ -415,14 +415,14 @@ export function TouchupHelpModal( props ) {
 					<h4>{ __( 'Prompt Modification', 'imajinn-ai' ) }</h4>
 					<p>
 						{ __(
-							'The most important thing to keep in mind is whether you should describe the entire image you want or only what you want to add. For example, let’s say you want to change an image of an empty shoreline to add a boat floating on the water. You select an area where you want the boat to go, and your prompt shouldn’t be “A boat”. Instead it should be “Shoreline with a boat floating on the water”. This is because Imajinn needs to know what the context of the entire image should look like, and then it will fill in the area you selected with the boat. If you just say “A boat”, you are more likely to just get an erased area.',
+							'The most important thing to keep in mind is whether you should describe the entire image you want or only what you want to add. For example, let’s say you want to change an image of an empty shoreline to add a boat floating on the water. You select an area where you want the boat to go, and your prompt in most cases shouldn’t be “a boat”. Instead it should be “Shoreline with a boat floating on the water”. This is because Imajinn needs to know what the context of the entire image should look like, and then it will fill in the area you selected with the boat. If you just say “a boat”, you are more likely to just get an erased area.',
 							'imajinn-ai'
 						) }
 					</p>
-					<p>{ __( 'There are some cases when you do want to describe the thing you want to add instead of the final result. For example, if you are trying to simply erase parts of the image, it may work better to describe "a gray background", or whatever it should be replaced with. Also if you are building an image step-by-step and there are a lot of different subjects, focus your prompt on the section you are painting and generalize the rest of the image as detailed below.', 'imajinn-ai' ) }</p>
+					<p>{ __( 'There are some cases when you do want to describe only the thing you want to add instead of the final result. For example, if you are trying to simply erase parts of the image, it may work better to describe "a gray background", or whatever it should be replaced with. Also if you are building an image step-by-step and there are a lot of different subjects, focus your prompt on the section you are painting and generalize the rest of the image as detailed below.', 'imajinn-ai' ) }</p>
 					<p>
 						{ __(
-							'When modifying the prompt, no need to get too poetic or descriptive like a normal prompt, because most of the image and its styles are already still there and taken into account, unless you paint out a very large portion of the image. Also if Prompt Genie or our style selectors were used initially, the styles will already be applied to your modified prompt. If you entered your own styles and modifiers to the prompt field, leave them there so they will be applied to the selected area. Be careful not to change or add styles that will clash with the rest of the image.',
+							'When modifying the prompt, there is no need to get too poetic or descriptive because most of the image and its styles are already still there and taken into account, unless you paint out a very large portion of the image. Also if Prompt Genie or our style selectors were used initially, the styles will already be applied to your modified prompt. If you entered your own styles and modifiers to the prompt field, it is best to leave them there so they will be applied to the selected area. Be careful not to change or add styles in the modified prompt that will clash with the rest of the image.',
 							'imajinn-ai'
 						) }
 					</p>
@@ -430,17 +430,18 @@ export function TouchupHelpModal( props ) {
 					<h4>{ __( 'Step-by-Step Image Building', 'imajinn-ai' ) }</h4>
 					<p>
 						{ __(
-							'If you are trying to create a complex image with lots of subjects like people, animals, or objects, it can be impossible to do this with just one prompt. Instead you can use Touchup to add new elements to the image step-by-step. For example, if you are building a landscape, you can use Touchup to add a new tree, mountain, or different characters one at a time. In this case as you add more objects, you should not describe the entire image in your prompt, but instead describe the new object you are adding, and summarize or skip the rest. For example, if you were adding a "girl with a dog", you would not put "girl with a dog, boy dancing, other boy with red shirt sitting" as then Imajinn would loose focus on what you want to put in the masked area. Instead summarize the existing objects like "a bunch of children including a girl with a dog".',
+							'If you are trying to create a complex image with lots of subjects like people, animals, or objects, it can be impossible to do this with just one long prompt. Instead you can use Touchup to add new elements to the image one-by-one. For example, if you are building a landscape, you can use Touchup to add a new tree, mountain, or different characters one at a time. In this case as you add more objects, you should not describe the entire image in your modified prompt, but instead describe the new object you are adding, and summarize or skip the rest. For example, if you were adding a "girl with a dog", you would not put "girl with a dog, boy dancing, other boy with red shirt sitting" as then Imajinn would loose focus on what you want to put in the masked area. Instead summarize the existing objects like "a bunch of children including a girl with a dog".',
 							'imajinn-ai'
 						) }
 					</p>
 
 					<h4>{ __( 'Other Tips', 'imajinn-ai' ) }</h4>
+					<p>{ __( 'When you are making adjustments to part of an existing object, make sure you mask enough of that object so that Imajinn can make a smooth transition between old and new. For example to add a hat to a person, include the top of their head in the masked area. If you want a person next to a cat to be petting the cat, mask their entire arm and part of the cat where their hand would go before prompting “person petting a cat”.', 'imajinn-ai' ) }</p>
 					<p>
 						{ __( 'Be careful with shadows and reflections. Be sure to select not just the object but its shadow and reflection so that the replacement will look more realistic.', 'imajinn-ai' ) }
 					</p>
 					<p>
-						{ __( 'Size matters! Try to select larger areas to replace rather than smaller ones, because the smaller the area is, the less likely it is to actually do anything. And the contextual size of the new object to the rest of the image is important too. For example, if you try to replace a cat with an elephant, the size does not make sense to Imajinn, so either nothing will happen or you\'ll only get a piece of the elephant. Either stick with similar sized replacements, or make the prompt ask for a "tiny elephant".', 'imajinn-ai' ) }
+						{ __( 'Size matters! Try to select larger areas to replace rather than smaller ones, because the smaller the area is, the less likely it is to actually do anything. Also, the contextual size of the new object to the rest of the image is important too. For example, if you try to replace a cat with an elephant, the size does not make sense to Imajinn, so either nothing will happen or you\'ll only get a piece of the elephant. Either stick with similar sized replacements, or make the prompt ask for a "tiny elephant".', 'imajinn-ai' ) }
 					</p>
 
 
