@@ -612,15 +612,19 @@ export default function Edit() {
 
 		if ( isSaved ) {
 			return (
-				<Button disabled icon={ check }>
-					{ __( 'Saved', 'imajinn-ai' ) }
+				<Button disabled icon={ check } label={ __( 'Saved', 'imajinn-ai' ) }>
+					{ IMAJINN.custom_editor ? __( 'Saved', 'imajinn-ai' ) : '' }
 				</Button>
 			);
 		} else {
 			if ( isSaving ) {
 				return (
-					<Button disabled>
-						<Spinner /> { __( 'Saving', 'imajinn-ai' ) }
+					<Button
+						disabled
+						style={ ! IMAJINN.custom_editor ? { maxWidth: '36px' } : {} }
+						icon={ <Spinner /> }
+						label={ __( 'Saving', 'imajinn-ai' ) }>
+						 { IMAJINN.custom_editor ? __( 'Saving', 'imajinn-ai' ) : '' }
 					</Button>
 				);
 			} else {
@@ -631,6 +635,7 @@ export default function Edit() {
 						}
 						disabled={ isSaving }
 						icon={ upload }
+						label={ __( 'Save to Media Library', 'imajinn-ai' ) }
 						onClick={ async () => {
 							setIsSaving( true );
 							if ( ! ( await saveImage( props.genindex ) ) ) {
@@ -638,7 +643,7 @@ export default function Edit() {
 							}
 						} }
 					>
-						{ __( 'Save', 'imajinn-ai' ) }
+						{ IMAJINN.custom_editor ? __( 'Save', 'imajinn-ai' ) : '' }
 					</Button>
 				);
 			}
@@ -743,14 +748,14 @@ export default function Edit() {
 		const [ width, setWidth ] = useState( '400px' );
 		const [ height, setHeight ] = useState( '400px' );
 		useEffect( () => {
-			setWidth( generations.length === 1 ? '400px' : '300px' );
+			setWidth( generations.length === 1 ? '400px' : '350px' );
 			if ( queryRatio === '3:2' ) {
-				setHeight( generations.length === 1 ? '266px' : '200px' );
+				setHeight( generations.length === 1 ? '266px' : '233px' );
 			} else if ( queryRatio === '2:3' ) {
 				setHeight( '450px' );
 				setWidth( '300px' );
 			} else {
-				setHeight( generations.length === 1 ? '400px' : '300px' );
+				setHeight( generations.length === 1 ? '400px' : '350px' );
 			}
 		}, [ generations, queryRatio ] ); // <-- here put the parameter to listen
 

@@ -246,7 +246,7 @@ export function HelpModal( props ) {
 						) }
 					</p>
 					<p>
-						{ __( "Summoning Prompt Genie does not use any of your credits, so you can summon it as many times as you like. However each time your choose to generate a set of images from one of it's prompts you will use one credit like normal.", 'imajinn-ai' ) }
+						{ __( "Summoning Prompt Genie does not use any of your credits, so you can summon it as many times as you like. However each time you generate a set of images from one of it's prompts you will use one credit like normal.", 'imajinn-ai' ) }
 					</p>
 
 					<h3>{ __( 'Prefilled Styles', 'imajinn-ai' ) }</h3>
@@ -289,7 +289,7 @@ export function HelpModal( props ) {
 					<h3>{ __( 'Image Ratio', 'imajinn-ai' ) }</h3>
 					<p>
 						{ __(
-							'You can control the output ratio of the generated images. Square images are the default, while rectangular images have more pixels and take much longer to process.',
+							'You can control the output ratio of the generated images. Square images are the default, while rectangular images have more pixels and take longer to process.',
 							'imajinn-ai'
 						) }
 					</p>
@@ -303,7 +303,7 @@ export function HelpModal( props ) {
 					<h3>{ __( 'Saving Images', 'imajinn-ai' ) }</h3>
 					<p>
 						{ __(
-							"Imajinn AI allows you to save images to your media library, and optionally insert them into your post/page. You can save images by clicking on the save button in the bottom left corner of each image generation. You can insert images into the editor in the same location as the Imajinn block by clicking on the insert button in the bottom right corner. Inserting an image also saves it to your media library, so you don't need to choose both.",
+							"Imajinn AI allows you to save images to your media library, and optionally insert them into your post/page. You can save images by clicking on the save button in the bottom right corner of each image generation. You can insert images into the editor in the same location as the Imajinn block by clicking on the insert button in the bottom right corner. Inserting an image also saves it to your media library, so you don't need to choose both.",
 							'imajinn-ai'
 						) }
 					</p>
@@ -339,6 +339,12 @@ export function HelpModal( props ) {
 							'imajinn-ai'
 						) }
 					</p>
+
+					<h3>{ __( 'Prompt History', 'imajinn-ai' ) }</h3>
+					<p>
+						{ __( 'Imajinn saves your prompt history to your site so that you can easily access previous prompts and their results later. Currently the editor will show the last 20 generated prompts and their image results. To jump back in time simply click the Load button next to an item. You can then edit, save, adjust the prompt, styles, or any other action you can normally do after generating a set of images.', 'imajinn-ai' ) }
+					</p>
+
 
 					<h3>{ __( 'Credits', 'imajinn-ai' ) }</h3>
 					<p>
