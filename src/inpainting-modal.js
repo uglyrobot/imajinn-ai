@@ -5,11 +5,12 @@ import {
 import {brush, undo, reusableBlock} from '@wordpress/icons';
 import {useState, useEffect} from '@wordpress/element';
 import CanvasDraw from "@win11react/react-canvas-draw";
+import {TouchupHelpModal} from "./help";
 
 export function InpaintingModal(props) {
 	const [isOpen, setOpen] = useState(false);
 	const [canvas, setCanvas] = useState(null);
-	const [brushSize, setBrushSize] = useState(20);
+	const [brushSize, setBrushSize] = useState(25);
 	const [prompt, setPrompt] = useState(props.prompt);
 	const [height, setHeight] = useState(512);
 	const [width, setWidth] = useState(512);
@@ -46,8 +47,8 @@ export function InpaintingModal(props) {
 				checked={brushSize}
 			>
 				<Radio label={__('Small', 'imajinn-ai')} className="brush-sm" value={10}><Icon icon={brush} /></Radio>
-				<Radio label={__('Medium', 'imajinn-ai')} className="brush-md" value={20}><Icon icon={brush} /></Radio>
-				<Radio label={__('large', 'imajinn-ai')} className="brush-lg" value={30}><Icon icon={brush} /></Radio>
+				<Radio label={__('Medium', 'imajinn-ai')} className="brush-md" value={25}><Icon icon={brush} /></Radio>
+				<Radio label={__('large', 'imajinn-ai')} className="brush-lg" value={40}><Icon icon={brush} /></Radio>
 			</RadioGroup>
 		</>);
 	};
@@ -83,6 +84,7 @@ export function InpaintingModal(props) {
 				</CardMedia>
 				<CardFooter>
 					<BrushSize />
+					<TouchupHelpModal />
 					<ButtonGroup>
 						<Button
 							icon={reusableBlock}
@@ -109,7 +111,7 @@ export function InpaintingModal(props) {
 				label={
 					<>
 						{ __(
-							'Change the main subject of the prompt to your replacement, leave any styles:',
+							'Modified prompt describing the entire image and the masked area:',
 							'imajinn-ai'
 						) }
 					</>

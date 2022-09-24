@@ -983,6 +983,11 @@ export default function Edit() {
 								/>
 							</>
 						) }
+						<ToolbarButton
+							onClick={ visitAccount }
+							icon={ <Dashicon icon={"admin-users"} /> }
+							label={ __( 'Account / Upgrade', 'imajinn-ai' ) }
+						/>
 						<HelpModal />
 					</ToolbarGroup>
 				</Toolbar>
@@ -1059,7 +1064,7 @@ export default function Edit() {
 							/>
 							<Text className={"prompt-style"} numberOfLines={2} truncate>{ promptStyle }</Text>
 							<div className={ 'styles-form' }>
-								<PromptGenieModal {...{prompt, setPrompt, setPromptStyle, startJob, setError, clearStyles}}/>
+								<PromptGenieModal {...{prompt, setPrompt, setPromptStyle, startJob, setError, clearStyles, isLoading}}/>
 								<StyleSelect />
 								<ArtistSelect />
 								<ModifierSelect />

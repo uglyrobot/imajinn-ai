@@ -20,7 +20,7 @@ export default {
 					name: __( 'Portrait', 'imajinn-ai' ),
 				},
 				{
-					id: 'polaroid photograph',
+					id: 'polaroid photograph, polaroid frame',
 					name: __( 'Polaroid', 'imajinn-ai' ),
 				},
 				{
@@ -36,7 +36,7 @@ export default {
 					name: __( 'Photojournalism', 'imajinn-ai' ),
 				},
 				{
-					id: 'macro photograph',
+					id: 'macro photography, close up, zoom, depth of field',
 					name: __( 'Macro', 'imajinn-ai' ),
 				},
 				{
@@ -44,7 +44,7 @@ export default {
 					name: __( 'Long Exposure', 'imajinn-ai' ),
 				},
 				{
-					id: 'fish eye lense, wide-angle',
+					id: 'photograph, fish eye lense, wide-angle',
 					name: __( 'Fish Eye', 'imajinn-ai' ),
 				},
 			],

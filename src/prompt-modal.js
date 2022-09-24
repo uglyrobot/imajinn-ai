@@ -7,13 +7,13 @@ export function PromptGenieModal( props ) {
 	const [ isOpen, setOpen ] = useState( false );
 	const [ isSubmitting, setIsSubmitting ] = useState( false );
 	const [ prompts, setPrompts ] = useState( [] );
+	const [ generatedPrompts, setGeneratedPrompts ] = useState( [] );
 	const [ currentPrompt, setCurrentPrompt ] = useState( null );
 	const openModal = () => setOpen( true );
 	const closeModal = () => setOpen( false );
 
 	const createPrompts = async ( prompt ) => {
 		setIsSubmitting( true );
-		props.clearStyles();
 
 		//save the attachment
 		const response = await fetch(
@@ -33,6 +33,7 @@ export function PromptGenieModal( props ) {
 		setIsSubmitting( false );
 		if ( result.success ) {
 			setPrompts( result.data.prompts );
+			setGeneratedPrompts( [] );
 			setCurrentPrompt( prompt );
 			openModal();
 		} else {
@@ -47,14 +48,20 @@ export function PromptGenieModal( props ) {
 
 			<PanelBody key={ index.toString() } opened={ true }>
 				<PanelRow>
-					<span><em>{ props.prompt }</em>{ item.replace( props.prompt, '' ) }</span>
+					<span><em>{ props.prompt }</em> { item }</span>
 					<Button
 						variant="primary"
 						isSmall
+						disabled={ generatedPrompts.some( ( e ) => e.index === index ) }
 						className={ "genie-generate" }
 						onClick={ () => {
-							props.setPromptStyle( item.replace( props.prompt, '' ) )
-							props.startJob( null, null, null, null, item.replace( props.prompt, '' ) );
+							props.clearStyles();
+							props.setPromptStyle( item )
+							props.startJob( null, null, null, null, item );
+							setGeneratedPrompts( ( generated ) => [
+								...generated,
+								{ index: index },
+							] );
 							closeModal()
 						} }
 					>
@@ -76,6 +83,7 @@ export function PromptGenieModal( props ) {
 		} else {
 			return (
 				<Button
+					disabled={ props.isLoading }
 					variant="secondary"
 					id="imajinn-prompt-genie-button"
 					label={__('Prompt Genie: AI generated prompt masterpiece', 'imajinn-ai')}
@@ -115,6 +123,7 @@ export function PromptGenieModal( props ) {
 					{ ...props }
 					onRequestClose={ closeModal }
 					style={ { maxWidth: '90%' } }
+					icon={ <Genie /> }
 					title={ __( 'AI Generated Prompt Ideas', 'imajinn-ai' ) }
 				>
 					<Panel>{ promptList }</Panel>
