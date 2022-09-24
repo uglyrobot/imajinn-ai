@@ -125,11 +125,12 @@ We also will be filtering prompt input and screening output to block the creatio
 == Screenshots ==
 
 1. The Imajinn AI block with generated images and prompt history.
-1. Generating images from a prompt with style presets.
-1. Saving high-resolution images to your WordPress media library and inserting them as an image block.
-1. Media admin page for generating images outside of Gutenberg.
+1. Saving high-resolution images to your WordPress media library for use in any theme or page builder.
+1. Saving and inserting images as an image block in Gutenberg.
+1. Using Prompt Genie and the face repair tools.
 1. Generate variations of an image with a similar style and layout.
 1. AI-based facial restoration to restore facial details and enhance colors with a good balance of realness and fidelity.
+2. Using Touchup (inpainting) to remove a watermark and add a crown to a princess.
 
 == Changelog ==
 
