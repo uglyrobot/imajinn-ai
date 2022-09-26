@@ -20,7 +20,7 @@ export default {
 					name: __( 'Portrait', 'imajinn-ai' ),
 				},
 				{
-					id: 'polaroid photograph',
+					id: 'polaroid photograph, polaroid frame',
 					name: __( 'Polaroid', 'imajinn-ai' ),
 				},
 				{
@@ -36,7 +36,7 @@ export default {
 					name: __( 'Photojournalism', 'imajinn-ai' ),
 				},
 				{
-					id: 'macro photograph',
+					id: 'macro photography, close up, zoom, depth of field',
 					name: __( 'Macro', 'imajinn-ai' ),
 				},
 				{
@@ -44,7 +44,7 @@ export default {
 					name: __( 'Long Exposure', 'imajinn-ai' ),
 				},
 				{
-					id: 'fish eye lense, wide-angle',
+					id: 'photograph, fish eye lense, wide-angle',
 					name: __( 'Fish Eye', 'imajinn-ai' ),
 				},
 			],
@@ -285,7 +285,7 @@ export default {
 	artists: [
 		{
 			value: '',
-			label: __( 'No Artist', 'imajinn-ai' ),
+			label: '',
 		},
 		{
 			value: 'by Albert Bierstadt',
@@ -352,6 +352,10 @@ export default {
 			label: __( 'Stanley Artgerm', 'imajinn-ai' ),
 		},
 		{
+			value: 'by Thomas Kinkade',
+			label: __( 'Thomas Kinkade', 'imajinn-ai' ),
+		},
+		{
 			value: 'by Vincent van Gogh',
 			label: __( 'Vincent van Gogh', 'imajinn-ai' ),
 		},
@@ -359,7 +363,7 @@ export default {
 	modifiers: [
 		{
 			value: '',
-			label: __( 'No Modifier', 'imajinn-ai' ),
+			label: '',
 		},
 		{
 			value: 'in the style of steampunk',
@@ -378,7 +382,7 @@ export default {
 			label: __( 'Detailed & Intricate', 'imajinn-ai' ),
 		},
 		{
-			value: 'n a symbolic and meaningful style, insanely detailed and intricate, hypermaximalist, elegant, ornate, hyper realistic, super detailed',
+			value: 'in a symbolic and meaningful style, insanely detailed and intricate, hypermaximalist, elegant, ornate, hyper realistic, super detailed',
 			label: __( 'Symbolic & Meaningful', 'imajinn-ai' ),
 		},
 		{

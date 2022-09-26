@@ -61,7 +61,7 @@
 			}
 		}
 	}
-	
+
 	.loop-icon {
 		position: absolute;
 		visibility: hidden;
@@ -109,7 +109,13 @@
 		width: 100%;
 		margin-bottom: 5px;
 
-		.styles-form {
+		.prompt-style {
+	  width: 100%;
+	  text-align: right;
+	  margin-bottom: 10px;
+	  font-weight: lighter;
+	}
+	.styles-form {
 			display: flex;
 			align-items: flex-end;
 			justify-content: flex-start;
@@ -121,7 +127,11 @@
 				margin-right: 20px;
 				display: inline-block;
 
-				&:last-of-type {
+				&:first-of-type {
+		  width: auto;
+		}
+
+		&:last-of-type {
 					margin-right: 0;
 				}
 			}
@@ -133,8 +143,28 @@
 					height: 15px;
 				}
 			}
+
+	.prompt-genie {
+		.components-base-control__field {
+		  margin-bottom: 7px;
 		}
+		label {
+		  line-height: 1.2;
+		}
+		button {
+		  padding: 0 8px 0 0;
+		  height: 30px;
+		  min-width: 90px;
+		  margin-bottom: 0;
+
+		  svg {
+			height: 18px;
+			margin-right: 0;
+		  }
+		}
+	  }
 	}
+  }
 
 	.text-prompt {
 		width: 100%;
@@ -226,7 +256,6 @@
 			box-shadow: none;
 		}
 	}
-
 }
 
 .imajinn-history {
@@ -249,6 +278,24 @@
 	.components-panel__row {
 		clear: both;
 	}
+
+
+
+}
+
+/* Inpainting Modal */
+
+button.brush-sm svg {
+  width: 16px;
+}
+
+button.brush-md svg {
+  width: 20px;
+}
+
+/* Prompt Genie modal */
+button.genie-generate {
+  margin-left: 10px;
 }
 
 .imajinn-toolbar {
