@@ -168,10 +168,6 @@ export default function Edit() {
 					setStatus(null);
 					setError(result.data[0].message);
 				}
-
-				if(!isLoading){
-					setChanged(true)
-				}
 			})
 			.catch((error) => {
 				setIsLoading(false);
@@ -217,12 +213,15 @@ export default function Edit() {
 						},
 						...history,
 					]);
+					setChanged(true)
 				} else if (result.data.status === 'failed') {
 					setError(result.data.error);
 					setStatus(null);
 					setIsLoading(false);
 					setJobId(null);
+					setChanged(true)
 				}
+
 
 				//keep looping until the job is done
 				if (
@@ -234,12 +233,14 @@ export default function Edit() {
 					setStatus(null);
 					setIsLoading(false);
 					setJobId(null);
+					setChanged(true)
 				}
 			} else {
 				setStatus(null);
 				setIsLoading(false);
 				setJobId(null);
 				setError(result.data[0].message);
+				setChanged(true)
 			}
 		}, 4000);
 	};
