@@ -59,7 +59,7 @@ import { ArtistSelect, ModifierSelect, StyleSelect } from './editor-components/s
 import ErrorNotice from './editor-components/ErrorNotice';
 import ResultsFlex from './editor-components/ResultsFlex';
 import GeneratingSpinner from './editor-components/GeneratingSpinner';
-
+import TopRight from './editor-components/TopRight'
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -90,7 +90,7 @@ export default function Edit() {
 	const [saved, setSaved] = useState([]);
 	const [selectedImage, setSelectedImage] = useState(null)
 	useEffect(() => {
-		return ()=>{
+		return () => {
 			setChanged(false)
 		}
 	}, [imageStyle, imageArtist, imageModifier])
@@ -161,7 +161,7 @@ export default function Edit() {
 					setCredits(result.data.remaining_credits);
 					setProgress(result.data.progress);
 					checkJobLoop(result.data.job_id);
-					
+
 				} else {
 					setIsLoading(false);
 					setJobId(null);
@@ -362,27 +362,6 @@ export default function Edit() {
 		removeBlocks(block_ids);
 	};
 
-	const TopRight = () => {
-		//skip in custom editor
-		if (IMAJINN.custom_editor) {
-			return null;
-		}
-
-		return (
-			<div className="corner-controls">
-				<HelpModal />
-				<Button
-					className="imajinn-close-button"
-					icon={close}
-					label={__('Close Imajinn Block', 'imajinn-ai')}
-					onClick={() => {
-						deleteBlock();
-					}}
-				/>
-			</div>
-		);
-	};
-
 	const UpgradeModal = (props) => {
 		const [isOpen, setOpen] = useState(props.showUpgrade);
 		const closeModal = () => {
@@ -439,10 +418,17 @@ export default function Edit() {
 
 	return (
 		<>
-			{selectedImage&&<ViewImage image={selectedImage} setImage={setSelectedImage}/>}
+			{selectedImage && <ViewImage image={selectedImage} setImage={setSelectedImage} />}
 			<figure {...blockProps}>
-				<ImajinnToolbar refreshInfo={refreshInfo} isConnected={isConnected} credits={credits}/>
-				<History history={history} />
+				<ImajinnToolbar refreshInfo={refreshInfo} isConnected={isConnected} credits={credits} />
+				<History
+					setImageModifier={setImageModifier}
+					setImageArtist={setImageArtist}
+					setImageStyle={setImageStyle}
+					setRatio={setRatio}
+					history={history}
+					setPrompt={setPrompt}
+					setGenerations={setGenerations} />
 				<Placeholder
 					icon={IMAJINN.custom_editor ? null : Imajinn}
 					instructions={placeholderInstructions}
@@ -459,9 +445,9 @@ export default function Edit() {
 					)}
 					{isConnected && (
 						<>
-							{hasError&&<ErrorNotice hasError={hasError}/>}
-							{isLoading&&<GeneratingSpinner status={status} progress={progress} cancelJob={cancelJob}/>}
-							<ResultsFlex saveImage={saveImage} setSelectedImage={setSelectedImage} saved={saved} generations={generations} queryRatio={queryRatio}/>
+							{hasError && <ErrorNotice hasError={hasError} />}
+							{isLoading && <GeneratingSpinner status={status} progress={progress} cancelJob={cancelJob} />}
+							<ResultsFlex saveImage={saveImage} setSelectedImage={setSelectedImage} saved={saved} generations={generations} queryRatio={queryRatio} />
 							<div className="prompt-form">
 								<TextareaControl
 									disabled={isLoading}
@@ -480,9 +466,9 @@ export default function Edit() {
 									onChange={(text) => setPrompt(text)}
 								/>
 								<div className={'styles-form'}>
-									<StyleSelect setImageStyle={setImageStyle} isLoading={isLoading} imageStyle={imageStyle} optionData={optionData}/>
-									<ArtistSelect setImageArtist={setImageArtist} isLoading={isLoading} imageArtist={imageArtist} optionData={optionData}/>
-									<ModifierSelect setImageModifier={setImageModifier} isLoading={isLoading} imageModifier={imageModifier} optionData={optionData}/>
+									<StyleSelect setImageStyle={setImageStyle} isLoading={isLoading} imageStyle={imageStyle} optionData={optionData} />
+									<ArtistSelect setImageArtist={setImageArtist} isLoading={isLoading} imageArtist={imageArtist} optionData={optionData} />
+									<ModifierSelect setImageModifier={setImageModifier} isLoading={isLoading} imageModifier={imageModifier} optionData={optionData} />
 									<Button
 										icon={close}
 										disabled={isLoading}
@@ -501,7 +487,7 @@ export default function Edit() {
 							</div>
 							<Flex align="top" wrap="true">
 								<FlexItem>
-									<RatioToggle ratio={ratio} setRatio={setRatio} image={image} aspectRatio={aspectRatio}/>
+									<RatioToggle ratio={ratio} setRatio={setRatio} image={image} aspectRatio={aspectRatio} />
 								</FlexItem>
 								<FlexItem>
 									<Button isPrimary disabled={isLoading} onClick={startJob}>
@@ -515,7 +501,7 @@ export default function Edit() {
 							</Flex>
 						</>
 					)}
-					<TopRight />
+					{IMAJINN.custom_editor && <TopRight deleteBlock={deleteBlock} />}
 				</Placeholder>
 
 				<div className="imajinn-footer">

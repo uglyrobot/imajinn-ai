@@ -24,6 +24,10 @@
 		background-color: inherit;
 	}
 
+	// .components-placeholder{
+	// 	margin-left: 20px;
+	// }
+
 	.components-placeholder__label svg {
 		fill: #000;
 	}
@@ -41,19 +45,36 @@
 		width: 100%;
 		margin-bottom: 20px;
 	}
+	.loop-show{
+		cursor: pointer;
+		&:hover{
+			.loop-icon{
+				background: rgba(0, 0, 0, 0.5);
+				visibility: visible;
+				transition: 0.2s;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+	}
+	
+	.loop-icon {
+		position: absolute;
+		visibility: hidden;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: 0.2s;
+	}
 
 	img.generation-zoom {
-		transition: transform .2s;
-
-		/* Animation */
-		&:hover {
-			transform: scale(1.25);
-			/* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-			z-index: 100;
-			position: absolute;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-			border-radius: 3px;
-		}
+		cursor: pointer;
 	}
 
 	.components-placeholder__fieldset .components-button,
