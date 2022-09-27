@@ -499,6 +499,7 @@ export default function Edit() {
 									startJob,
 									saveImage,
 									setSelectedImage,
+									setError,
 								} }
 							/>
 							<div className="prompt-form">

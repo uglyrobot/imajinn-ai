@@ -8,6 +8,7 @@ const FaceFixButton = ( {
 	setGenerations,
 	faceFixed,
 	setFaceFixed,
+	setError,
 	...props
 } ) => {
 	const [ isFixing, setIsFixing ] = useState( false );
@@ -15,6 +16,8 @@ const FaceFixButton = ( {
 
 	const faceFix = async ( genIndex ) => {
 		let image = generations[ genIndex ].jpg;
+
+		setError( null );
 
 		//save the attachment
 		const response = await fetch(
@@ -51,6 +54,8 @@ const FaceFixButton = ( {
 				}
 			);
 			return result.data;
+		} else {
+			setError( result.data[ 0 ].message );
 		}
 
 		return false;
