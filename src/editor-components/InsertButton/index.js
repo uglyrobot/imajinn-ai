@@ -48,7 +48,11 @@ const InsertButton = ( { saved, saveImage, ...props } ) => {
 
 	if ( isSaving ) {
 		return (
-			<Button disabled>
+			<Button
+				disabled
+				className="imajinn-image-insert"
+				label={ __( 'Inserting', 'imajinn-ai' ) }
+			>
 				<Spinner />
 			</Button>
 		);

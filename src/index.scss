@@ -249,12 +249,18 @@
 		padding: calc(10px) calc(10px);
 
 		.imajinn-image-insert {
-			margin-left: 10px;
+			margin-left: 5px;
 		}
 
 		.components-button-group.imajinn-image-actions .components-button {
 			box-shadow: none;
+		  	border: none;
 		}
+
+	  .components-button .components-spinner {
+		height: 24px;
+		margin: 0;
+	  }
 	}
 }
 
