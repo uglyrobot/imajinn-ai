@@ -1,7 +1,5 @@
-import {
-	Button,
-} from '@wordpress/components';
-import {gallery} from '@wordpress/icons';
+import { Button } from '@wordpress/components';
+import { gallery } from '@wordpress/icons';
 import { __, _x } from '@wordpress/i18n';
 
 const VariationsButton = ( props ) => {
@@ -19,4 +17,4 @@ const VariationsButton = ( props ) => {
 	);
 };
 
-export default VariationsButton
+export default VariationsButton;

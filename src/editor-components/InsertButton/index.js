@@ -1,15 +1,10 @@
-import {
-	Button,
-	Spinner,
-} from '@wordpress/components';
-import {useState} from 'react'
-import {
-	postFeaturedImage,
-
-} from '@wordpress/icons';
+import { Button, Spinner } from '@wordpress/components';
+import { useState } from 'react';
+import { postFeaturedImage } from '@wordpress/icons';
 import { __, _x } from '@wordpress/i18n';
-const InsertButton = (props) => {
-    const [isSaving, setIsSaving] = useState(false);
+
+const InsertButton = ( props ) => {
+	const [ isSaving, setIsSaving ] = useState( false );
 
 	const insertImageBlock = async ( genIndex ) => {
 		let data = false;
@@ -47,31 +42,35 @@ const InsertButton = (props) => {
 		return false;
 	};
 
-    if (isSaving) {
-        return (
-            <Button disabled>
-                <Spinner />
-            </Button>
-        );
-    } else {
-	    return (
-		    <Button
-			    variant="primary"
-			    className="imajinn-image-insert"
-			    disabled={ isSaving }
-			    icon={ postFeaturedImage }
-			    onClick={ async () => {
-				    setIsSaving( true );
-				    const result = await insertImageBlock( props.genindex );
-				    if ( ! result ) {
-					    setIsSaving( false );
-				    }
-			    } }
-		    >
-			    { __( 'Insert', 'imajinn-ai' ) }
-		    </Button>
-	    );
-    }
+	if ( IMAJINN.custom_editor ) {
+		return null;
+	}
+
+	if ( isSaving ) {
+		return (
+			<Button disabled>
+				<Spinner />
+			</Button>
+		);
+	} else {
+		return (
+			<Button
+				variant="primary"
+				className="imajinn-image-insert"
+				disabled={ isSaving }
+				icon={ postFeaturedImage }
+				onClick={ async () => {
+					setIsSaving( true );
+					const result = await insertImageBlock( props.genindex );
+					if ( ! result ) {
+						setIsSaving( false );
+					}
+				} }
+			>
+				{ __( 'Insert', 'imajinn-ai' ) }
+			</Button>
+		);
+	}
 };
 
-export default InsertButton
+export default InsertButton;
