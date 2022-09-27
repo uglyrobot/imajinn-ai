@@ -1,7 +1,7 @@
 import { Card, CardMedia } from '@wordpress/components';
 import ImageFooter from '../ImageFooter';
 import searchIcon from './search.svg';
-const ResultsFlex = ( { setSelectedImage, queryRatio, ...props } ) => {
+const ResultsFlex = ( { setSelectedImage, ...props } ) => {
 	const width = '300px';
 	const height = '300px';
 
