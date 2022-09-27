@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { postFeaturedImage } from '@wordpress/icons';
 import { __, _x } from '@wordpress/i18n';
 
-const InsertButton = ( props ) => {
+const InsertButton = ( { saved, saveImage, ...props } ) => {
 	const [ isSaving, setIsSaving ] = useState( false );
 
 	const insertImageBlock = async ( genIndex ) => {
@@ -20,7 +20,7 @@ const InsertButton = ( props ) => {
 				.select( 'core/block-editor' )
 				.getBlocks()
 				.map( function ( block ) {
-					return block.name == 'infinite-uploads/imajinn-ai';
+					return block.name === 'infinite-uploads/imajinn-ai';
 				} )
 				.indexOf( true );
 
