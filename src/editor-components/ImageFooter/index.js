@@ -2,37 +2,34 @@ import InsertButton from "../InsertButton";
 import SaveButton from "../SaveButton";
 import {
 	Button,
-	CardFooter,
-	Dashicon,
+	CardFooter
 } from '@wordpress/components';
-import { __, _x } from '@wordpress/i18n';
-const ImageFooter = ({ genindex,saveImage, saved,...props }) => {
-    if (IMAJINN.custom_editor) {
-        return (
-            <CardFooter>
-                <Button
-                    href={`${ajaxurl}?action=imajinn-tweet&image=${props.src}`}
-                    target="_blank"
-                    icon={<Dashicon icon="twitter" />}
-                    label={__('Share on Twitter', 'imajinn-ai')}
-                />
-                <SaveButton {...props} saved={saved} saveImage={saveImage}/>
-            </CardFooter>
-        );
-    } else {
-        return (
-            <CardFooter>
-                <SaveButton {...props} saved={saved} saveImage={saveImage}/>
-                <Button
-                    href={`${ajaxurl}?action=imajinn-tweet&image=${props.src}`}
-                    target="_blank"
-                    icon={<Dashicon icon="twitter" />}
-                    label={__('Share on Twitter', 'imajinn-ai')}
-                />
-                <InsertButton {...props} genindex={genindex}/>
-            </CardFooter>
-        );
-    }
+import {share} from '@wordpress/icons';
+import {__, _x} from '@wordpress/i18n';
+import {InpaintingModal} from "../../inpainting-modal";
+import FaceFixButton from "../FaceFixButton";
+import VariationsButton from "../VariationsButton";
+
+const ImageFooter = ({genindex, saveImage, saved, ...props}) => {
+	return (
+		<CardFooter>
+			<ButtonGroup className="imajinn-image-actions">
+				<Button
+					href={`${ajaxurl}?action=imajinn-tweet&image=${props.src}`}
+					target="_blank"
+					icon={share}
+					label={__('Share on Twitter', 'imajinn-ai')}
+				/>
+				<VariationsButton {...props} />
+				<FaceFixButton {...props} />
+				<InpaintingModal {...props} src={generations[props.genindex].jpg} {...{prompt, setPrompt, queryRatio, setRatio, startJob}} />
+			</ButtonGroup>
+			<ButtonGroup>
+				<SaveButton {...props} />
+				<InsertButton {...props} />
+			</ButtonGroup>
+		</CardFooter>
+	);
 };
 
 export default ImageFooter

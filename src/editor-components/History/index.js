@@ -12,10 +12,15 @@ const History = ({
     setPrompt,
     setGenerations,
     setRatio,
-    setImageStyle,
-    setImageArtist,
-    setImageModifier
+	clearStyles,
+	                 setQueryRatio,
+	                 setSaved,
+	                 setFaceFixed
 }) => {
+
+	if ( history.length <= 0 ) {
+		return null;
+	}
 
     return (
         <InspectorControls key="setting">
@@ -27,23 +32,25 @@ const History = ({
                     history.map((item, index) => (
                         <PanelBody key={index}>
                             <h2 className="components-panel__body-title">
-                                {item.generations.map((gen, index) => (
-                                    <img
-                                        key={index}
-                                        src={gen.thumbnail}
-                                        alt={'Result ' + (index + 1).toString()}
-                                    />
-                                ))}
+	                            { item.generations.map( ( gen, index ) => (
+		                            <img
+			                            key={ index }
+			                            src={ gen.thumbnail }
+			                            alt={ sprintf( __( 'Result %d', 'imajinn-ai'), ( index + 1 ).toString() ) }
+		                            />
+	                            ) ) }
                                 <Button
                                     variant="secondary"
                                     label={__('Load prompt results', 'imajinn-ai')}
                                     onClick={() => {
-                                        setPrompt(item.promptStyle);
-                                        setGenerations(item.generations);
-                                        setRatio(item.ratio);
-                                        setImageStyle('');
-                                        setImageArtist('');
-                                        setImageModifier('');
+	                                    clearStyles();
+	                                    setPrompt( item.prompt );
+	                                    setPromptStyle( item.prompt_style );
+	                                    setGenerations( item.generations );
+	                                    setRatio( item.ratio );
+	                                    setQueryRatio( item.ratio );
+	                                    setSaved( [] );
+	                                    setFaceFixed( [] );
                                     }}
                                 >
                                     {__('Load', 'imajinn-ai')}
@@ -51,7 +58,7 @@ const History = ({
                             </h2>
                             <PanelRow>
                                 <Text numberOfLines={2} truncate>
-                                    {item.promptStyle}
+                                    {item.prompt}
                                 </Text>
                             </PanelRow>
                         </PanelBody>

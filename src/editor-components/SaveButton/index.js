@@ -22,39 +22,44 @@ const SaveButton = (props) => {
         }
     }, [props.saved]);
 
-    if (isSaved) {
-        return (
-            <Button disabled icon={check}>
-                {__('Saved', 'imajinn-ai')}
-            </Button>
-        );
-    } else {
-        if (isSaving) {
-            return (
-                <Button disabled>
-                    <Spinner /> {__('Saving', 'imajinn-ai')}
-                </Button>
-            );
-        } else {
-            return (
-                <Button
-                    variant={
-                        IMAJINN.custom_editor ? 'primary' : 'secondary'
-                    }
-                    disabled={isSaving}
-                    icon={upload}
-                    onClick={async () => {
-                        setIsSaving(true);
-                        if (!(await props.saveImage(props.genindex))) {
-                            setIsSaving(false);
-                        }
-                    }}
-                >
-                    {__('Save', 'imajinn-ai')}
-                </Button>
-            );
-        }
-    }
+	if ( isSaved ) {
+		return (
+			<Button disabled icon={ check } label={ __( 'Saved', 'imajinn-ai' ) }>
+				{ IMAJINN.custom_editor ? __( 'Saved', 'imajinn-ai' ) : '' }
+			</Button>
+		);
+	} else {
+		if (isSaving) {
+			return (
+				<Button
+					disabled
+					style={!IMAJINN.custom_editor ? {maxWidth: '36px'} : {}}
+					icon={<Spinner/>}
+					label={__('Saving', 'imajinn-ai')}>
+					{IMAJINN.custom_editor ? __('Saving', 'imajinn-ai') : ''}
+				</Button>
+			);
+		} else {
+			return (
+				<Button
+					variant={
+						IMAJINN.custom_editor ? 'primary' : 'secondary'
+					}
+					disabled={isSaving}
+					icon={upload}
+					label={__('Save to Media Library', 'imajinn-ai')}
+					onClick={async () => {
+						setIsSaving(true);
+						if (!(await props.saveImage(props.genindex))) {
+							setIsSaving(false);
+						}
+					}}
+				>
+					{IMAJINN.custom_editor ? __('Save', 'imajinn-ai') : ''}
+				</Button>
+			);
+		}
+	}
 };
 
 export default SaveButton

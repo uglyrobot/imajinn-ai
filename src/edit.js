@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __, _x, sprintf } from '@wordpress/i18n';
+import {__, _x, sprintf} from '@wordpress/i18n';
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,42 +11,39 @@ import { __, _x, sprintf } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import {useBlockProps} from '@wordpress/block-editor';
 
-import { useEffect, useState } from '@wordpress/element';
+import {useEffect, useState} from '@wordpress/element';
 
 import {
 	__experimentalText as Text,
 	Button,
-	CardFooter,
 	Dashicon,
 	Flex,
 	FlexItem,
 	Icon,
 	Modal,
 	Placeholder,
-	Spinner,
 	TextareaControl,
 } from '@wordpress/components';
 
 import {
 	aspectRatio,
-	check,
 	close,
 	cloud,
 	image,
-	postFeaturedImage,
-	upload,
 } from '@wordpress/icons';
 import metadata from './block.json';
-import { Imajinn, ImajinnSpinner } from './images';
-import { HelpModal, PromptHelpModal } from './help';
-import { LicenseModal } from './license';
-import { Connect } from './connect';
+import {Imajinn} from './images';
+import {PromptHelpModal} from './help';
+import {PromptGenieModal} from './prompt-modal';
+import {LicenseModal} from './license';
+import {Connect} from './connect';
 import optionData from './option-data';
 import ViewImage from './editor-components/ViewImage';
 import History from './editor-components/History';
 import RatioToggle from './editor-components/RatioToogle';
+
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -55,11 +52,12 @@ import RatioToggle from './editor-components/RatioToogle';
  */
 import './index.scss';
 import ImajinnToolbar from './editor-components/ImaginnToolbar';
-import { ArtistSelect, ModifierSelect, StyleSelect } from './editor-components/selects';
+import {ArtistSelect, ModifierSelect, StyleSelect} from './editor-components/selects';
 import ErrorNotice from './editor-components/ErrorNotice';
 import ResultsFlex from './editor-components/ResultsFlex';
 import GeneratingSpinner from './editor-components/GeneratingSpinner';
 import TopRight from './editor-components/TopRight'
+
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -88,13 +86,14 @@ export default function Edit() {
 	const [imageModifier, setImageModifier] = useState('');
 	const [changed, setChanged] = useState(false)
 	const [saved, setSaved] = useState([]);
+	const [faceFixed, setFaceFixed] = useState([]);
 	const [selectedImage, setSelectedImage] = useState(null)
+
 	useEffect(() => {
 		return () => {
 			setChanged(false)
 		}
 	}, [imageStyle, imageArtist, imageModifier])
-
 	//hide upgrade modal when you have credits
 	useEffect(() => {
 		IMAJINN.remaining_credits = credits; //update global in case block is inserted again
@@ -107,36 +106,42 @@ export default function Edit() {
 		IMAJINN.history = history; //update global in case block is inserted again
 	}, [history]);
 
-	//add our styles to the prompt string
+	//add our styles to the prompt string on changing the dropdowns
 	useEffect(() => {
 		setPromptStyle(
-			[prompt, imageStyle, imageArtist, imageModifier]
+			[imageStyle, imageArtist, imageModifier]
 				.filter(Boolean)
 				.join(', ')
 		);
-	}, [prompt, imageStyle, imageArtist, imageModifier]); // <-- here put the parameter to listen
+	}, [imageStyle, imageArtist, imageModifier]); // <-- here put the parameter to listen
 
 	const blockProps = useBlockProps();
 
 
-
 	//function to make an ajax call to the server to get the image
-	const startJob = () => {
+	const startJob = (initImage, mask, thisQueryRatio, customPrompt, customStyle) => {
 		//Check credit status in case we bought more
 		if (credits <= 0) {
 			refreshInfo();
 		}
 
 		//show upgrade modal when trying to start job with no credits
-		if (credits - 1 <= 0) {
+		if (credits - 1 < 0) {
 			setShowUpgrade(true);
 			return false;
 		}
 
+		const thisInitImage = initImage || null;
+		const thisMask = mask || null;
+		const thisRatio = thisQueryRatio || ratio;
+		const thisPrompt = customPrompt ? customPrompt : prompt;
+		const thisPromptStyle = customStyle ? customStyle : promptStyle;
+
 		setJobId(null);
 		setGenerations([]);
+		setFaceFixed([]);
 		setSaved([]);
-		setQueryRatio(ratio);
+		setQueryRatio(thisRatio);
 		setIsLoading(true);
 		setError(null);
 		setProgress(0);
@@ -147,9 +152,12 @@ export default function Edit() {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				prompt: promptStyle,
-				ratio: ratio,
+				prompt: thisPrompt,
+				prompt_style: thisPromptStyle,
+				ratio: thisRatio,
 				num_variations: 4,
+				init_image: thisInitImage,
+				mask: thisMask,
 				nonce: IMAJINN.nonce,
 			}),
 		})
@@ -206,11 +214,7 @@ export default function Edit() {
 				if (result.data.status === 'succeeded') {
 					setGenerations(result.data.generations);
 					setHistory((history) => [
-						{
-							promptStyle,
-							ratio,
-							generations: result.data.generations,
-						},
+						result.data.history,
 						...history,
 					]);
 					setChanged(true)
@@ -327,7 +331,7 @@ export default function Edit() {
 				},
 				body: JSON.stringify({
 					url: url,
-					prompt: promptStyle,
+					prompt: prompt,
 					post_id: wp.data.select('core/editor').getCurrentPostId(),
 					nonce: IMAJINN.nonce,
 				}),
@@ -337,7 +341,7 @@ export default function Edit() {
 		if (result.success) {
 			setSaved((saved) => [
 				...saved,
-				{ index: genIndex, data: result.data },
+				{index: genIndex, data: result.data},
 			]);
 			wp.data.dispatch('core/notices').createNotice(
 				'success', // Can be one of: success, info, warning, error.
@@ -355,11 +359,62 @@ export default function Edit() {
 	};
 
 	const deleteBlock = () => {
-		const { removeBlocks } = wp.data.dispatch('core/block-editor');
+		const {removeBlocks} = wp.data.dispatch('core/block-editor');
 		const block_ids = wp.data
 			.select('core/block-editor')
 			.getSelectedBlockClientIds();
 		removeBlocks(block_ids);
+	};
+
+	const focusSelect = (event) => event.target.select();
+
+	const OLDResultsFlex = ({...props}) => {
+		const [width, setWidth] = useState('400px');
+		const [height, setHeight] = useState('400px');
+		useEffect(() => {
+			setWidth(generations.length === 1 ? '400px' : '350px');
+			if (queryRatio === '3:2') {
+				setHeight(generations.length === 1 ? '266px' : '233px');
+			} else if (queryRatio === '2:3') {
+				setHeight('450px');
+				setWidth('300px');
+			} else {
+				setHeight(generations.length === 1 ? '400px' : '350px');
+			}
+		}, [generations, queryRatio]); // <-- here put the parameter to listen
+
+		if (generations.length === 0) {
+			return null;
+		}
+
+		const images = generations.map((image, index) => (
+			<FlexBlock
+				style={{minWidth: width, flexGrow: 0}}
+				key={index.toString()}
+			>
+				<ImageResult
+					src={image.preview}
+					genindex={index}
+					width={width}
+					height={height}
+					ratio={queryRatio}
+					label={'Result ' + (index + 1).toString()}
+				/>
+			</FlexBlock>
+		));
+
+		return (
+			<Flex
+				{...props}
+				align="center"
+				wrap="true"
+				gap={0}
+				justify="space-around"
+				className="results-grid"
+			>
+				{images}
+			</Flex>
+		);
 	};
 
 	const UpgradeModal = (props) => {
@@ -379,8 +434,8 @@ export default function Edit() {
 					<Modal
 						{...props}
 						onRequestClose={closeModal}
-						style={{ maxWidth: '400px' }}
-						icon={<Icon icon={cloud} />}
+						style={{maxWidth: '400px'}}
+						icon={<Icon icon={cloud}/>}
 						title={__('Upgrade Plan', 'imajinn-ai')}
 					>
 						<p>
@@ -416,19 +471,19 @@ export default function Edit() {
 		? ''
 		: metadata.description;
 
+	const clearStyles = () => {
+		setImageStyle('');
+		setImageArtist('');
+		setImageModifier('');
+		setPromptStyle('');
+	}
+
 	return (
 		<>
-			{selectedImage && <ViewImage image={selectedImage} setImage={setSelectedImage} />}
+			{selectedImage && <ViewImage image={selectedImage} setImage={setSelectedImage}/>}
 			<figure {...blockProps}>
-				<ImajinnToolbar refreshInfo={refreshInfo} isConnected={isConnected} credits={credits} />
-				<History
-					setImageModifier={setImageModifier}
-					setImageArtist={setImageArtist}
-					setImageStyle={setImageStyle}
-					setRatio={setRatio}
-					history={history}
-					setPrompt={setPrompt}
-					setGenerations={setGenerations} />
+				<ImajinnToolbar {...{refreshInfo, isConnected, credits, visitAccount}} />
+				{isConnected && <History {...{history, setPrompt, setGenerations, setRatio, clearStyles, setQueryRatio, setSaved, setFaceFixed}} />}
 				<Placeholder
 					icon={IMAJINN.custom_editor ? null : Imajinn}
 					instructions={placeholderInstructions}
@@ -440,17 +495,18 @@ export default function Edit() {
 				>
 					{!isConnected && (
 						<Connect
-							{...{ setCredits, isConnected, setIsConnected }}
+							{...{setCredits, isConnected, setIsConnected}}
 						/>
 					)}
 					{isConnected && (
 						<>
-							{hasError && <ErrorNotice hasError={hasError} />}
-							{isLoading && <GeneratingSpinner status={status} progress={progress} cancelJob={cancelJob} />}
-							<ResultsFlex saveImage={saveImage} setSelectedImage={setSelectedImage} saved={saved} generations={generations} queryRatio={queryRatio} />
+							{hasError && <ErrorNotice hasError={hasError}/>}
+							{isLoading && <GeneratingSpinner status={status} progress={progress} cancelJob={cancelJob}/>}
+							<ResultsFlex {...{prompt, setPrompt, saved, queryRatio, setRatio, faceFixed, setFaceFixed, generations, setGenerations, startJob, saveImage, setSelectedImage}} />
 							<div className="prompt-form">
 								<TextareaControl
 									disabled={isLoading}
+									rows={2}
 									maxLength={450}
 									value={prompt}
 									label={
@@ -459,16 +515,19 @@ export default function Edit() {
 												'Prompt - Enter a detailed English description of the image you would like to generate.',
 												'imajinn-ai'
 											)}
-											<PromptHelpModal />
+											<PromptHelpModal/>
 										</>
 									}
 									className="text-prompt"
 									onChange={(text) => setPrompt(text)}
+									onFocus={focusSelect}
 								/>
+								<Text className={"prompt-style"} numberOfLines={2} truncate>{promptStyle}</Text>
 								<div className={'styles-form'}>
-									<StyleSelect setImageStyle={setImageStyle} isLoading={isLoading} imageStyle={imageStyle} optionData={optionData} />
-									<ArtistSelect setImageArtist={setImageArtist} isLoading={isLoading} imageArtist={imageArtist} optionData={optionData} />
-									<ModifierSelect setImageModifier={setImageModifier} isLoading={isLoading} imageModifier={imageModifier} optionData={optionData} />
+									<PromptGenieModal {...{prompt, setPrompt, setPromptStyle, startJob, setError, clearStyles, isLoading}}/>
+									<StyleSelect setImageStyle={setImageStyle} isLoading={isLoading} imageStyle={imageStyle} optionData={optionData}/>
+									<ArtistSelect setImageArtist={setImageArtist} isLoading={isLoading} imageArtist={imageArtist} optionData={optionData}/>
+									<ModifierSelect setImageModifier={setImageModifier} isLoading={isLoading} imageModifier={imageModifier} optionData={optionData}/>
 									<Button
 										icon={close}
 										disabled={isLoading}
@@ -477,17 +536,13 @@ export default function Edit() {
 											'clear the image style selects',
 											'imajinn-ai'
 										)}
-										onClick={() => {
-											setImageStyle('');
-											setImageArtist('');
-											setImageModifier('');
-										}}
+										onClick={clearStyles}
 									/>
 								</div>
 							</div>
 							<Flex align="top" wrap="true">
 								<FlexItem>
-									<RatioToggle ratio={ratio} setRatio={setRatio} image={image} aspectRatio={aspectRatio} />
+									<RatioToggle ratio={ratio} setRatio={setRatio} image={image} aspectRatio={aspectRatio}/>
 								</FlexItem>
 								<FlexItem>
 									<Button isPrimary disabled={isLoading} onClick={startJob}>
@@ -501,7 +556,7 @@ export default function Edit() {
 							</Flex>
 						</>
 					)}
-					{IMAJINN.custom_editor && <TopRight deleteBlock={deleteBlock} />}
+					{!IMAJINN.custom_editor && <TopRight deleteBlock={deleteBlock}/>}
 				</Placeholder>
 
 				<div className="imajinn-footer">
@@ -513,7 +568,7 @@ export default function Edit() {
 						{__('Account', 'imajinn-ai')}
 					</Button>
 
-					<LicenseModal />
+					<LicenseModal/>
 
 					<a
 						href="https://infiniteuploads.com/support/"

@@ -44,6 +44,7 @@ const ResultsFlex = ({ saveImage, setSelectedImage, saved, generations, queryRat
                             width={width}
                             height={height}
                             label={'Result ' + (index + 1).toString()}
+                            {...props}
                         />
                     </div>
                 ))
