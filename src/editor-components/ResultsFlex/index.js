@@ -4,19 +4,19 @@ import ImageFooter from '../ImageFooter';
 import searchIcon from './search.svg';
 
 const ResultsFlex = ( { setSelectedImage, ...props } ) => {
-	const [ width, setWidth ] = useState( '400px' );
-	const [ height, setHeight ] = useState( '400px' );
+	const [ width, setWidth ] = useState( '300px' );
+	const [ height, setHeight ] = useState( '300px' );
 
 	useEffect( () => {
-		setWidth( props.generations.length === 1 ? '400px' : '350px' );
 		if ( props.queryRatio === '3:2' ) {
-			setHeight( '300px' );
-			setWidth( '450px' );
+			setHeight( '200px' );
+			setWidth( '300px' );
 		} else if ( props.queryRatio === '2:3' ) {
 			setHeight( '450px' );
 			setWidth( '300px' );
 		} else {
-			setHeight( props.generations.length === 1 ? '400px' : '350px' );
+			setHeight( '300px' );
+			setWidth( '300px' );
 		}
 	}, [ props.generations, props.queryRatio ] );
 
