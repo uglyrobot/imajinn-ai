@@ -434,12 +434,11 @@ export default function Edit() {
 
 	return (
 		<>
-			{ selectedImage && (
-				<ViewImage
-					image={ selectedImage }
-					setImage={ setSelectedImage }
-				/>
-			) }
+			<ViewImage
+				image={ selectedImage }
+				setImage={ setSelectedImage }
+				generations={ generations }
+			/>
 			<figure { ...blockProps }>
 				<ImajinnToolbar
 					{ ...{ refreshInfo, isConnected, credits, visitAccount } }

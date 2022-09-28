@@ -34,7 +34,7 @@ const ResultsFlex = ( { setSelectedImage, ...props } ) => {
 				>
 					<div
 						className="loop-icon"
-						onClick={ () => setSelectedImage( props.src ) }
+						onClick={ () => setSelectedImage( props.genindex ) }
 					>
 						<div>
 							<img src={ searchIcon } />
