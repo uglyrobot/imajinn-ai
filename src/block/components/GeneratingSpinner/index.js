@@ -1,6 +1,8 @@
 import { __, _x, sprintf } from '@wordpress/i18n';
 import { ImajinnSpinner } from '../images/images';
 import { __experimentalText as Text, Button } from '@wordpress/components';
+import './styles.scss';
+
 const GeneratingSpinner = ( { status, progress, cancelJob } ) => {
 	const label =
 		'processing' === status

@@ -22,6 +22,7 @@ import {
 
 import demoImage from '../images/imajinn-demo.jpg';
 import { LicenseModal } from '../LicenseModal';
+import './styles.scss';
 
 /**
  * The edit function describes the structure of your block in the context of the

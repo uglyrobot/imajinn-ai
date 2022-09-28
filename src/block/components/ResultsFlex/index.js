@@ -2,6 +2,7 @@ import { useState, useEffect } from '@wordpress/element';
 import { Card, CardMedia } from '@wordpress/components';
 import ImageFooter from '../ImageFooter';
 import searchIcon from './search.svg';
+import './styles.scss';
 
 const ResultsFlex = ( { setSelectedImage, ...props } ) => {
 	const [ width, setWidth ] = useState( '300px' );

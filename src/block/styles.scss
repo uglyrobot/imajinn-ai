@@ -5,363 +5,133 @@
  */
 
 .editor-styles-wrapper .wp-block-infinite-uploads-imajinn-ai p {
-	font-size: 120%;
+  font-size: 120%;
 }
 
 .imajinn-upgrade-modal-buttons {
-	text-align: right;
+  text-align: right;
 
-	a,
-	button {
-		float: right;
-		margin-left: 10px;
-	}
+  a,
+  button {
+	float: right;
+	margin-left: 10px;
+  }
 }
 
 .wp-block-infinite-uploads-imajinn-ai {
 
-	.components-spinner {
-		background-color: inherit;
-	}
+  .components-spinner {
+	background-color: inherit;
+  }
 
-	// .components-placeholder{
-	// 	margin-left: 20px;
-	// }
+  .components-placeholder__label svg {
+	fill: #000;
+  }
 
-	.components-placeholder__label svg {
-		fill: #000;
-	}
+  .components-placeholder__fieldset .components-button,
+  button {
+	margin: 0;
+  }
 
-	.components-notice {
-		width: 100%;
-		margin-bottom: 10px;
-	}
+  button.ratio-3-2 svg {
+	transform: rotate(90deg) scaleX(-1);
+  }
 
-	.results-grid {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		place-items: center;
-		gap: 16px;
-		width: 100%;
-		margin-bottom: 20px;
-	}
-	.loop-show{
-		cursor: pointer;
-		&:hover{
-			.loop-icon{
-				background: rgba(0, 0, 0, 0.5);
-				visibility: visible;
-				transition: 0.2s;
-				position: absolute;
-				width: 100%;
-				height: 100%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-		}
-	}
+  .prompt-form {
+	width: 100%;
+	margin-bottom: 5px;
 
-	.loop-icon {
-		position: absolute;
-		visibility: hidden;
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition: 0.2s;
-	}
-
-	img.generation-zoom {
-		cursor: pointer;
-	}
-
-	.components-placeholder__fieldset .components-button,
-	button {
-		margin: 0;
-	}
-
-	button.ratio-3-2 svg {
-		transform: rotate(90deg) scaleX(-1);
-	}
-
-	.credits {
-		margin: 0;
-		font-size: 20px !important;
-		font-weight: lighter;
-	}
-
-	.corner-controls {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		display: flex;
-		align-items: center;
-
-		div {
-			padding: 6px;
-		}
-
-	}
-
-	.prompt-form {
-		width: 100%;
-		margin-bottom: 5px;
-
-		.prompt-style {
+	.prompt-style {
 	  width: 100%;
 	  text-align: right;
 	  margin-bottom: 10px;
 	  font-weight: lighter;
 	}
+
 	.styles-form {
-			display: flex;
-			align-items: flex-end;
-			justify-content: flex-start;
-			flex-wrap: wrap;
-			margin-bottom: 20px;
+	  display: flex;
+	  align-items: flex-end;
+	  justify-content: flex-start;
+	  flex-wrap: wrap;
+	  margin-bottom: 20px;
 
-			.components-base-control {
-				width: 175px;
-				margin-right: 20px;
-				display: inline-block;
+	  .components-base-control {
+		width: 175px;
+		margin-right: 20px;
+		display: inline-block;
 
-				&:first-of-type {
+		&:first-of-type {
 		  width: auto;
 		}
 
 		&:last-of-type {
-					margin-right: 0;
-				}
-			}
-
-			.components-button {
-				margin-bottom: 5px;
-
-				svg {
-					height: 15px;
-				}
-			}
-
-	.prompt-genie {
-		.components-base-control__field {
-		  margin-bottom: 7px;
-		}
-		label {
-		  line-height: 1.2;
-		}
-		button {
-		  padding: 0 8px 0 0;
-		  height: 30px;
-		  min-width: 90px;
-		  margin-bottom: 0;
-
-		  svg {
-			height: 18px;
-			margin-right: 0;
-		  }
+		  margin-right: 0;
 		}
 	  }
+
+	  .components-button {
+		margin-bottom: 5px;
+
+		svg {
+		  height: 15px;
+		}
+	  }
+
 	}
   }
 
-	.text-prompt {
-		width: 100%;
+  .text-prompt {
+	width: 100%;
+  }
+
+  .prompt-tips {
+	padding: 0;
+	width: 20px;
+	height: 20px;
+
+	svg {
+	  width: 20px;
+	  height: 20px;
+	}
+  }
+
+  .imajinn-footer,
+  .imajinn-footer button {
+	text-align: right;
+	font-size: calc(13px);
+	color: gray;
+
+	.dashicon {
+	  font-size: 13px;
+	  line-height: 1.9; //ugly hack
+	  height: 13px;
+	  width: 13px;
 	}
 
-	.prompt-tips {
-		padding: 0;
-		width: 20px;
-		height: 20px;
-
-		svg {
-			width: 20px;
-			height: 20px;
-		}
+	a {
+	  margin-right: 10px;
 	}
 
-	.imajinn-footer,
-	.imajinn-footer button {
-		text-align: right;
-		font-size: calc(13px);
-		color: gray;
-
-		.dashicon {
-			font-size: 13px;
-			line-height: 1.9; //ugly hack
-			height: 13px;
-			width: 13px;
-		}
-
-		a {
-			margin-right: 10px;
-		}
-
-		.imajinn-credits {
-			display: inline-block;
-		}
+	.imajinn-credits {
+	  display: inline-block;
 	}
+  }
 
-	.connect-wrapper {
-		align-content: space-between;
-		margin-top: 10px;
-		align-items: end;
+  .license-links {
+	margin-left: 30px;
+	margin-bottom: 10px;
 
-		.components-base-control__help {
-			font-size: 80%;
-		}
+	.components-external-link {
+	  margin-right: 12px;
 	}
+  }
 
-	.components-placeholder__fieldset .components-button.connect-button {
-		margin-bottom: calc(8px);
-	}
-
-	.license-links {
-		margin-left: 30px;
-		margin-bottom: 10px;
-
-		.components-external-link {
-			margin-right: 12px;
-		}
-	}
-
-	.components-notice .components-external-link {
-		margin-left: 5px;
-	}
-
-	.imajinn-loading {
-		margin: 40px auto;
-
-		.components-button {
-			margin-left: 5px;
-		}
-
-		.imajinn-spinner {
-			width: 100px;
-			height: 100px;
-			display: block;
-			margin: 0 auto;
-		}
-	}
-
-	.components-card-footer {
-		padding: calc(10px) calc(10px);
-
-		.imajinn-image-insert {
-			margin-left: 5px;
-		}
-
-		.components-button-group.imajinn-image-actions .components-button {
-			box-shadow: none;
-		  	border: none;
-		}
-
-		.components-button .components-spinner {
-		  height: 24px;
-		  margin: 0;
-		}
-	}
-}
-
-.imajinn-history {
-	.components-panel__body-title {
-		height: 50px;
-
-		.components-button {
-			margin-top: 7px;
-			float: right;
-			margin-right: 10px;
-		}
-
-		img {
-			height: 50px;
-			width: 50px;
-			float: left;
-		}
-	}
-
-	.components-panel__row {
-		clear: both;
-	}
-
-
-
-}
-
-/* Inpainting Modal */
-
-button.brush-sm svg {
-  width: 16px;
-}
-
-button.brush-md svg {
-  width: 20px;
-}
-
-/* Prompt Genie modal */
-button.genie-generate {
-  margin-left: 10px;
-}
-
-.imajinn-toolbar {
-	.credit-label {
-		padding: 24px 0 24px 6px;
-	}
-
-	.credits {
-		font-size: 18px;
-		padding: 24px 0 24px 6px;
-	}
-
-	.refreshing-button {
-		padding-left: 0;
-
-		.dashicon {
-			color: gray;
-		}
-
-		&.is-refreshing .dashicon {
-			/* The animation part: */
-			animation-name: spin;
-			animation-duration: 2000ms;
-			animation-iteration-count: infinite;
-			animation-timing-function: linear;
-
-			@keyframes spin {
-				from {
-					transform: rotate(0deg);
-				}
-
-				to {
-					transform: rotate(360deg);
-				}
-			}
-		}
-
-	}
 }
 
 .media_page_imajinn-ai {
-	background-color: #fff;
+  background-color: #fff;
 
-	#wpfooter {
-		display: none;
-	}
-}
-
-@media screen and (max-width:1756px) {
-	.wp-block-infinite-uploads-imajinn-ai {
-		.results-grid {
-			grid-template-columns: 3fr 3fr;
-		}
-	}
-}
-
-@media screen and (max-width:1120px) {
-	.wp-block-infinite-uploads-imajinn-ai {
-		.results-grid {
-			grid-template-columns: 1fr !important;
-		}
-	}
+  #wpfooter {
+	display: none;
+  }
 }

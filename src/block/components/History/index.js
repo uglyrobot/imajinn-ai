@@ -7,6 +7,7 @@ import {
 } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
 import { __, _x } from '@wordpress/i18n';
+import './styles.scss';
 
 const History = ( {
 	history,

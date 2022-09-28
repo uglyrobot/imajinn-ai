@@ -8,6 +8,8 @@ import {
 } from '@wordpress/components';
 import { useState, useEffect } from 'react';
 import { __, _x } from '@wordpress/i18n';
+import './styles.scss';
+
 const ImajinnToolbar = ( {
 	isConnected,
 	credits,

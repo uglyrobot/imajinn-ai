@@ -6,6 +6,7 @@ import { __, _x } from '@wordpress/i18n';
 import { InpaintingModal } from '../InpaintingModal';
 import FaceFixButton from '../FaceFixButton';
 import VariationsButton from '../VariationsButton';
+import './styles.scss';
 
 const ImageFooter = ( { ...props } ) => {
 	return (

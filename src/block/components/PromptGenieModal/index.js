@@ -10,6 +10,7 @@ import {
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { Genie } from '../images/images';
+import './styles.scss';
 
 export function PromptGenieModal( props ) {
 	const [ isOpen, setOpen ] = useState( false );

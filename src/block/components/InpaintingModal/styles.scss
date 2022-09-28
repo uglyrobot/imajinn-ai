@@ -11,5 +11,13 @@
   }
   .components-card-footer {
 	padding: 10px 10px;
+
+	button.brush-sm svg {
+	  width: 16px;
+	}
+
+	button.brush-md svg {
+	  width: 20px;
+	}
   }
 }
