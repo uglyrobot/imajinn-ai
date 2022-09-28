@@ -1,0 +1,15 @@
+.imajinn-inpainting-modal {
+
+  &.components-modal__frame {
+	width: min-content;
+	max-height: 98%;
+	min-width: 576px;
+  }
+  .components-card {
+	margin: 0 auto 10px auto;
+	width: fit-content;
+  }
+  .components-card-footer {
+	padding: 10px 10px;
+  }
+}

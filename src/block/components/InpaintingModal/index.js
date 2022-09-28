@@ -17,6 +17,7 @@ import { brush, undo, reusableBlock } from '@wordpress/icons';
 import { useState, useEffect } from '@wordpress/element';
 import CanvasDraw from '@win11react/react-canvas-draw';
 import { TouchupHelpModal } from '../help-modals';
+import './styles.scss';
 
 export function InpaintingModal( props ) {
 	const [ isOpen, setOpen ] = useState( false );
@@ -31,12 +32,12 @@ export function InpaintingModal( props ) {
 	const closeModal = () => setOpen( false );
 
 	useEffect( () => {
-		if ( props.ratio === '3:2' ) {
+		if ( props.queryRatio === '3:2' ) {
 			setHeight( 512 );
 			setOrigHeight( 512 );
 			setWidth( 768 );
 			setOrigWidth( 768 );
-		} else if ( props.ratio === '2:3' ) {
+		} else if ( props.queryRatio === '2:3' ) {
 			setHeight( 512 );
 			setOrigHeight( 768 );
 			setWidth( 341 );
@@ -94,24 +95,11 @@ export function InpaintingModal( props ) {
 				<Modal
 					{ ...props }
 					onRequestClose={ closeModal }
-					style={ {
-						width: 'min-content',
-						maxHeight: '98%',
-						minWidth: '576px',
-					} }
+					className={ 'imajinn-inpainting-modal' }
 					shouldCloseOnClickOutside={ true }
-					title={ __(
-						'Inpainting Image Editor (beta)',
-						'imajinn-ai'
-					) }
-					__experimentalHideHeader={ true }
+					title={ __( 'Touchup Image Editor (beta)', 'imajinn-ai' ) }
 				>
-					<Card
-						style={ {
-							margin: '0 auto 10px auto',
-							width: 'fit-content',
-						} }
-					>
+					<Card>
 						<CardMedia>
 							<CanvasDraw
 								style={ { position: 'relative' } }

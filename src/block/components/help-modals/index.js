@@ -388,7 +388,7 @@ export function HelpModal( props ) {
 	);
 }
 
-export function TouchupHelpModal( props ) {
+export function TouchupHelpModal( { ...props } ) {
 	const [ isOpen, setOpen ] = useState( false );
 	const openModal = () => setOpen( true );
 	const closeModal = () => setOpen( false );
@@ -396,7 +396,7 @@ export function TouchupHelpModal( props ) {
 	return (
 		<>
 			<Button onClick={ openModal } icon={ info }>
-				{ __( 'Touchup (beta)', 'imajinn-ai' ) }
+				{ __( 'Tips', 'imajinn-ai' ) }
 			</Button>
 			{ isOpen && (
 				<Modal
