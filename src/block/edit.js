@@ -613,7 +613,7 @@ export default function Edit() {
 					<LicenseModal />
 
 					<a
-						href="src/block/edit"
+						href="https://infiniteuploads.com/support/"
 						target={ '_blank' }
 					>
 						{ __( 'Support', 'imajinn-ai' ) }
@@ -639,7 +639,7 @@ export default function Edit() {
 							'imajinn-ai'
 						) }
 						<a
-							href="src/block/edit"
+							href="https://infiniteuploads.com/"
 							target={ '_blank' }
 						>
 							Infinite Uploads
