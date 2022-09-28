@@ -11,9 +11,13 @@
 	  border: none;
 	}
 
-	.components-button .components-spinner {
+	.components-button:not(.has-text) .components-spinner {
 	  height: 24px;
 	  margin: 0;
+	}
+	.components-button.has-text .components-spinner {
+	  height: 24px;
+	  margin: 0 6px 0 4px;
 	}
   }
 }
