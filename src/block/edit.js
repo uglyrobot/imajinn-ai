@@ -38,6 +38,7 @@ import optionData from './option-data';
 import ViewImage from './components/ViewImage';
 import History from './components/History';
 import RatioToggle from './components/RatioToogle';
+import UpgradeModal from "./components/UpgradeModal";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -370,56 +371,6 @@ export default function Edit() {
 	};
 
 	const focusSelect = ( event ) => event.target.select();
-
-	const UpgradeModal = ( props ) => {
-		const [ isOpen, setOpen ] = useState( props.showUpgrade );
-		const closeModal = () => {
-			setOpen( false );
-			props.setShowUpgrade( false );
-		};
-
-		useEffect( () => {
-			setOpen( props.showUpgrade );
-		}, [ setOpen, props ] ); // <-- here put the parameter to listen
-
-		return (
-			<>
-				{ isOpen && (
-					<Modal
-						{ ...props }
-						onRequestClose={ closeModal }
-						style={ { maxWidth: '400px' } }
-						icon={ <Icon icon={ cloud } /> }
-						title={ __( 'Upgrade Plan', 'imajinn-ai' ) }
-					>
-						<p>
-							{ __(
-								'Sorry, you are out of available image generation credits. You can get more credits by upgrading your account to one of our premium plans.',
-								'imajinn-ai'
-							) }
-						</p>
-
-						<div className="imajinn-upgrade-modal-buttons">
-							<Button
-								variant="primary"
-								href={ IMAJINN.checkout_url }
-								target="_blank"
-							>
-								{ __( 'Get More Credits', 'imajinn-ai' ) }
-							</Button>
-							<Button variant="secondary" onClick={ closeModal }>
-								{ _x(
-									'Cancel',
-									"Don't upgrade now",
-									'imajinn-ai'
-								) }
-							</Button>
-						</div>
-					</Modal>
-				) }
-			</>
-		);
-	};
 
 	const placeholderInstructions = generations.length
 		? ''

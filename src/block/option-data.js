@@ -8,15 +8,15 @@ import { __ } from '@wordpress/i18n';
 export default {
 	styles: [
 		{
-			id: 'photography, photorealistic, DSLR, canon50',
+			id: 'photograph of, DSLR, nikon d850, Kodak, 50mm, 35mm',
 			name: __( 'Photography', 'imajinn-ai' ),
 			children: [
 				{
-					id: 'photography, photo realistic, DSLR, canon50',
+					id: 'photograph of, DSLR, nikon d850, aperture, ISO, Kodak',
 					name: __( 'Realistic', 'imajinn-ai' ),
 				},
 				{
-					id: 'Portrait photograph, bokeh, dof, canon50',
+					id: 'Portrait photograph, bokeh, dof, canon, nikon, Annie Leibovitz',
 					name: __( 'Portrait', 'imajinn-ai' ),
 				},
 				{
@@ -24,15 +24,15 @@ export default {
 					name: __( 'Polaroid', 'imajinn-ai' ),
 				},
 				{
-					id: 'war photography, WWI photograph, WWII photograph',
+					id: 'war photograph, WWI photograph, WWII photograph',
 					name: __( 'War', 'imajinn-ai' ),
 				},
 				{
-					id: 'Wildlife Photography, national geographic photo, zoom',
+					id: 'Wildlife Photograph, national geographic photo, zoom, telephoto',
 					name: __( 'Wildlife', 'imajinn-ai' ),
 				},
 				{
-					id: 'Photojournalism, award winning',
+					id: 'Photojournalism, award winning, photograph of, magazine photograph',
 					name: __( 'Photojournalism', 'imajinn-ai' ),
 				},
 				{
