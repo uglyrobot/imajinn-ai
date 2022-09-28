@@ -28,16 +28,16 @@ import {
 } from '@wordpress/components';
 
 import { close, cloud } from '@wordpress/icons';
-import metadata from './block.json';
-import { Imajinn } from './images';
-import { PromptHelpModal } from './help';
-import { PromptGenieModal } from './prompt-modal';
-import { LicenseModal } from './license';
-import { Connect } from './connect';
+import metadata from '../block.json';
+import { Imajinn } from './components/images/images';
+import { PromptHelpModal } from './components/help-modals';
+import { PromptGenieModal } from './components/PromptGenieModal';
+import { LicenseModal } from './components/LicenseModal';
+import { Connect } from './components/Connect';
 import optionData from './option-data';
-import ViewImage from './editor-components/ViewImage';
-import History from './editor-components/History';
-import RatioToggle from './editor-components/RatioToogle';
+import ViewImage from './components/ViewImage';
+import History from './components/History';
+import RatioToggle from './components/RatioToogle';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -45,17 +45,17 @@ import RatioToggle from './editor-components/RatioToogle';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './index.scss';
-import ImajinnToolbar from './editor-components/ImaginnToolbar';
+import './styles.scss';
+import ImajinnToolbar from './components/ImaginnToolbar';
 import {
 	ArtistSelect,
 	ModifierSelect,
 	StyleSelect,
-} from './editor-components/selects';
-import ErrorNotice from './editor-components/ErrorNotice';
-import ResultsFlex from './editor-components/ResultsFlex';
-import GeneratingSpinner from './editor-components/GeneratingSpinner';
-import TopRight from './editor-components/TopRight';
+} from './components/selects';
+import ErrorNotice from './components/ErrorNotice';
+import ResultsFlex from './components/ResultsFlex';
+import GeneratingSpinner from './components/GeneratingSpinner';
+import TopRight from './components/TopRight';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -613,7 +613,7 @@ export default function Edit() {
 					<LicenseModal />
 
 					<a
-						href="https://infiniteuploads.com/support/"
+						href="src/block/edit"
 						target={ '_blank' }
 					>
 						{ __( 'Support', 'imajinn-ai' ) }
@@ -639,7 +639,7 @@ export default function Edit() {
 							'imajinn-ai'
 						) }
 						<a
-							href="https://infiniteuploads.com/"
+							href="src/block/edit"
 							target={ '_blank' }
 						>
 							Infinite Uploads

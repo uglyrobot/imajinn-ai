@@ -1,7 +1,7 @@
-@import "~@wordpress/base-styles/_colors";
-@import "~@wordpress/base-styles/_variables";
-@import "~@wordpress/base-styles/_mixins";
-@import "~@wordpress/base-styles/_breakpoints";
+@import "../../node_modules/@wordpress/base-styles/colors";
+@import "../../node_modules/@wordpress/base-styles/variables";
+@import "../../node_modules/@wordpress/base-styles/mixins";
+@import "../../node_modules/@wordpress/base-styles/breakpoints";
 //@import "~@wordpress/base-styles/_animations";
 //@import "~@wordpress/base-styles/_z-index";
 //@import '~@wordpress/components/build-style/style.css';
@@ -9,9 +9,9 @@
 
 
 // Internal
-@import "./editor-components/header/styles";
-@import "./editor-components/sidebar/styles";
-@import "./editor-components/block-editor/styles";
+@import "components/header/styles";
+@import "components/sidebar/styles";
+@import "components/block-editor/styles";
 
 // In order to use mix-blend-mode, this element needs to have an explicitly set background-color
 // We scope it to .wp-toolbar to be wp-admin only, to prevent bleed into other implementations
@@ -61,7 +61,7 @@ body.block-editor-page {
 
 	// Important all other selectors scoped underneath
 	// `div.editor-styles-wrapper`
-	@import "~@wordpress/editor/src/style.scss";
+	@import "../../node_modules/@wordpress/editor/src/style";
 }
 
 .imajinn-block-editor,

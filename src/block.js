@@ -8,10 +8,10 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import Edit from './edit';
-import save from './save';
+import Edit from './block/edit';
+import save from './block/save';
 import metadata from './block.json';
-import { Genie } from './images';
+import { Genie } from './block/components/images/images';
 
 /**
  * Every block starts by registering a new block type definition.

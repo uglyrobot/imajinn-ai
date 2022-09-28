@@ -3,7 +3,7 @@ import SaveButton from '../SaveButton';
 import { Button, ButtonGroup, CardFooter } from '@wordpress/components';
 import { share } from '@wordpress/icons';
 import { __, _x } from '@wordpress/i18n';
-import { InpaintingModal } from '../../inpainting-modal';
+import { InpaintingModal } from '../InpaintingModal';
 import FaceFixButton from '../FaceFixButton';
 import VariationsButton from '../VariationsButton';
 

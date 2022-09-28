@@ -200,8 +200,8 @@ class Imajinn_AI {
 	function admin_page() {
 		?>
 		<div
-				id="imajinn-block-editor"
-				class="imajinn-block-editor"
+			id="imajinn-block-editor"
+			class="imajinn-block-editor"
 		>
 			<?php esc_html_e( 'Loading Editor...', 'imajinn-ai' ); ?>
 		</div>

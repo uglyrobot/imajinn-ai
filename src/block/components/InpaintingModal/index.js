@@ -16,7 +16,7 @@ import {
 import { brush, undo, reusableBlock } from '@wordpress/icons';
 import { useState, useEffect } from '@wordpress/element';
 import CanvasDraw from '@win11react/react-canvas-draw';
-import { TouchupHelpModal } from './help';
+import { TouchupHelpModal } from '../help-modals';
 
 export function InpaintingModal( props ) {
 	const [ isOpen, setOpen ] = useState( false );
@@ -250,3 +250,5 @@ export function InpaintingModal( props ) {
 		</>
 	);
 }
+
+export default InpaintingModal;

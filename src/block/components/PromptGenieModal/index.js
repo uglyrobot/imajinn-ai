@@ -9,7 +9,7 @@ import {
 	PanelRow,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import { Genie } from './images';
+import { Genie } from '../images/images';
 
 export function PromptGenieModal( props ) {
 	const [ isOpen, setOpen ] = useState( false );
@@ -153,3 +153,5 @@ export function PromptGenieModal( props ) {
 		</>
 	);
 }
+
+export default PromptGenieModal;

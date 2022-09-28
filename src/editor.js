@@ -1,8 +1,8 @@
 import domReady from '@wordpress/dom-ready';
 import { render } from '@wordpress/element';
-import Editor from './editor-main';
+import Editor from './editor/index';
 
-import './editor-styles.scss';
+import './editor/styles.scss';
 
 domReady( function () {
 	const settings = {};

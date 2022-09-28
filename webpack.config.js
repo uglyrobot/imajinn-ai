@@ -12,8 +12,8 @@ module.exports = {
 	...defaultConfig,
 	...{
 		entry: {
-			block: path.resolve( process.cwd(), 'src', 'index.js' ),
-			editor: path.resolve( process.cwd(), 'src', 'editor-index.js' ),
+			block: path.resolve( process.cwd(), 'src', 'block.js' ),
+			editor: path.resolve( process.cwd(), 'src', 'editor.js' ),
 		},
 	},
 };

@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Imajinn } from '../../images';
+import { Imajinn } from '../../../block/components/images/images';
 
 export default function Header() {
 	return (

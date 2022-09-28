@@ -1,5 +1,5 @@
 import { BlockControls } from '@wordpress/block-editor';
-import { HelpModal } from '../../help';
+import { HelpModal } from '../help-modals';
 import {
 	Dashicon,
 	Toolbar,

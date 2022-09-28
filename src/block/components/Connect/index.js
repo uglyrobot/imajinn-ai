@@ -5,7 +5,7 @@
  */
 import { __ } from '@wordpress/i18n';
 
-import { useState, useRef, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 
 import {
 	Button,
@@ -13,18 +13,15 @@ import {
 	Notice,
 	__experimentalText as Text,
 	CheckboxControl,
-	Icon,
 	Spinner,
-	Dashicon,
 	FlexItem,
 	Flex,
 	ExternalLink,
 	__experimentalHeading as Heading,
-	Modal,
 } from '@wordpress/components';
 
-import demoImage from './imajinn-demo.jpg';
-import { LicenseModal } from './license';
+import demoImage from '../images/imajinn-demo.jpg';
+import { LicenseModal } from '../LicenseModal';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -221,3 +218,5 @@ export function Connect( props ) {
 		</>
 	);
 }
+
+export default Connect;

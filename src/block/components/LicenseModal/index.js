@@ -442,3 +442,5 @@ export function LicenseModal( props ) {
 		</>
 	);
 }
+
+export default LicenseModal;
