@@ -68,8 +68,18 @@ export function PromptGenieModal( props ) {
 					className={ 'genie-generate' }
 					onClick={ () => {
 						props.clearStyles();
-						props.setPromptStyle( item );
-						props.startJob( null, null, null, null, item );
+						//if prompt was empty, then split the generated prompt into subject and style
+						if ( ! props.prompt ) {
+							let prompt = item.split( ',' )[ 0 ]; //get string up to first comma
+							props.setPrompt( prompt );
+							let promptStyle = item.split( ',' ).slice( 1 ).join(); //get entire string after first comma
+							props.setPromptStyle( promptStyle );
+							props.startJob( null, null, null, prompt, promptStyle );
+						} else {
+							props.setPromptStyle( item );
+							props.startJob( null, null, null, null, item );
+						}
+
 						setGeneratedPrompts( ( generated ) => [
 							...generated,
 							{ index: index },
@@ -106,21 +116,12 @@ export function PromptGenieModal( props ) {
 						'imajinn-ai'
 					) }
 					onClick={ () => {
-						if ( ! props.prompt ) {
-							props.setError(
-								__(
-									'Please enter a prompt before summoning the prompt genie!',
-									'imajinn-ai'
-								)
-							);
-						} else {
 							props.setError( '' );
 							if ( props.prompt === currentPrompt ) {
 								openModal();
 							} else {
 								createPrompts( props.prompt );
 							}
-						}
 					} }
 					icon={ <Genie /> }
 				>
