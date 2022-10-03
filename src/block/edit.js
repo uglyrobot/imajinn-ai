@@ -325,7 +325,7 @@ export default function Edit() {
 	const saveImage = async ( genIndex ) => {
 		let url = generations[ genIndex ].jpg;
 
-		//save the attachment
+		//save the attachment 
 		const response = await fetch(
 			`${ ajaxurl }?action=imajinn-save-image`,
 			{

@@ -1,7 +1,6 @@
 .imajinn-inpainting-modal {
 
   &.components-modal__frame {
-	width: min-content;
 	max-height: 98%;
 	min-width: 576px;
   }
@@ -20,4 +19,10 @@
 	  width: 20px;
 	}
   }
+}
+
+@media screen and (max-width:600px) {
+	.components-modal__frame{
+		zoom: 55% !important;
+	}
 }

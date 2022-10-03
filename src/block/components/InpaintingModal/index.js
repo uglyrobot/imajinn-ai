@@ -28,8 +28,6 @@ export function InpaintingModal( props ) {
 	const [ width, setWidth ] = useState( 512 );
 	const [ origHeight, setOrigHeight ] = useState( 512 );
 	const [ origWidth, setOrigWidth ] = useState( 512 );
-	const openModal = () => setOpen( true );
-	const closeModal = () => setOpen( false );
 
 	useEffect( () => {
 		if ( props.queryRatio === '3:2' ) {
@@ -87,14 +85,14 @@ export function InpaintingModal( props ) {
 	return (
 		<>
 			<Button
-				onClick={ openModal }
+				onClick={()=>setOpen(true)}
 				icon={ brush }
 				label={ __( 'Touchup (beta)', 'imajinn-ai' ) }
 			/>
 			{ isOpen && (
 				<Modal
 					{ ...props }
-					onRequestClose={ closeModal }
+					onRequestClose={()=>setOpen(false)}
 					className={ 'imajinn-inpainting-modal' }
 					shouldCloseOnClickOutside={ true }
 					title={ __( 'Touchup Image Editor (beta)', 'imajinn-ai' ) }
@@ -154,7 +152,7 @@ export function InpaintingModal( props ) {
 					/>
 					<Flex wrap={ false }>
 						<FlexItem>
-							<Button variant="secondary" onClick={ closeModal }>
+							<Button variant="secondary" onClick={()=>setOpen(false)}>
 								{ __( 'Cancel', 'imajinn-ai' ) }
 							</Button>
 						</FlexItem>
