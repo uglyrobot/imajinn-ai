@@ -11,7 +11,7 @@ export function PromptHelpModal( props ) {
 	return (
 		<>
 			<Button
-				className="prompt-tips"
+				className="imajinn-prompt-tips"
 				onClick={ openModal }
 				icon={ info }
 				label={ __( 'Prompt Tips', 'imajinn-ai' ) }

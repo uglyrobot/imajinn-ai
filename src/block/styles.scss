@@ -8,13 +8,14 @@
   font-size: 120%;
 }
 
-.imajinn-upgrade-modal-buttons {
-  text-align: right;
+.imajinn-prompt-tips {
+  padding: 0;
+  width: 20px;
+  height: 20px;
 
-  a,
-  button {
-	float: right;
-	margin-left: 10px;
+  svg {
+	width: 20px;
+	height: 20px;
   }
 }
 
@@ -82,17 +83,6 @@
 
   .text-prompt {
 	width: 100%;
-  }
-
-  .prompt-tips {
-	padding: 0;
-	width: 20px;
-	height: 20px;
-
-	svg {
-	  width: 20px;
-	  height: 20px;
-	}
   }
 
   .imajinn-footer,

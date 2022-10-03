@@ -38,7 +38,7 @@ import optionData from './option-data';
 import ViewImage from './components/ViewImage';
 import History from './components/History';
 import RatioToggle from './components/RatioToogle';
-import UpgradeModal from "./components/UpgradeModal";
+import UpgradeModal from './components/UpgradeModal';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -57,6 +57,7 @@ import ErrorNotice from './components/ErrorNotice';
 import ResultsFlex from './components/ResultsFlex';
 import GeneratingSpinner from './components/GeneratingSpinner';
 import TopRight from './components/TopRight';
+import WelcomeModal from './components/WelcomeModal';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -81,6 +82,7 @@ export default function Edit() {
 	const [ queryRatio, setQueryRatio ] = useState( ratio );
 	const [ credits, setCredits ] = useState( IMAJINN.remaining_credits );
 	const [ showUpgrade, setShowUpgrade ] = useState( false );
+	const [ showWelcome, setShowWelcome ] = useState( IMAJINN.show_welcome );
 	const [ imageStyle, setImageStyle ] = useState( '' );
 	const [ imageArtist, setImageArtist ] = useState( '' );
 	const [ imageModifier, setImageModifier ] = useState( '' );
@@ -325,7 +327,7 @@ export default function Edit() {
 	const saveImage = async ( genIndex ) => {
 		let url = generations[ genIndex ].jpg;
 
-		//save the attachment 
+		//save the attachment
 		const response = await fetch(
 			`${ ajaxurl }?action=imajinn-save-image`,
 			{
@@ -425,6 +427,12 @@ export default function Edit() {
 					) }
 					{ isConnected && (
 						<>
+							<UpgradeModal
+								{ ...{ showUpgrade, setShowUpgrade } }
+							/>
+							<WelcomeModal
+								{ ...{ showWelcome, setShowWelcome } }
+							/>
 							{ hasError && (
 								<ErrorNotice hasError={ hasError } />
 							) }
@@ -535,14 +543,10 @@ export default function Edit() {
 										{ __(
 											! changed
 												? 'Generate'
-												: 'Try Again',
+												: 'Generate More',
 											'imajinn-ai'
 										) }
 									</Button>
-									<UpgradeModal
-										showUpgrade={ showUpgrade }
-										setShowUpgrade={ setShowUpgrade }
-									/>
 								</FlexItem>
 							</Flex>
 						</>
