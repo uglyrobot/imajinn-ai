@@ -35,21 +35,29 @@ export function InpaintingModal( props ) {
 	const [ width, setWidth ] = useState( 512 * responsiveMultiplier );
 	const [ origHeight, setOrigHeight ] = useState( 512 );
 	const [ origWidth, setOrigWidth ] = useState( 512 );
+	const [ canvasData, setCanvasData ] = useState( null );
 
 	useEffect( () => {
 		setResponsiveMultiplier( isMobile ? 0.6 : 1 );
 	}, [ isMobile ] );
 
 	useEffect( () => {
+		setCanvasData( canvas?.getSaveData() ); //save drawing
+
 		if ( props.queryRatio === '3:2' ) {
-			setHeight( 512 * responsiveMultiplier );
+			setHeight( 341 * responsiveMultiplier );
+			setWidth( 512 * responsiveMultiplier );
 			setOrigHeight( 512 );
-			setWidth( 768 * responsiveMultiplier );
 			setOrigWidth( 768 );
 		} else if ( props.queryRatio === '2:3' ) {
-			setHeight( 512 * responsiveMultiplier );
+			if ( ! isMobile ) {
+				setHeight( 512 * responsiveMultiplier );
+				setWidth( 341 * responsiveMultiplier );
+			} else {
+				setHeight( 768 * responsiveMultiplier );
+				setWidth( 512 * responsiveMultiplier );
+			}
 			setOrigHeight( 768 );
-			setWidth( 341 * responsiveMultiplier );
 			setOrigWidth( 512 );
 		} else {
 			setHeight( 512 * responsiveMultiplier );
@@ -57,8 +65,17 @@ export function InpaintingModal( props ) {
 		}
 
 		setBrushSize( ( brushSize ) => brushSize * responsiveMultiplier );
-		canvas?.clear(); //clear the canvas on resize
+
+		canvas?.clear();
 	}, [ responsiveMultiplier ] );
+
+	//when width changes, redraw the canvas with saved data
+	useEffect( () => {
+		canvas?.loadSaveData(
+			canvasData,
+			true
+		);
+	}, [ width ] );
 
 	const focusSelect = ( event ) => event.target.select();
 
@@ -98,7 +115,7 @@ export function InpaintingModal( props ) {
 			</>
 		);
 	};
-console.log(props.queryRatio);
+
 	return (
 		<>
 			<Button
@@ -113,12 +130,11 @@ console.log(props.queryRatio);
 					className={ 'imajinn-inpainting-modal' }
 					shouldCloseOnClickOutside={ true }
 					title={ __( 'Touchup Image Editor (beta)', 'imajinn-ai' ) }
-					// style={{ zoom:"70%" }}
 				>
 					<Card>
 						<CardMedia>
 							<CanvasDraw
-								style={ { position: 'relative', width:width, height:height } }
+								style={ { position: 'relative' } }
 								ref={ ( canvasDraw ) =>
 									setCanvas( canvasDraw )
 								}
@@ -127,6 +143,8 @@ console.log(props.queryRatio);
 								lazyRadius={ 0 }
 								hideInterface={ true }
 								brushColor={ 'rgba(180,0,0,0.75)' }
+								canvasWidth={ width }
+								canvasHeight={ height }
 							/>
 						</CardMedia>
 						<CardFooter>
@@ -239,6 +257,7 @@ console.log(props.queryRatio);
 										);
 										props.setPrompt( prompt );
 									};
+									tempCanvas.clear();
 									tempCanvas.loadSaveData(
 										canvas.getSaveData(),
 										true
