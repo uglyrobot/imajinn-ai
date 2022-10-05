@@ -5,7 +5,7 @@ import { __, _x } from '@wordpress/i18n';
 
 const InsertButton = ( { saved, saveImage, ...props } ) => {
 	const [ isSaving, setIsSaving ] = useState( false );
- 
+
 	const insertImageBlock = async ( genIndex ) => {
 		let data = false;
 		//if already saved load up that data

@@ -72,9 +72,18 @@ export function PromptGenieModal( props ) {
 						if ( ! props.prompt ) {
 							let prompt = item.split( ',' )[ 0 ]; //get string up to first comma
 							props.setPrompt( prompt );
-							let promptStyle = item.split( ',' ).slice( 1 ).join(); //get entire string after first comma
+							let promptStyle = item
+								.split( ',' )
+								.slice( 1 )
+								.join(); //get entire string after first comma
 							props.setPromptStyle( promptStyle );
-							props.startJob( null, null, null, prompt, promptStyle );
+							props.startJob(
+								null,
+								null,
+								null,
+								prompt,
+								promptStyle
+							);
 						} else {
 							props.setPromptStyle( item );
 							props.startJob( null, null, null, null, item );
@@ -116,12 +125,12 @@ export function PromptGenieModal( props ) {
 						'imajinn-ai'
 					) }
 					onClick={ () => {
-							props.setError( '' );
-							if ( props.prompt === currentPrompt ) {
-								openModal();
-							} else {
-								createPrompts( props.prompt );
-							}
+						props.setError( '' );
+						if ( props.prompt === currentPrompt ) {
+							openModal();
+						} else {
+							createPrompts( props.prompt );
+						}
 					} }
 					icon={ <Genie /> }
 				>

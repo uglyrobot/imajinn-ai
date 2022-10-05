@@ -2,7 +2,7 @@
 
   &.components-modal__frame {
 	max-height: 98%;
-	min-width: 576px;
+	width: fit-content;
   }
   .components-card {
 	margin: 0 auto 10px auto;
@@ -22,7 +22,5 @@
 }
 
 @media screen and (max-width:600px) {
-	.components-modal__frame{
-		zoom: 55% !important;
-	}
+
 }
