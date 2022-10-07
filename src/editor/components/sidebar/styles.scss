@@ -10,7 +10,7 @@
   right: 0;
   top: 0;
   width: $sidebar-width;
-  z-index: 10000;
+  z-index: z-index(".edit-site-sidebar");
 
   @include break-small() {
 	-webkit-overflow-scrolling: touch;
