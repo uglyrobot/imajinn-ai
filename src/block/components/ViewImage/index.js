@@ -31,6 +31,7 @@ const ViewImage = ( { image, setImage, generations } ) => {
 					<img
 						src={ generations[ image ].preview }
 						onClick={ () => setImage( null ) }
+						style={{objectFit:'contain'}}
 					/>
 				</Modal>
 			) }

@@ -29,19 +29,19 @@ export function InpaintingModal( props ) {
 	const [ origHeight, setOrigHeight ] = useState( 512 );
 	const [ origWidth, setOrigWidth ] = useState( 512 );
 
-	useEffect( () => {
-		if ( props.queryRatio === '3:2' ) {
-			setHeight( 512 );
-			setOrigHeight( 512 );
-			setWidth( 768 );
-			setOrigWidth( 768 );
-		} else if ( props.queryRatio === '2:3' ) {
-			setHeight( 512 );
-			setOrigHeight( 768 );
-			setWidth( 341 );
-			setOrigWidth( 512 );
-		}
-	}, [] );
+	// useEffect( () => {
+	// 	if ( props.queryRatio === '3:2' ) {
+	// 		setHeight( 512 );
+	// 		setOrigHeight( 512 );
+	// 		setWidth( 768 );
+	// 		setOrigWidth( 768 );
+	// 	} else if ( props.queryRatio === '2:3' ) {
+	// 		setHeight( 512 );
+	// 		setOrigHeight( 768 );
+	// 		setWidth( 341 );
+	// 		setOrigWidth( 512 );
+	// 	}
+	// }, [] );
 
 	const focusSelect = ( event ) => event.target.select();
 
@@ -81,7 +81,7 @@ export function InpaintingModal( props ) {
 			</>
 		);
 	};
-
+console.log(props.queryRatio);
 	return (
 		<>
 			<Button
@@ -96,11 +96,12 @@ export function InpaintingModal( props ) {
 					className={ 'imajinn-inpainting-modal' }
 					shouldCloseOnClickOutside={ true }
 					title={ __( 'Touchup Image Editor (beta)', 'imajinn-ai' ) }
+					// style={{ zoom:"70%" }}
 				>
 					<Card>
 						<CardMedia>
 							<CanvasDraw
-								style={ { position: 'relative' } }
+								style={ { position: 'relative', width:width, height:height } }
 								ref={ ( canvasDraw ) =>
 									setCanvas( canvasDraw )
 								}
@@ -109,8 +110,6 @@ export function InpaintingModal( props ) {
 								lazyRadius={ 0 }
 								hideInterface={ true }
 								brushColor={ 'rgba(180,0,0,0.75)' }
-								canvasWidth={ width }
-								canvasHeight={ height }
 							/>
 						</CardMedia>
 						<CardFooter>

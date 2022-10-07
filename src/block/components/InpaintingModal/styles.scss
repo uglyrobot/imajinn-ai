@@ -1,8 +1,7 @@
 .imajinn-inpainting-modal {
-
   &.components-modal__frame {
 	max-height: 98%;
-	min-width: 576px;
+	min-width: 320px;
   }
   .components-card {
 	margin: 0 auto 10px auto;
@@ -23,6 +22,11 @@
 
 @media screen and (max-width:600px) {
 	.components-modal__frame{
-		zoom: 55% !important;
+		// zoom: 55% !important;
 	}
+
+	// .imajinn-inpainting-modal canvas{
+	// 	width: calc(100% - 100px);
+		
+	// }
 }
