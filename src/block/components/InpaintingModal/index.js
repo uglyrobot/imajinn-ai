@@ -16,32 +16,49 @@ import {
 import { brush, undo, reusableBlock } from '@wordpress/icons';
 import { useState, useEffect } from '@wordpress/element';
 import CanvasDraw from '@win11react/react-canvas-draw';
+import useMediaQuery from '../hooks/useMediaQuery';
 import { TouchupHelpModal } from '../help-modals';
 import './styles.scss';
 
 export function InpaintingModal( props ) {
+	const isMobile = useMediaQuery( 600 );
+	const [ responsiveMultiplier, setResponsiveMultiplier ] = useState(
+		isMobile ? 0.6 : 1
+	);
+
 	const [ isOpen, setOpen ] = useState( false );
 	const [ canvas, setCanvas ] = useState( null );
+	const [ tempCanvas, setTempCanvas ] = useState( null );
 	const [ brushSize, setBrushSize ] = useState( 25 );
 	const [ prompt, setPrompt ] = useState( props.prompt );
-	const [ height, setHeight ] = useState( 512 );
-	const [ width, setWidth ] = useState( 512 );
+	const [ height, setHeight ] = useState( 512 * responsiveMultiplier );
+	const [ width, setWidth ] = useState( 512 * responsiveMultiplier );
 	const [ origHeight, setOrigHeight ] = useState( 512 );
 	const [ origWidth, setOrigWidth ] = useState( 512 );
 
-	// useEffect( () => {
-	// 	if ( props.queryRatio === '3:2' ) {
-	// 		setHeight( 512 );
-	// 		setOrigHeight( 512 );
-	// 		setWidth( 768 );
-	// 		setOrigWidth( 768 );
-	// 	} else if ( props.queryRatio === '2:3' ) {
-	// 		setHeight( 512 );
-	// 		setOrigHeight( 768 );
-	// 		setWidth( 341 );
-	// 		setOrigWidth( 512 );
-	// 	}
-	// }, [] );
+	useEffect( () => {
+		setResponsiveMultiplier( isMobile ? 0.6 : 1 );
+	}, [ isMobile ] );
+
+	useEffect( () => {
+		if ( props.queryRatio === '3:2' ) {
+			setHeight( 512 * responsiveMultiplier );
+			setOrigHeight( 512 );
+			setWidth( 768 * responsiveMultiplier );
+			setOrigWidth( 768 );
+		} else if ( props.queryRatio === '2:3' ) {
+			setHeight( 512 * responsiveMultiplier );
+			setOrigHeight( 768 );
+			setWidth( 341 * responsiveMultiplier );
+			setOrigWidth( 512 );
+		} else {
+			setHeight( 512 * responsiveMultiplier );
+			setWidth( 512 * responsiveMultiplier );
+		}
+
+		setBrushSize( ( brushSize ) => brushSize * responsiveMultiplier );
+		canvas?.clear(); //clear the canvas on resize
+	}, [ responsiveMultiplier ] );
 
 	const focusSelect = ( event ) => event.target.select();
 
@@ -59,21 +76,21 @@ export function InpaintingModal( props ) {
 					<Radio
 						label={ __( 'Small', 'imajinn-ai' ) }
 						className="brush-sm"
-						value={ 10 }
+						value={ 10 * responsiveMultiplier }
 					>
 						<Icon icon={ brush } />
 					</Radio>
 					<Radio
 						label={ __( 'Medium', 'imajinn-ai' ) }
 						className="brush-md"
-						value={ 25 }
+						value={ 25 * responsiveMultiplier }
 					>
 						<Icon icon={ brush } />
 					</Radio>
 					<Radio
 						label={ __( 'large', 'imajinn-ai' ) }
 						className="brush-lg"
-						value={ 40 }
+						value={ 40 * responsiveMultiplier }
 					>
 						<Icon icon={ brush } />
 					</Radio>
@@ -85,14 +102,14 @@ console.log(props.queryRatio);
 	return (
 		<>
 			<Button
-				onClick={()=>setOpen(true)}
+				onClick={ () => setOpen( true ) }
 				icon={ brush }
 				label={ __( 'Touchup (beta)', 'imajinn-ai' ) }
 			/>
 			{ isOpen && (
 				<Modal
 					{ ...props }
-					onRequestClose={()=>setOpen(false)}
+					onRequestClose={ () => setOpen( false ) }
 					className={ 'imajinn-inpainting-modal' }
 					shouldCloseOnClickOutside={ true }
 					title={ __( 'Touchup Image Editor (beta)', 'imajinn-ai' ) }
@@ -114,7 +131,7 @@ console.log(props.queryRatio);
 						</CardMedia>
 						<CardFooter>
 							<BrushSize />
-							<TouchupHelpModal />
+							<TouchupHelpModal { ...{ isMobile } } />
 							<ButtonGroup>
 								<Button
 									icon={ reusableBlock }
@@ -151,7 +168,10 @@ console.log(props.queryRatio);
 					/>
 					<Flex wrap={ false }>
 						<FlexItem>
-							<Button variant="secondary" onClick={()=>setOpen(false)}>
+							<Button
+								variant="secondary"
+								onClick={ () => setOpen( false ) }
+							>
 								{ __( 'Cancel', 'imajinn-ai' ) }
 							</Button>
 						</FlexItem>
@@ -219,7 +239,11 @@ console.log(props.queryRatio);
 										);
 										props.setPrompt( prompt );
 									};
-									img.src = canvas.getDataURL(
+									tempCanvas.loadSaveData(
+										canvas.getSaveData(),
+										true
+									); //redraw at correct size
+									img.src = tempCanvas.getDataURL(
 										'png',
 										false,
 										'#ffffff'
@@ -230,6 +254,19 @@ console.log(props.queryRatio);
 							</Button>
 						</FlexItem>
 					</Flex>
+					<CanvasDraw
+						style={ {
+							visibility: 'hidden',
+							position: 'absolute',
+							top: '-99999px',
+							left: '-99999px',
+						} }
+						disabled={ true }
+						hideGrid={ true }
+						ref={ ( canvasTemp ) => setTempCanvas( canvasTemp ) }
+						canvasWidth={ origWidth }
+						canvasHeight={ origHeight }
+					/>
 				</Modal>
 			) }
 		</>

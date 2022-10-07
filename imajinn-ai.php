@@ -63,6 +63,7 @@ class Imajinn_AI {
 		add_action( 'wp_ajax_imajinn-create-prompts', [ &$this, 'ajax_create_prompts' ] );
 		add_action( 'wp_ajax_imajinn-save-image', [ &$this, 'ajax_save_image' ] );
 		add_action( 'wp_ajax_imajinn-tweet', [ &$this, 'ajax_tweet_url' ] );
+		add_action( 'wp_ajax_imajinn-dismiss-welcome', [ &$this, 'ajax_dismiss_welcome' ] );
 	}
 
 	/**
@@ -152,6 +153,7 @@ class Imajinn_AI {
 				'checkout_url'      => $checkout_url,
 				'history'           => $history,
 				'custom_editor'     => $custom_editor,
+				'show_welcome'      => ! get_user_option( 'imajinn_dismiss_welcome', get_current_user_id() ),
 		);
 		wp_add_inline_script( 'infinite-uploads-imajinn-ai-editor-script', 'let IMAJINN = ' . json_encode( $data ) . ';' );
 	}
@@ -484,6 +486,15 @@ class Imajinn_AI {
 		$via      = 'infiniteuploads';
 		$hashtags = 'ImajinnThat,WordPress';
 		wp_redirect( add_query_arg( compact( 'text', 'url', 'via', 'hashtags' ), 'https://twitter.com/intent/tweet' ) );
+	}
+
+	function ajax_dismiss_welcome() {
+
+		// check caps
+		$this->check_ajax();
+
+		update_user_option( get_current_user_id(), 'imajinn_dismiss_welcome', true );
+		wp_send_json_success();
 	}
 
 	/**

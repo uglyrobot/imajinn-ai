@@ -9,11 +9,11 @@
 	  line-height: 1.2;
 	}
 
-	.components-button.has-icon.has-text {
+	.components-button.has-icon {
 	  padding: 0 8px 0 0;
 	  height: 30px;
 	  min-width: 90px;
-	  margin-bottom: 0;
+	  margin-bottom: 0 !important;
 
 	  svg {
 		height: 18px;

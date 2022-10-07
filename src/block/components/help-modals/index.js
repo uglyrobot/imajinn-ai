@@ -11,7 +11,7 @@ export function PromptHelpModal( props ) {
 	return (
 		<>
 			<Button
-				className="prompt-tips"
+				className="imajinn-prompt-tips"
 				onClick={ openModal }
 				icon={ info }
 				label={ __( 'Prompt Tips', 'imajinn-ai' ) }
@@ -388,15 +388,19 @@ export function HelpModal( props ) {
 	);
 }
 
-export function TouchupHelpModal( { ...props } ) {
+export function TouchupHelpModal( { isMobile, ...props } ) {
 	const [ isOpen, setOpen ] = useState( false );
 	const openModal = () => setOpen( true );
 	const closeModal = () => setOpen( false );
 
 	return (
 		<>
-			<Button onClick={ openModal } icon={ info }>
-				{ __( 'Tips', 'imajinn-ai' ) }
+			<Button
+				onClick={ openModal }
+				icon={ info }
+				label={ isMobile && __( 'Tips', 'imajinn-ai' ) }
+			>
+				{ ! isMobile && __( 'Tips', 'imajinn-ai' ) }
 			</Button>
 			{ isOpen && (
 				<Modal
