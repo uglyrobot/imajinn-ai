@@ -8,48 +8,6 @@ import { __ } from '@wordpress/i18n';
 export default {
 	styles: [
 		{
-			id: 'photograph of, DSLR, nikon d850, Kodak, 50mm, 35mm',
-			name: __( 'Photography', 'imajinn-ai' ),
-			children: [
-				{
-					id: 'photograph of, DSLR, nikon d850, aperture, ISO, Kodak',
-					name: __( 'Realistic', 'imajinn-ai' ),
-				},
-				{
-					id: 'Portrait photograph, bokeh, dof, canon, nikon, Annie Leibovitz',
-					name: __( 'Portrait', 'imajinn-ai' ),
-				},
-				{
-					id: 'polaroid photograph, polaroid frame',
-					name: __( 'Polaroid', 'imajinn-ai' ),
-				},
-				{
-					id: 'war photograph, WWI photograph, WWII photograph',
-					name: __( 'War', 'imajinn-ai' ),
-				},
-				{
-					id: 'Wildlife Photograph, national geographic photo, zoom, telephoto',
-					name: __( 'Wildlife', 'imajinn-ai' ),
-				},
-				{
-					id: 'Photojournalism, award winning, photograph of, magazine photograph',
-					name: __( 'Photojournalism', 'imajinn-ai' ),
-				},
-				{
-					id: 'macro photography, close up, zoom, depth of field',
-					name: __( 'Macro', 'imajinn-ai' ),
-				},
-				{
-					id: 'long exposure, photograph, realistic',
-					name: __( 'Long Exposure', 'imajinn-ai' ),
-				},
-				{
-					id: 'photograph, fish eye lense, wide-angle',
-					name: __( 'Fish Eye', 'imajinn-ai' ),
-				},
-			],
-		},
-		{
 			id: 'painting, digital art, trending on artstation',
 			name: __( 'Painting', 'imajinn-ai' ),
 			children: [
@@ -174,11 +132,11 @@ export default {
 					name: __( 'Simpsons', 'imajinn-ai' ),
 				},
 				{
-					id: 'anime style, rhads, Bruce Pennington, Studio Ghibli, tim hildebrandt, trending on artstation',
+					id: 'anime style, Studio Ghibli, manga, trending on artstation',
 					name: __( 'Anime', 'imajinn-ai' ),
 				},
 				{
-					id: 'pixar 3D animation',
+					id: 'disney pixar style animation, octane render',
 					name: __( 'Pixar', 'imajinn-ai' ),
 				},
 			],
@@ -218,6 +176,48 @@ export default {
 				{
 					id: 'ASCII art',
 					name: __( 'ASCII', 'imajinn-ai' ),
+				},
+			],
+		},
+		{
+			id: 'photograph of, photo, 50mm portrait photograph',
+			name: __( 'Photography (avoid people)', 'imajinn-ai' ),
+			children: [
+				{
+					id: 'realistic photo of, award winning photograph, 50mm',
+					name: __( 'Realistic', 'imajinn-ai' ),
+				},
+				{
+					id: 'Portrait photograph, symmetrical, award winning, bokeh, dof, Annie Leibovitz',
+					name: __( 'Portrait', 'imajinn-ai' ),
+				},
+				{
+					id: 'polaroid photograph, polaroid frame',
+					name: __( 'Polaroid', 'imajinn-ai' ),
+				},
+				{
+					id: 'war photograph, WWI photograph, WWII photograph',
+					name: __( 'War', 'imajinn-ai' ),
+				},
+				{
+					id: 'Wildlife Photograph, national geographic photo, zoom, telephoto',
+					name: __( 'Wildlife', 'imajinn-ai' ),
+				},
+				{
+					id: 'Photojournalism, award winning, photo of, magazine photograph',
+					name: __( 'Photojournalism', 'imajinn-ai' ),
+				},
+				{
+					id: 'macro photograph, close up, zoom, depth of field',
+					name: __( 'Macro', 'imajinn-ai' ),
+				},
+				{
+					id: 'long exposure, photograph, realistic',
+					name: __( 'Long Exposure', 'imajinn-ai' ),
+				},
+				{
+					id: 'photograph, fish eye lense, wide-angle',
+					name: __( 'Fish Eye', 'imajinn-ai' ),
 				},
 			],
 		},

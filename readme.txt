@@ -2,7 +2,7 @@
 
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.3
+Stable tag: 1.3.1
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
 Tags: AI, DALLE, image generator, stock photos, art, stable diffusion
@@ -133,6 +133,13 @@ We also will be filtering prompt input and screening output to block the creatio
 2. Using Touchup (inpainting) to remove a watermark and add a crown to a princess.
 
 == Changelog ==
+
+1.3.1 - 2022-10-10
+----------------------------------------------------------------------
+- New image zoom previews with keyboard shortcuts
+- Prompt style preset improvements
+- Getting started guide popover
+- Many bug and style fixes
 
 1.3 - 2022-9-24
 ----------------------------------------------------------------------
