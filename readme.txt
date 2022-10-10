@@ -65,14 +65,9 @@ Touchup mode allows you to customize and make modifications to an image in a mor
 
 Touchup works by choosing an image as an input, masking an area with the brush that you want to modify, then adjusting your prompt to describe what you want in that area.
 
-### NEW! Fine-tune custom AI models for bespoke image generation
-
-[Fine-tune your own AI models](https://imajinn.ai/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=imajinn_readme&utm_term=photobooth) in minutes to generate amazing images of anyone or anything ...anywhere. Upload a handful of boring photos or selfies and let Imajinn AI turn them into amazing one-of-a-kind portraits, profile pictures, or ecommerce product shots that will stand out from the crowd!
-
 ### Privacy
 
 This plugin does not collect or share data other than your prompts and generated images as needed to run our API service. Read our [Privacy Policy](https://infiniteuploads.com/privacy/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=imajinn_readme&utm_term=privacy) for more information.
-
 
 == Installation ==
 
