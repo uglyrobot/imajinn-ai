@@ -2,7 +2,7 @@
 
 Requires at least: 5.9
 Tested up to: 6.0
-Stable tag: 1.3.1
+Stable tag: 1.4
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
 Tags: AI, DALLE, image generator, stock photos, art, stable diffusion
@@ -134,7 +134,7 @@ We also will be filtering prompt input and screening output to block the creatio
 
 == Changelog ==
 
-1.3.1 - 2022-10-10
+1.4 - 2022-10-10
 ----------------------------------------------------------------------
 - New image zoom previews with keyboard shortcuts
 - Prompt style preset improvements
