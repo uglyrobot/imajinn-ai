@@ -27,7 +27,7 @@ const History = ( {
 	return (
 		<InspectorControls key="setting">
 			<Panel
-				header={ __( 'Generation History' ) }
+				header={ __( 'Generation History', 'imajinn-ai' ) }
 				className="imajinn-history"
 			>
 				{ history.map( ( item, index ) => (
