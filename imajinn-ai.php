@@ -4,7 +4,7 @@
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
  * Requires PHP:      7.0
- * Version:           1.3
+ * Version:           1.3.1
  * Author:            Infinite Uploads
  * Author URI:        https://infiniteuploads.com
  * Plugin URI:        https://infiniteuploads.com/imajinn/
@@ -19,7 +19,7 @@
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '1.3' );
+define( 'IMAJINN_AI_VERSION', '1.3.1' );
 
 class Imajinn_AI {
 
@@ -63,6 +63,7 @@ class Imajinn_AI {
 		add_action( 'wp_ajax_imajinn-create-prompts', [ &$this, 'ajax_create_prompts' ] );
 		add_action( 'wp_ajax_imajinn-save-image', [ &$this, 'ajax_save_image' ] );
 		add_action( 'wp_ajax_imajinn-tweet', [ &$this, 'ajax_tweet_url' ] );
+		add_action( 'wp_ajax_imajinn-dismiss-welcome', [ &$this, 'ajax_dismiss_welcome' ] );
 	}
 
 	/**
@@ -152,6 +153,7 @@ class Imajinn_AI {
 				'checkout_url'      => $checkout_url,
 				'history'           => $history,
 				'custom_editor'     => $custom_editor,
+				'show_welcome'      => ! get_user_option( 'imajinn_dismiss_welcome', get_current_user_id() ),
 		);
 		wp_add_inline_script( 'infinite-uploads-imajinn-ai-editor-script', 'let IMAJINN = ' . json_encode( $data ) . ';' );
 	}
@@ -200,8 +202,8 @@ class Imajinn_AI {
 	function admin_page() {
 		?>
 		<div
-				id="imajinn-block-editor"
-				class="imajinn-block-editor"
+			id="imajinn-block-editor"
+			class="imajinn-block-editor"
 		>
 			<?php esc_html_e( 'Loading Editor...', 'imajinn-ai' ); ?>
 		</div>
@@ -484,6 +486,15 @@ class Imajinn_AI {
 		$via      = 'infiniteuploads';
 		$hashtags = 'ImajinnThat,WordPress';
 		wp_redirect( add_query_arg( compact( 'text', 'url', 'via', 'hashtags' ), 'https://twitter.com/intent/tweet' ) );
+	}
+
+	function ajax_dismiss_welcome() {
+
+		// check caps
+		$this->check_ajax();
+
+		update_user_option( get_current_user_id(), 'imajinn_dismiss_welcome', true );
+		wp_send_json_success();
 	}
 
 	/**

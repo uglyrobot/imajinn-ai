@@ -1,0 +1,15 @@
+.wp-block-infinite-uploads-imajinn-ai {
+  .connect-wrapper {
+	align-content: space-between;
+	margin-top: 10px;
+	align-items: end;
+
+	.components-base-control__help {
+	  font-size: 80%;
+	}
+  }
+
+  .components-placeholder__fieldset .components-button.connect-button {
+	margin-bottom: calc(8px);
+  }
+}

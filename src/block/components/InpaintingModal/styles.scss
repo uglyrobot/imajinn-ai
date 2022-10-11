@@ -1,0 +1,24 @@
+.imajinn-inpainting-modal {
+  &.components-modal__frame {
+	max-height: 98%;
+	width: fit-content;
+  }
+  .components-card {
+	margin: 0 auto 10px auto;
+	width: fit-content;
+  }
+  .components-card-footer {
+	padding: 10px 10px;
+
+	button.brush-sm svg {
+	  width: 16px;
+	}
+
+	button.brush-md svg {
+	  width: 20px;
+	}
+  }
+}
+
+@media screen and (max-width:600px) {
+}

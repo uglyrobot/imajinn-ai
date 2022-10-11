@@ -1,0 +1,127 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.editor-styles-wrapper .wp-block-infinite-uploads-imajinn-ai p {
+  font-size: 120%;
+}
+
+.imajinn-prompt-tips {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+
+  svg {
+	width: 20px;
+	height: 20px;
+  }
+}
+
+.wp-block-infinite-uploads-imajinn-ai {
+
+  .components-spinner {
+	background-color: inherit;
+  }
+
+  .components-placeholder__label svg {
+	fill: #000;
+  }
+
+  .components-placeholder__fieldset .components-button,
+  button {
+	margin: 0;
+  }
+
+  button.ratio-3-2 svg {
+	transform: rotate(90deg) scaleX(-1);
+  }
+
+  .prompt-form {
+	width: 100%;
+	margin-bottom: 5px;
+
+	.prompt-style {
+	  width: 100%;
+	  text-align: right;
+	  margin-bottom: 10px;
+	  font-weight: lighter;
+	}
+
+	.styles-form {
+	  display: flex;
+	  align-items: flex-end;
+	  justify-content: flex-start;
+	  flex-wrap: wrap;
+	  margin-bottom: 20px;
+
+	  .components-base-control {
+		width: 175px;
+		margin-right: 20px;
+		display: inline-block;
+
+		&:first-of-type {
+		  width: auto;
+		}
+
+		&:last-of-type {
+		  margin-right: 0;
+		}
+	  }
+
+	  .components-button {
+		margin-bottom: 5px;
+
+		svg {
+		  height: 15px;
+		}
+	  }
+
+	}
+  }
+
+  .text-prompt {
+	width: 100%;
+  }
+
+  .imajinn-footer,
+  .imajinn-footer button {
+	text-align: right;
+	font-size: calc(13px);
+	color: gray;
+
+	.dashicon {
+	  font-size: 13px;
+	  line-height: 1.9; //ugly hack
+	  height: 13px;
+	  width: 13px;
+	}
+
+	a {
+	  margin-right: 10px;
+	}
+
+	.imajinn-credits {
+	  display: inline-block;
+	}
+  }
+
+  .license-links {
+	margin-left: 30px;
+	margin-bottom: 10px;
+
+	.components-external-link {
+	  margin-right: 12px;
+	}
+  }
+
+}
+
+.media_page_imajinn-ai {
+  background-color: #fff;
+
+  #wpfooter {
+	display: none;
+  }
+}
