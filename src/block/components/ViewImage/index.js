@@ -29,6 +29,7 @@ const ViewImage = ( { image, setImage, generations } ) => {
 					} }
 				>
 					<img
+						style={{width:'100%'}}
 						src={ generations[ image ].preview }
 						onClick={ () => setImage( null ) }
 					/>

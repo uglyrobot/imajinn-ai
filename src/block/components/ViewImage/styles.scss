@@ -1,14 +1,15 @@
-
 .imajinn-preview-modal {
 
   height: 80%;
 
   .components-modal__content.hide-header {
-	padding: 0;
-	overflow: hidden;
+    padding: 0;
+    overflow: hidden;
   }
+}
 
-  img {
-	height: 100%;
-  }
+.imajinn-preview-modal img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
 }
