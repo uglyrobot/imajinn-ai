@@ -408,21 +408,28 @@ class Imajinn_AI {
 		// check caps
 		$params = $this->check_ajax();
 		$image   = esc_url_raw( $params['url'] );
-		$prompt  = sanitize_text_field( $params['prompt'] );
+		$orig_prompt  = sanitize_text_field( $params['prompt'] );
 		$post_id = absint( $params['post_id'] );
+
+		$prompt_style = trim( sanitize_text_field( $params['prompt_style'] ), " \t\n\r\0\x0B,/." );
+		$prompt = $orig_prompt . ' ' . $prompt_style;
 
 		$size = 'full';
 		//make api call to upscale the image
-		$upscaled_result = $this->api_request( sprintf( 'site/%s/upscale', $this->get_site_id() ), compact( 'image' ) );
+		$upscaled_result = $this->api_request( sprintf( 'site/%s/upscale', $this->get_site_id() ), compact( 'image', 'prompt' ) );
 		if ( ! is_wp_error( $upscaled_result ) && ! empty( $upscaled_result->image ) ) {
 			$image = $upscaled_result->image;
 			$size  = 'large';
 		}
 
-		$attachment_id = media_sideload_image( $image, $post_id, $prompt, 'id' );
+		$attachment_id = media_sideload_image( $image, $post_id, $orig_prompt, 'id' );
 		if ( is_wp_error( $attachment_id ) ) {
 			wp_send_json_error( $attachment_id );
 		}
+
+		//add alt text to attachment
+		$alt = wp_strip_all_tags( $prompt, true );
+		update_post_meta( $attachment_id, '_wp_attachment_image_alt', wp_slash( $alt ) );
 
 		list( $url, $width, $height ) = wp_get_attachment_image_src( $attachment_id, $size );
 		wp_send_json_success( compact( 'attachment_id', 'url', 'width', 'height', 'size' ) );
