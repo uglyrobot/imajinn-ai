@@ -58,6 +58,7 @@ import ResultsFlex from './components/ResultsFlex';
 import GeneratingSpinner from './components/GeneratingSpinner';
 import TopRight from './components/TopRight';
 import WelcomeModal from './components/WelcomeModal';
+import StylesModal from "./components/StylesModal";
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -504,18 +505,7 @@ export default function Edit() {
 										imageStyle={ imageStyle }
 										optionData={ optionData }
 									/>
-									<ArtistSelect
-										setImageArtist={ setImageArtist }
-										isLoading={ isLoading }
-										imageArtist={ imageArtist }
-										optionData={ optionData }
-									/>
-									<ModifierSelect
-										setImageModifier={ setImageModifier }
-										isLoading={ isLoading }
-										imageModifier={ imageModifier }
-										optionData={ optionData }
-									/>
+									<StylesModal {...{setPromptStyle}} />
 									<Button
 										icon={ close }
 										disabled={ isLoading }

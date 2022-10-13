@@ -1,0 +1,36 @@
+.components-modal__frame.imajinn-styles-modal {
+	max-width: 800px;
+
+  .components-panel {
+	margin-bottom: 10px;
+  }
+  .components-panel__body.is-opened {
+	padding: 16px 16px 6px 16px;
+  }
+  .components-panel__row {
+	display: block;
+
+	.components-button.has-icon.has-text {
+	  margin-right: 10px;
+	  margin-bottom: 10px;
+	  border-radius: 5px;
+	  svg {
+		height: 16px;
+		width: 16px;
+		margin: 0;
+	  }
+	}
+  }
+
+}
+
+.imajinn-styles-button.components-button.has-icon.has-text {
+  padding: 0 8px;
+  height: 30px;
+
+  .dashicon {
+	height: 18px;
+	font-size: 18px;
+	margin-right: 5px;
+  }
+}

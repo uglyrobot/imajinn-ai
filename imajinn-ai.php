@@ -15,6 +15,7 @@
  * @package           imajinn-ai
  *
  * Copyright 2022 UglyRobot, LLC. All rights reserved.
+ * Style modifier presets and preview images originally Copyright (c) 2022 cmdr2 and contributors, MIT license. https://github.com/cmdr2/stable-diffusion-ui
  *
  * Developers: Aaron Edwards @UglyRobotDev
  */
