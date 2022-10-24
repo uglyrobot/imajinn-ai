@@ -460,10 +460,10 @@ export default function Edit() {
 									value={ prompt }
 									label={
 										<>
-											{ __(
+											{/* { __(
 												'Prompt - Enter a detailed English description of the image you would like to generate.',
 												'imajinn-ai'
-											) }
+											) } */}
 											<PromptHelpModal />
 										</>
 									}

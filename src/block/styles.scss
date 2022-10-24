@@ -1,137 +1,298 @@
-/**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
- */
-
 .editor-styles-wrapper .wp-block-infinite-uploads-imajinn-ai p {
-  font-size: 120%;
-}
-
-.imajinn-upgrade-modal-buttons {
-  text-align: right;
-
-  a,
-  button {
+	font-size: 120%;
+  }
+  
+  .imajinn-upgrade-modal-buttons {
+	text-align: right;
+  }
+  .imajinn-upgrade-modal-buttons a,
+  .imajinn-upgrade-modal-buttons button {
 	float: right;
 	margin-left: 10px;
   }
-}
-
-.wp-block-infinite-uploads-imajinn-ai {
-
-  .components-spinner {
+  
+  .wp-block-infinite-uploads-imajinn-ai .components-spinner {
 	background-color: inherit;
   }
-
-  .components-placeholder__label svg {
+  .wp-block-infinite-uploads-imajinn-ai .components-placeholder__label svg {
 	fill: #000;
   }
-
-  .components-placeholder__fieldset .components-button,
-  button {
+  .wp-block-infinite-uploads-imajinn-ai .components-notice {
+	width: 100%;
+	margin-bottom: 10px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .results-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	place-items: center;
+	gap: 16px;
+	width: 100%;
+	margin-bottom: 20px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .loop-show {
+	cursor: pointer;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .loop-show:hover .loop-icon {
+	background: rgba(0, 0, 0, 0.5);
+	visibility: visible;
+	transition: 0.2s;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .loop-icon {
+	position: absolute;
+	visibility: hidden;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: 0.2s;
+  }
+  .wp-block-infinite-uploads-imajinn-ai img.generation-zoom {
+	cursor: pointer;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .components-placeholder__fieldset .components-button,
+  .wp-block-infinite-uploads-imajinn-ai button {
 	margin: 0;
   }
-
-  button.ratio-3-2 svg {
+  .wp-block-infinite-uploads-imajinn-ai button.ratio-3-2 svg {
 	transform: rotate(90deg) scaleX(-1);
   }
-
-  .prompt-form {
+  .wp-block-infinite-uploads-imajinn-ai .credits {
+	margin: 0;
+	font-size: 20px !important;
+	font-weight: lighter;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .corner-controls {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	display: flex;
+	align-items: center;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .corner-controls div {
+	padding: 6px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form {
 	width: 100%;
 	margin-bottom: 5px;
-
-	.prompt-style {
-	  width: 100%;
-	  text-align: right;
-	  margin-bottom: 10px;
-	  font-weight: lighter;
-	}
-
-	.styles-form {
-	  display: flex;
-	  align-items: flex-end;
-	  justify-content: flex-start;
-	  flex-wrap: wrap;
-	  margin-bottom: 20px;
-
-	  .components-base-control {
-		width: 175px;
-		margin-right: 20px;
-		display: inline-block;
-
-		&:first-of-type {
-		  width: auto;
-		}
-
-		&:last-of-type {
-		  margin-right: 0;
-		}
-	  }
-
-	  .components-button {
-		margin-bottom: 5px;
-
-		svg {
-		  height: 15px;
-		}
-	  }
-
-	}
   }
-
-  .text-prompt {
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form .prompt-style {
+	width: 100%;
+	text-align: right;
+	margin-bottom: 10px;
+	font-weight: lighter;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form .styles-form {
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	margin-bottom: 20px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form .styles-form .components-base-control {
+	width: 175px;
+	margin-right: 20px;
+	display: inline-block;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form .styles-form .components-base-control:first-of-type {
+	width: auto;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form .styles-form .components-base-control:last-of-type {
+	margin-right: 0;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form .styles-form .components-button {
+	margin-bottom: 5px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form .styles-form .components-button svg {
+	height: 15px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form .styles-form .prompt-genie .components-base-control__field {
+	margin-bottom: 7px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form .styles-form .prompt-genie label {
+	line-height: 1.2;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form .styles-form .prompt-genie button {
+	padding: 0 8px 0 0;
+	height: 30px;
+	min-width: 90px;
+	margin-bottom: 0;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .prompt-form .styles-form .prompt-genie button svg {
+	height: 18px;
+	margin-right: 0;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .text-prompt {
 	width: 100%;
   }
-
-  .prompt-tips {
+  .wp-block-infinite-uploads-imajinn-ai .prompt-tips {
 	padding: 0;
 	width: 20px;
 	height: 20px;
-
-	svg {
-	  width: 20px;
-	  height: 20px;
-	}
   }
-
-  .imajinn-footer,
-  .imajinn-footer button {
+  .wp-block-infinite-uploads-imajinn-ai .prompt-tips svg {
+	width: 20px;
+	height: 20px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .imajinn-footer,
+  .wp-block-infinite-uploads-imajinn-ai .imajinn-footer button {
 	text-align: right;
-	font-size: calc(13px);
+	font-size: 13px;
 	color: gray;
-
-	.dashicon {
-	  font-size: 13px;
-	  line-height: 1.9; //ugly hack
-	  height: 13px;
-	  width: 13px;
-	}
-
-	a {
-	  margin-right: 10px;
-	}
-
-	.imajinn-credits {
-	  display: inline-block;
-	}
   }
-
-  .license-links {
+  .wp-block-infinite-uploads-imajinn-ai .imajinn-footer .dashicon,
+  .wp-block-infinite-uploads-imajinn-ai .imajinn-footer button .dashicon {
+	font-size: 13px;
+	line-height: 1.9;
+	height: 13px;
+	width: 13px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .imajinn-footer a,
+  .wp-block-infinite-uploads-imajinn-ai .imajinn-footer button a {
+	margin-right: 10px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .imajinn-footer .imajinn-credits,
+  .wp-block-infinite-uploads-imajinn-ai .imajinn-footer button .imajinn-credits {
+	display: inline-block;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .connect-wrapper {
+	align-content: space-between;
+	margin-top: 10px;
+	align-items: end;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .connect-wrapper .components-base-control__help {
+	font-size: 80%;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .components-placeholder__fieldset .components-button.connect-button {
+	margin-bottom: 8px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .license-links {
 	margin-left: 30px;
 	margin-bottom: 10px;
-
-	.components-external-link {
-	  margin-right: 12px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .license-links .components-external-link {
+	margin-right: 12px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .components-notice .components-external-link {
+	margin-left: 5px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .imajinn-loading {
+	margin: 40px auto;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .imajinn-loading .components-button {
+	margin-left: 5px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .imajinn-loading .imajinn-spinner {
+	width: 100px;
+	height: 100px;
+	display: block;
+	margin: 0 auto;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .components-card-footer {
+	padding: 10px 10px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .components-card-footer .imajinn-image-insert {
+	margin-left: 10px;
+  }
+  .wp-block-infinite-uploads-imajinn-ai .components-card-footer .components-button-group.imajinn-image-actions .components-button {
+	box-shadow: none;
+  }
+  
+  .imajinn-history .components-panel__body-title {
+	height: 50px;
+  }
+  .imajinn-history .components-panel__body-title .components-button {
+	margin-top: 7px;
+	float: right;
+	margin-right: 10px;
+  }
+  .imajinn-history .components-panel__body-title img {
+	height: 50px;
+	width: 50px;
+	float: left;
+  }
+  .imajinn-history .components-panel__row {
+	clear: both;
+  }
+  
+  /* Inpainting Modal */
+  button.brush-sm svg {
+	width: 16px;
+  }
+  
+  button.brush-md svg {
+	width: 20px;
+  }
+  
+  /* Prompt Genie modal */
+  button.genie-generate {
+	margin-left: 10px;
+  }
+  
+  .imajinn-toolbar .credit-label {
+	padding: 24px 0 24px 6px;
+  }
+  .imajinn-toolbar .credits {
+	font-size: 18px;
+	padding: 24px 0 24px 6px;
+  }
+  .imajinn-toolbar .refreshing-button {
+	padding-left: 0;
+  }
+  .imajinn-toolbar .refreshing-button .dashicon {
+	color: gray;
+  }
+  .imajinn-toolbar .refreshing-button.is-refreshing .dashicon {
+	/* The animation part: */
+	-webkit-animation-name: spin;
+			animation-name: spin;
+	-webkit-animation-duration: 2000ms;
+			animation-duration: 2000ms;
+	-webkit-animation-iteration-count: infinite;
+			animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+			animation-timing-function: linear;
+  }
+  @-webkit-keyframes spin {
+	from {
+	  transform: rotate(0deg);
+	}
+	to {
+	  transform: rotate(360deg);
 	}
   }
-
-}
-
-.media_page_imajinn-ai {
-  background-color: #fff;
-
-  #wpfooter {
+  @keyframes spin {
+	from {
+	  transform: rotate(0deg);
+	}
+	to {
+	  transform: rotate(360deg);
+	}
+  }
+  
+  .media_page_imajinn-ai {
+	background-color: #fff;
+  }
+  .media_page_imajinn-ai #wpfooter {
 	display: none;
   }
-}
+  
+  @media screen and (max-width: 1756px) {
+	.wp-block-infinite-uploads-imajinn-ai .results-grid {
+	  grid-template-columns: 3fr 3fr;
+	}
+  }
+  @media screen and (max-width: 1120px) {
+	.wp-block-infinite-uploads-imajinn-ai .results-grid {
+	  grid-template-columns: 1fr !important;
+	}
+  }
+  .imajinn-block-editor__block-list{
+	  margin-top: 0px !important;
+  }
