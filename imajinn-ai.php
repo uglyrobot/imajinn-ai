@@ -4,13 +4,14 @@
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
  * Requires PHP:      7.0
- * Version:           1.4
+ * Version:           1.5
  * Author:            Infinite Uploads
  * Author URI:        https://infiniteuploads.com
  * Plugin URI:        https://infiniteuploads.com/imajinn/
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       imajinn-ai
+
  *
  * @package           imajinn-ai
  *
@@ -19,7 +20,7 @@
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '1.4' );
+define( 'IMAJINN_AI_VERSION', '1.5' );
 
 class Imajinn_AI {
 
@@ -134,12 +135,12 @@ class Imajinn_AI {
 
 		//get history from post type
 		$history = [];
-		$posts = get_posts( [
-			'post_type'      => 'imajinn_prompt',
-			'post_status'    => 'publish',
-			'posts_per_page' => 20,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
+		$posts   = get_posts( [
+				'post_type'      => 'imajinn_prompt',
+				'post_status'    => 'publish',
+				'posts_per_page' => 20,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
 		] );
 		foreach ( $posts as $post ) {
 			$history[] = json_decode( $post->post_content, true );
@@ -202,8 +203,8 @@ class Imajinn_AI {
 	function admin_page() {
 		?>
 		<div
-			id="imajinn-block-editor"
-			class="imajinn-block-editor"
+				id="imajinn-block-editor"
+				class="imajinn-block-editor"
 		>
 			<?php esc_html_e( 'Loading Editor...', 'imajinn-ai' ); ?>
 		</div>
@@ -330,7 +331,7 @@ class Imajinn_AI {
 
 		//rename vars for saving
 		$full_prompt = $prompt;
-		$prompt = $orig_prompt;
+		$prompt      = $orig_prompt;
 
 		//save to history post type
 		wp_insert_post( [
@@ -406,23 +407,30 @@ class Imajinn_AI {
 	function ajax_save_image() {
 
 		// check caps
-		$params = $this->check_ajax();
-		$image   = esc_url_raw( $params['url'] );
-		$prompt  = sanitize_text_field( $params['prompt'] );
-		$post_id = absint( $params['post_id'] );
+		$params      = $this->check_ajax();
+		$image       = esc_url_raw( $params['url'] );
+		$orig_prompt = sanitize_text_field( $params['prompt'] );
+		$post_id     = absint( $params['post_id'] );
+
+		$prompt_style = trim( sanitize_text_field( $params['prompt_style'] ), " \t\n\r\0\x0B,/." );
+		$prompt       = $orig_prompt . ' ' . $prompt_style;
 
 		$size = 'full';
 		//make api call to upscale the image
-		$upscaled_result = $this->api_request( sprintf( 'site/%s/upscale', $this->get_site_id() ), compact( 'image' ) );
+		$upscaled_result = $this->api_request( sprintf( 'site/%s/upscale', $this->get_site_id() ), compact( 'image', 'prompt' ) );
 		if ( ! is_wp_error( $upscaled_result ) && ! empty( $upscaled_result->image ) ) {
 			$image = $upscaled_result->image;
 			$size  = 'large';
 		}
 
-		$attachment_id = media_sideload_image( $image, $post_id, $prompt, 'id' );
+		$attachment_id = media_sideload_image( $image, $post_id, $orig_prompt, 'id' );
 		if ( is_wp_error( $attachment_id ) ) {
 			wp_send_json_error( $attachment_id );
 		}
+
+		//add alt text to attachment
+		$alt = wp_strip_all_tags( $prompt, true );
+		update_post_meta( $attachment_id, '_wp_attachment_image_alt', wp_slash( $alt ) );
 
 		list( $url, $width, $height ) = wp_get_attachment_image_src( $attachment_id, $size );
 		wp_send_json_success( compact( 'attachment_id', 'url', 'width', 'height', 'size' ) );
@@ -433,7 +441,7 @@ class Imajinn_AI {
 		// check caps
 		$params = $this->check_ajax();
 
-		$prompt  = sanitize_text_field( $params['prompt'] );
+		$prompt = sanitize_text_field( $params['prompt'] );
 
 		//make api call to fix the image
 		$result = $this->api_request( sprintf( 'site/%s/prompts', $this->get_site_id() ), compact( 'prompt' ) );
@@ -453,7 +461,7 @@ class Imajinn_AI {
 		// check caps
 		$params = $this->check_ajax();
 
-		$image   = esc_url_raw( $params['image'] );
+		$image = esc_url_raw( $params['image'] );
 
 		//make api call to fix the image
 		$result = $this->api_request( sprintf( 'site/%s/face_repair', $this->get_site_id() ), compact( 'image' ) );
@@ -510,8 +518,9 @@ class Imajinn_AI {
 		$url = IMAJINN_API_URL . ltrim( $path, '/' );
 
 		$headers = array(
-				'Accept'       => 'application/json',
-				'Content-Type' => 'application/json',
+				'Accept'           => 'application/json',
+				'Content-Type'     => 'application/json',
+				'x-plugin-version' => IMAJINN_AI_VERSION,
 		);
 
 		if ( $this->get_api_key() ) {

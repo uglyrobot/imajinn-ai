@@ -11,13 +11,13 @@
   top: 0;
   width: $sidebar-width;
   z-index: z-index(".edit-site-sidebar");
+  display: none;
 
   @include break-small() {
 	-webkit-overflow-scrolling: touch;
 	height: auto;
 	overflow: auto;
 	top: $admin-bar-height-big + $header-height + 20;
-
   }
 
   @include break-medium() {

@@ -1,7 +1,7 @@
 === Imajinn - Magical AI Image Generation like DALL·E ===
 
 Requires at least: 5.9
-Tested up to: 6.0
+Tested up to: 6.1.1
 Stable tag: 1.4
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
@@ -65,9 +65,14 @@ Touchup mode allows you to customize and make modifications to an image in a mor
 
 Touchup works by choosing an image as an input, masking an area with the brush that you want to modify, then adjusting your prompt to describe what you want in that area.
 
+### NEW! Fine-tune custom AI models for bespoke image generation
+
+[Fine-tune your own AI models](https://imajinn.ai/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=imajinn_readme&utm_term=photobooth) in minutes to generate amazing images of anyone or anything ...anywhere. Upload a handful of boring photos or selfies and let Imajinn AI turn them into amazing one-of-a-kind portraits, profile pictures, or ecommerce product shots that will stand out from the crowd!
+
 ### Privacy
 
 This plugin does not collect or share data other than your prompts and generated images as needed to run our API service. Read our [Privacy Policy](https://infiniteuploads.com/privacy/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=imajinn_readme&utm_term=privacy) for more information.
+
 
 == Installation ==
 
@@ -130,9 +135,16 @@ We also will be filtering prompt input and screening output to block the creatio
 1. Using Prompt Genie and the face repair tools.
 1. Generate variations of an image with a similar style and layout.
 1. AI-based facial restoration to restore facial details and enhance colors with a good balance of realness and fidelity.
-2. Using Touchup (inpainting) to remove a watermark and add a crown to a princess.
+1. Using Touchup (inpainting) to remove a watermark and add a crown to a princess.
+1. Fine-tune custom AI models to visualize people, products, or styles with AI. Find at https://imajinn.ai
 
 == Changelog ==
+
+1.5 - 2022-12-13
+----------------------------------------------------------------------
+- Upgrade to Stable Diffusion v1.5+VAE
+- 2x faster image generation
+- Responsive fixes
 
 1.4 - 2022-10-10
 ----------------------------------------------------------------------

@@ -30,8 +30,9 @@ const InsertButton = ( { saved, saveImage, ...props } ) => {
 				width: data.width,
 				height: data.height,
 				sizeSlug: data.size,
-				alt: props.prompt,
+				alt: props.prompt + ' ' + props.promptStyle,
 				title: props.prompt,
+				caption: props.prompt,
 			} );
 			wp.data
 				.dispatch( 'core/block-editor' )

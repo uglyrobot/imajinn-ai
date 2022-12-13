@@ -338,6 +338,7 @@ export default function Edit() {
 				body: JSON.stringify( {
 					url: url,
 					prompt: prompt,
+					prompt_style: promptStyle,
 					post_id: wp.data.select( 'core/editor' ).getCurrentPostId(),
 					nonce: IMAJINN.nonce,
 				} ),
@@ -447,6 +448,7 @@ export default function Edit() {
 								{ ...{
 									prompt,
 									setPrompt,
+									promptStyle,
 									saved,
 									queryRatio,
 									setRatio,
