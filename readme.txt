@@ -144,6 +144,7 @@ We also will be filtering prompt input and screening output to block the creatio
 ----------------------------------------------------------------------
 - Upgrade to Stable Diffusion v1.5+VAE
 - 2x faster image generation
+- Responsive fixes
 
 1.3.1 - 2022-10-10
 ----------------------------------------------------------------------
