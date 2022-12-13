@@ -140,13 +140,13 @@ We also will be filtering prompt input and screening output to block the creatio
 
 == Changelog ==
 
-1.4 - 2022-12-13
+1.5 - 2022-12-13
 ----------------------------------------------------------------------
 - Upgrade to Stable Diffusion v1.5+VAE
 - 2x faster image generation
 - Responsive fixes
 
-1.3.1 - 2022-10-10
+1.4 - 2022-10-10
 ----------------------------------------------------------------------
 - New image zoom previews with keyboard shortcuts
 - Prompt style preset improvements
