@@ -2,7 +2,7 @@
 
 Requires at least: 5.9
 Tested up to: 6.1.1
-Stable tag: 1.4
+Stable tag: 1.5
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
 Tags: AI, DALLE, image generator, stock photos, art, stable diffusion
@@ -145,6 +145,7 @@ We also will be filtering prompt input and screening output to block the creatio
 - Upgrade to Stable Diffusion v1.5+VAE
 - 2x faster image generation
 - Responsive fixes
+- Add prompt style to alt text, and add alt text to saved library images
 
 1.4 - 2022-10-10
 ----------------------------------------------------------------------
