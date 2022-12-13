@@ -235,8 +235,8 @@ export function InpaintingModal( props ) {
 												imgData.data[ i ] +
 												imgData.data[ i + 1 ] +
 												imgData.data[ i + 2 ];
-											let colour = 0;
-											if ( count > 383 ) colour = 255;
+											let colour = 255;
+											if ( count > 383 ) colour = 0;
 
 											imgData.data[ i ] = colour;
 											imgData.data[ i + 1 ] = colour;
