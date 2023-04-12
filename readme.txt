@@ -1,8 +1,8 @@
 === Imajinn - Magical AI Image Generation like DALL·E ===
 
 Requires at least: 5.9
-Tested up to: 6.1.1
-Stable tag: 1.5
+Tested up to: 6.2
+Stable tag: 1.5.1
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
 Tags: AI, DALLE, image generator, stock photos, art, stable diffusion
@@ -135,6 +135,11 @@ We also will be filtering prompt input and screening output to block the creatio
 
 == Changelog ==
 
+1.5.1 - 2023-04-12
+----------------------------------------------------------------------
+- WordPress 6.2 compatibility improvements
+- Fix: Broken block when a prompt that filtered all images as NSFW was saved in history
+
 1.5 - 2022-12-13
 ----------------------------------------------------------------------
 - Upgrade to Stable Diffusion v1.5+VAE
@@ -178,6 +183,8 @@ We also will be filtering prompt input and screening output to block the creatio
 == About Us ==
 Imajinn AI is built and maintained by the team behind Infinite Uploads - a premium cloud storage provider and content delivery network (CDN) for all your WordPress media files. Learn more here:
 [infiniteuploads.com](https://infiniteuploads.com/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=imajinn_readme&utm_term=about_us)
+
+Looking to add ChatGPT-powered support or Q/A chatbots trained on your content or documentation to your WordPress site? Check out our new product [DocsBot AI](https://docsbot.ai/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=imajinn_readme&utm_term=about_us)! It's free to try and easy to set up.
 
 [Contribute to the plugin's development on Github!](https://github.com/uglyrobot/imajinn-ai/)
 

@@ -1,21 +1,22 @@
 .imajinn-history {
   .components-panel__body-title {
-	height: 50px;
+    height: 50px;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
 
-	.components-button {
-	  margin-top: 7px;
-	  float: right;
-	  margin-right: 10px;
-	}
+    span {
+      margin-left: 16px;
+    }
 
-	img {
-	  height: 50px;
-	  width: 50px;
-	  float: left;
-	}
-  }
+    .components-button {
+      margin-right: 10px;
+    }
 
-  .components-panel__row {
-	clear: both;
+    img {
+      height: 50px;
+      width: 50px;
+      float: left;
+    }
   }
 }

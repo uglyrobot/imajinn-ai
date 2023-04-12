@@ -375,7 +375,7 @@ export default function Edit() {
 
 	const focusSelect = ( event ) => event.target.select();
 
-	const placeholderInstructions = generations.length
+	const placeholderInstructions = generations?.length
 		? ''
 		: metadata.description;
 
@@ -570,7 +570,7 @@ export default function Edit() {
 					<LicenseModal />
 
 					<a
-						href="https://infiniteuploads.com/support/"
+						href="mailto:genie@imajinn.ai"
 						target={ '_blank' }
 					>
 						{ __( 'Support', 'imajinn-ai' ) }
