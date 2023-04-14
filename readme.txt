@@ -2,7 +2,7 @@
 
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
 Tags: AI, DALLE, image generator, stock photos, art, stable diffusion
@@ -134,6 +134,10 @@ We also will be filtering prompt input and screening output to block the creatio
 1. Fine-tune custom AI models to visualize people, products, or styles with AI. Find at https://imajinn.ai
 
 == Changelog ==
+
+1.5.2 - 2023-04-14
+----------------------------------------------------------------------
+- Fix: Broken block when invalid json saved in history
 
 1.5.1 - 2023-04-12
 ----------------------------------------------------------------------

@@ -4,7 +4,7 @@
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
  * Requires PHP:      7.0
- * Version:           1.5.1
+ * Version:           1.5.2
  * Author:            Infinite Uploads
  * Author URI:        https://infiniteuploads.com
  * Plugin URI:        https://infiniteuploads.com/imajinn/
@@ -19,7 +19,7 @@
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '1.5.1' );
+define( 'IMAJINN_AI_VERSION', '1.5.2' );
 
 class Imajinn_AI {
 
@@ -87,18 +87,18 @@ class Imajinn_AI {
 	 */
 	public function register_post_type() {
 		register_post_type( 'imajinn_prompt', [
-				'public'              => false,
-				'show_ui'             => false,
-				'show_in_menu'        => false,
-				'show_in_nav_menus'   => false,
-				'show_in_admin_bar'   => false,
-				'can_export'          => true,
-				'has_archive'         => false,
-				'exclude_from_search' => true,
-				'publicly_queryable'  => false,
-				'capability_type'     => 'post',
-				'supports'            => false,
-				'rewrite'             => false,
+			'public'              => false,
+			'show_ui'             => false,
+			'show_in_menu'        => false,
+			'show_in_nav_menus'   => false,
+			'show_in_admin_bar'   => false,
+			'can_export'          => true,
+			'has_archive'         => false,
+			'exclude_from_search' => true,
+			'publicly_queryable'  => false,
+			'capability_type'     => 'post',
+			'supports'            => false,
+			'rewrite'             => false,
 		] );
 	}
 
@@ -135,25 +135,28 @@ class Imajinn_AI {
 		//get history from post type
 		$history = [];
 		$posts   = get_posts( [
-				'post_type'      => 'imajinn_prompt',
-				'post_status'    => 'publish',
-				'posts_per_page' => 20,
-				'orderby'        => 'date',
-				'order'          => 'DESC',
+			'post_type'      => 'imajinn_prompt',
+			'post_status'    => 'publish',
+			'posts_per_page' => 20,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
 		] );
 		foreach ( $posts as $post ) {
-			$history[] = json_decode( $post->post_content, true );
+			$prompt = json_decode( $post->post_content, true );
+			if ( $prompt ) { //ignore invalid json
+				$history[] = $prompt;
+			}
 		}
 
 		$data = array(
-				'connected'         => $this->is_connected(),
-				'remaining_credits' => $this->get_site_data( 'remaining_credits' ),
-				'email'             => ! $this->is_connected() ? wp_get_current_user()->user_email : null, //for prefilling the registration form
-				'nonce'             => wp_create_nonce( 'imajinn-ai' ),
-				'checkout_url'      => $checkout_url,
-				'history'           => $history,
-				'custom_editor'     => $custom_editor,
-				'show_welcome'      => ! get_user_option( 'imajinn_dismiss_welcome', get_current_user_id() ),
+			'connected'         => $this->is_connected(),
+			'remaining_credits' => $this->get_site_data( 'remaining_credits' ),
+			'email'             => ! $this->is_connected() ? wp_get_current_user()->user_email : null, //for prefilling the registration form
+			'nonce'             => wp_create_nonce( 'imajinn-ai' ),
+			'checkout_url'      => $checkout_url,
+			'history'           => $history,
+			'custom_editor'     => $custom_editor,
+			'show_welcome'      => ! get_user_option( 'imajinn_dismiss_welcome', get_current_user_id() ),
 		);
 		wp_add_inline_script( 'infinite-uploads-imajinn-ai-editor-script', 'let IMAJINN = ' . json_encode( $data ) . ';' );
 	}
@@ -170,11 +173,11 @@ class Imajinn_AI {
 		$script_path       = plugins_url( 'build/editor.css', __FILE__ );
 		$script_asset_path = dirname( __FILE__ ) . '/build/editor.asset.php';
 		$script_asset      = file_exists( $script_asset_path )
-				? require $script_asset_path
-				: array(
-						'dependencies' => array(),
-						'version'      => filemtime( $script_path ),
-				);
+			? require $script_asset_path
+			: array(
+				'dependencies' => array(),
+				'version'      => filemtime( $script_path ),
+			);
 		wp_enqueue_style( 'imajinn-ai', $script_path, [ 'wp-components', 'wp-block-editor', 'wp-editor', 'wp-format-library' ], IMAJINN_AI_VERSION );
 	}
 
@@ -189,11 +192,11 @@ class Imajinn_AI {
 		$script_path       = 'build/editor.js';
 		$script_asset_path = dirname( __FILE__ ) . '/build/editor.asset.php';
 		$script_asset      = file_exists( $script_asset_path )
-				? require $script_asset_path
-				: array(
-						'dependencies' => array(),
-						'version'      => filemtime( $script_path ),
-				);
+			? require $script_asset_path
+			: array(
+				'dependencies' => array(),
+				'version'      => filemtime( $script_path ),
+			);
 		$script_url        = plugins_url( $script_path, __FILE__ );
 
 		wp_enqueue_script( 'imajinn-ai', $script_url, $script_asset['dependencies'], $script_asset['version'] );
@@ -202,8 +205,8 @@ class Imajinn_AI {
 	function admin_page() {
 		?>
 		<div
-				id="imajinn-block-editor"
-				class="imajinn-block-editor"
+			id="imajinn-block-editor"
+			class="imajinn-block-editor"
 		>
 			<?php esc_html_e( 'Loading Editor...', 'imajinn-ai' ); ?>
 		</div>
@@ -334,11 +337,11 @@ class Imajinn_AI {
 
 		//save to history post type
 		wp_insert_post( [
-				'post_type'    => 'imajinn_prompt',
-				'post_status'  => 'draft',
-				'post_title'   => $full_prompt,
-				'post_name'    => $job->job_id,
-				'post_content' => json_encode( compact( 'prompt', 'prompt_style', 'ratio', 'num_variations', 'generations' ) ),
+			'post_type'    => 'imajinn_prompt',
+			'post_status'  => 'draft',
+			'post_title'   => $full_prompt,
+			'post_name'    => $job->job_id,
+			'post_content' => json_encode( compact( 'prompt', 'prompt_style', 'ratio', 'num_variations', 'generations' ) ),
 		] );
 
 		wp_send_json_success( $job );
@@ -361,9 +364,9 @@ class Imajinn_AI {
 		$post = get_page_by_path( $job->job_id, OBJECT, 'imajinn_prompt' );
 		if ( $post ) {
 			wp_update_post( [
-					'ID'           => $post->ID,
-					'post_status'  => 'succeeded' == $job->status ? 'publish' : 'trash',
-					'post_content' => json_encode( array_merge( json_decode( $post->post_content, true ), [ 'generations' => $job->generations ] ) ),
+				'ID'           => $post->ID,
+				'post_status'  => 'succeeded' == $job->status ? 'publish' : 'trash',
+				'post_content' => json_encode( array_merge( json_decode( $post->post_content, true ), [ 'generations' => $job->generations ] ) ),
 			] );
 		}
 
@@ -388,9 +391,9 @@ class Imajinn_AI {
 			if ( $post ) {
 				$history = array_merge( json_decode( $post->post_content, true ), [ 'generations' => $job->generations ] );
 				wp_update_post( [
-						'ID'           => $post->ID,
-						'post_status'  => 'succeeded' == $job->status ? 'publish' : 'trash',
-						'post_content' => json_encode( $history ),
+					'ID'           => $post->ID,
+					'post_status'  => 'succeeded' == $job->status ? 'publish' : 'trash',
+					'post_content' => json_encode( $history ),
 				] );
 				$job->history = $history; //return this so we can add to history array
 			}
@@ -517,9 +520,9 @@ class Imajinn_AI {
 		$url = IMAJINN_API_URL . ltrim( $path, '/' );
 
 		$headers = array(
-				'Accept'           => 'application/json',
-				'Content-Type'     => 'application/json',
-				'x-plugin-version' => IMAJINN_AI_VERSION,
+			'Accept'           => 'application/json',
+			'Content-Type'     => 'application/json',
+			'x-plugin-version' => IMAJINN_AI_VERSION,
 		);
 
 		if ( $this->get_api_key() ) {
@@ -527,10 +530,10 @@ class Imajinn_AI {
 		}
 
 		$args = array(
-				'headers'   => $headers,
-				'sslverify' => true,
-				'method'    => strtoupper( $method ),
-				'timeout'   => 30,
+			'headers'   => $headers,
+			'sslverify' => true,
+			'method'    => strtoupper( $method ),
+			'timeout'   => 30,
 		);
 
 		//log if WP_DEBUG is true
@@ -617,10 +620,10 @@ class Imajinn_AI {
 
 		//filter array
 		$allowed_keys = [
-				'remaining_credits',
-				'total_images',
-				'site_credits_used',
-				'site_image_count',
+			'remaining_credits',
+			'total_images',
+			'site_credits_used',
+			'site_image_count',
 		];
 		$data         = array_intersect_key( $data, array_flip( $allowed_keys ) );
 
