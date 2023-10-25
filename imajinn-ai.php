@@ -3,10 +3,10 @@
  * Plugin Name:       Imajinn AI
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
- * Requires PHP:      7.0
- * Version:           1.5.2
- * Author:            Infinite Uploads
- * Author URI:        https://infiniteuploads.com
+ * Requires PHP:      7.2
+ * Version:           1.5.3
+ * Author:            Imajinn AI
+ * Author URI:        https://imajinn.ai
  * Plugin URI:        https://infiniteuploads.com/imajinn/
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -19,7 +19,7 @@
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '1.5.2' );
+define( 'IMAJINN_AI_VERSION', '1.5.3' );
 
 class Imajinn_AI {
 

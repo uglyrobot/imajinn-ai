@@ -1,15 +1,15 @@
 === Imajinn - Magical AI Image Generation like DALL·E ===
 
-Requires at least: 5.9
-Tested up to: 6.2
-Stable tag: 1.5.2
+Requires at least: 6.0
+Tested up to: 6.4
+Stable tag: 1.5.3
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
-Tags: AI, DALLE, image generator, stock photos, art, stable diffusion
+Tags: AI, DALLE, image generator, stock photos, art, stable diffusion, SDXL
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Generate the perfect royalty-free images for your blog in seconds with cutting-edge AI for a fraction of the cost of stock photo sites. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website, so you can create stunning images for any topic with just your imagination.
+Generate the perfect royalty-free images for your blog in seconds with cutting-edge AI for a fraction of the cost of stock photo sites. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E right into the backend of your website, so you can create stunning images for any topic with just your imagination.
 
 == Description ==
 
@@ -55,6 +55,10 @@ Running on the latest in AI technology, Imajinn is able to generate images that 
 ★★★★★
 > “VERY impressive...Love the 3:2 option (obvious need but missing from most other AI image tools). Easy, no-fuss install. Great documentation. The array of config options are intuitive, and actually make a big difference in output. And it's FAST!” - J. Paul Hendricks
 
+### NEW: Stable Diffusion XL
+
+Now powered by the latest Stable Diffusion XL model, allowing you to create descriptive images with shorter prompts and generate words within images. The model is a significant advancement in image generation capabilities, offering enhanced image composition and face generation that results in stunning visuals and realistic aesthetics.
+
 ### Prompt Genie
 
 Prompt Genie is a powerful AI tool that can help you generate better prompts for your images. Just enter a few simple words to describe what you would like to create, then summon Prompt Genie to use it's custom-trained machine learning model to turn your boring prompts into amazingly artistic images. Prompt Genie is a great way to create fantastic images with Imajinn without having to learn the complex skill of prompt building that's necessary to use other tools like DALLE or Stable Diffusion.
@@ -97,7 +101,7 @@ Connect an unlimited number of sites to your Imajinn account, and they all will 
 
 = What restrictions are there? =
 
-Our AI has much more relaxed restrictions than ones like DALLE-2. But with great power comes great responsibility, so you must agree to abide by our restrictions for all prompts and generated images:
+Our AI has much more relaxed restrictions than ones like DALLE-3. But with great power comes great responsibility, so you must agree to abide by our restrictions for all prompts and generated images:
 
 You should not attempt to generate:
 
@@ -134,6 +138,10 @@ We also will be filtering prompt input and screening output to block the creatio
 1. Fine-tune custom AI models to visualize people, products, or styles with AI. Find at https://imajinn.ai
 
 == Changelog ==
+
+1.5.3 - 2023-10-25
+----------------------------------------------------------------------
+- Upgrade to Stable Diffusion XL for 50% more resolution and much higher quality images from shorter prompts.
 
 1.5.2 - 2023-04-14
 ----------------------------------------------------------------------
