@@ -4,7 +4,7 @@
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
  * Requires PHP:      7.2
- * Version:           1.5.3
+ * Version:           1.5.4
  * Author:            Imajinn AI
  * Author URI:        https://imajinn.ai
  * Plugin URI:        https://infiniteuploads.com/imajinn/
@@ -19,7 +19,7 @@
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '1.5.3' );
+define( 'IMAJINN_AI_VERSION', '1.5.4' );
 
 class Imajinn_AI {
 
@@ -378,7 +378,7 @@ class Imajinn_AI {
 
 		$job_id = sanitize_key( $params['job_id'] );
 
-		$job = $this->api_request( sprintf( 'site/%s/generate/%s', $this->get_site_id(), $job_id ), [], 'GET' );
+		$job = $this->api_request( sprintf( 'site/%s/generate/%s', $this->get_site_id(), $job_id ), [ 'v' => microtime( true ) ], 'GET' );
 		if ( is_wp_error( $job ) ) {
 			wp_send_json_error( $job );
 		}
@@ -591,6 +591,7 @@ class Imajinn_AI {
 			return new WP_Error( 'api_error', esc_html__( "There was an unknown API error. Please try again.", 'imajinn-ai' ), [ 'status' => wp_remote_retrieve_response_code( $response ) ] );
 		}
 
+		error_log( 'HEADERS: ' . var_export( wp_remote_retrieve_headers( $response ), true ) );
 		return $body;
 	}
 

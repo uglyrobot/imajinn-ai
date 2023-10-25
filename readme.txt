@@ -2,7 +2,7 @@
 
 Requires at least: 6.0
 Tested up to: 6.4
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
 Tags: AI, DALLE, image generator, stock photos, art, stable diffusion, SDXL
@@ -15,9 +15,13 @@ Generate the perfect royalty-free images for your blog in seconds with cutting-e
 
 **Imajinn brings the magic of AI image generation to WordPress**
 
-Imajinn is a WordPress plugin that brings the power of AI image generation to your website. Similar to tools like [DALL·E 2](https://openai.com/dall-e-2/), Midjourney, and Stable Diffusion, Imajinn lets you generate images for any topic with just your imagination. Just enter a description of what you would like to create, and Imajinn will generate a stunning image for you in seconds.
+Imajinn is a WordPress plugin that brings the power of AI image generation to your website. Similar to tools like [DALL·E 3](https://openai.com/dall-e-3), Midjourney, and Stable Diffusion, Imajinn lets you generate images for any topic with just your imagination. Just enter a description of what you would like to create, and Imajinn will generate a stunning image for you in seconds.
 
 Running on the latest in AI technology, Imajinn is able to generate images that are indistinguishable from real photos and art. The images are royalty-free, so you can use them on your website without worrying about licensing issues. It's like having a full-time graphic design assistant on your team that follows your every command. Your only limitation is your imagination.
+
+### NEW: Stable Diffusion XL
+
+Now powered by the latest **Stable Diffusion XL** model, allowing you to create descriptive images with shorter and simpler prompts, and generate words within images. The model is a significant advancement in image generation capabilities, offering enhanced image composition and face generation that results in stunning visuals and realistic aesthetics.
 
 #### Imajinn AI - Plugin Features
 
@@ -54,10 +58,6 @@ Running on the latest in AI technology, Imajinn is able to generate images that 
 
 ★★★★★
 > “VERY impressive...Love the 3:2 option (obvious need but missing from most other AI image tools). Easy, no-fuss install. Great documentation. The array of config options are intuitive, and actually make a big difference in output. And it's FAST!” - J. Paul Hendricks
-
-### NEW: Stable Diffusion XL
-
-Now powered by the latest Stable Diffusion XL model, allowing you to create descriptive images with shorter prompts and generate words within images. The model is a significant advancement in image generation capabilities, offering enhanced image composition and face generation that results in stunning visuals and realistic aesthetics.
 
 ### Prompt Genie
 
@@ -138,6 +138,10 @@ We also will be filtering prompt input and screening output to block the creatio
 1. Fine-tune custom AI models to visualize people, products, or styles with AI. Find at https://imajinn.ai
 
 == Changelog ==
+
+1.5.4 - 2023-10-25
+----------------------------------------------------------------------
+- Fix: Image generation status would not update on some sites with persistent object cache enabled.
 
 1.5.3 - 2023-10-25
 ----------------------------------------------------------------------

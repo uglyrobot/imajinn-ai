@@ -181,7 +181,7 @@ export default {
 		},
 		{
 			id: 'photograph of, photo, 50mm portrait photograph',
-			name: __( 'Photography (avoid people)', 'imajinn-ai' ),
+			name: __( 'Photography', 'imajinn-ai' ),
 			children: [
 				{
 					id: 'realistic photo of, award winning photograph, 50mm',

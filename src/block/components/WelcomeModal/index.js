@@ -87,19 +87,13 @@ export function WelcomeModal( { showWelcome, setShowWelcome, ...props } ) {
 					<ol>
 						<li>
 							{ __(
-								'Try to generate photo-realistic human faces or bodies, they will look deformed. Stick to artistic styles for images with people.',
+								'Try to generate photo-realistic human fingers, arms, or legs, they will often look deformed.',
 								'imajinn-ai'
 							) }
 						</li>
 						<li>
 							{ __(
-								'Expect to be able to create legible words, text, or logos. They will be gibberish.',
-								'imajinn-ai'
-							) }
-						</li>
-						<li>
-							{ __(
-								'Use 3:2 or 2:3 ratio for images with a single object or subject, as that tends to create strange duplications. It is best to use 1:1 for those types of images.',
+								'Expect to be able to create legible words, text, or logos. Text longer than a simple word will usually be gibberish.',
 								'imajinn-ai'
 							) }
 						</li>
