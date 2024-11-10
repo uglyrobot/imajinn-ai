@@ -175,7 +175,7 @@ export function PromptHelpModal( props ) {
 					<h3>{ __( '5. Conclusion', 'imajinn-ai' ) }</h3>
 					<p>
 						{ __(
-							'Prompt engineering allows you to have better control of what the image will look like. It (if done right) improves the image quality by a lot in every aspect. But if you want to keep it simple, just use our Prompt Genie or style presets.',
+							'Prompt engineering allows you to have better control of what the image will look like. It (if done right) improves the image quality by a lot in every aspect. But if you want to keep it simple, just use our style presets.',
 							'imajinn-ai'
 						) }
 					</p>
@@ -225,7 +225,7 @@ export function HelpModal( props ) {
 					<h3>{ __( 'Connecting', 'imajinn-ai' ) }</h3>
 					<p>
 						{ __(
-							'Running an artificial intelligence neural network requires a lot of computing power. To make this possible, we run a cloud service to run the neural network. This means that you need to connect to our service before you can use the plugin. To connect to Imajinn AI, you need to have a user account. You can create one for free with just your valid email address and a password, or if you already have an account, you can log in with your Infinite Uploads/Imajinn AI email and password.',
+							'Running an artificial intelligence neural network requires a lot of computing power. To make this possible, we run a cloud service to run the neural network. This means that you need to connect to our service before you can use the plugin. To connect to Imajinn AI, you need to have a user account. You can create one for free with just your valid email address and a password, or if you already have an account, you can log in with your Imajinn AI email and password.',
 							'imajinn-ai'
 						) }
 					</p>
@@ -234,20 +234,6 @@ export function HelpModal( props ) {
 					<p>
 						{ __(
 							'To generate images, you need to write a prompt. A prompt is a text that describes what you want the image to look like. The prompt should be in English as the AI model was only trained with English labels, and will function poorly with other languages. The prompt can be as short as a a few words, or as long as a paragraph. The longer the prompt, the more detailed the image will be. Please see our prompt engineering guide for more information on how to write a good prompt.',
-							'imajinn-ai'
-						) }
-					</p>
-
-					<h3>{ __( 'Prompt Genie', 'imajinn-ai' ) }</h3>
-					<p>
-						{ __(
-							'Because writing prompts is hard, we have created a tool called Prompt Genie that can help you turn your simple prompts into amazing masterpieces. Prompt Genie uses a custom AI model to transform your prompt into ten different powerful options to generate an image in beautiful artistic styles. Simply enter your simple prompt like "a dog running on a beach", then click on the Prompt Genie button. After a few moments it will present you with ten different expanded prompts to choose from. You can then select the one you like best and click on the Generate button to generate a set of images. If you want to try a different prompt, just click on the Prompt Genie button again and choose a new option.',
-							'imajinn-ai'
-						) }
-					</p>
-					<p>
-						{ __(
-							"Summoning Prompt Genie does not use any of your credits, so you can summon it as many times as you like. However each time you generate a set of images from one of it's prompts you will use one credit like normal.",
 							'imajinn-ai'
 						) }
 					</p>
@@ -444,7 +430,7 @@ export function TouchupHelpModal( { isMobile, ...props } ) {
 					</p>
 					<p>
 						{ __(
-							'When modifying the prompt, there is no need to get too poetic or descriptive because most of the image and its styles are already still there and taken into account, unless you paint out a very large portion of the image. Also if Prompt Genie or our style selectors were used initially, the styles will already be applied to your modified prompt. If you entered your own styles and modifiers to the prompt field, it is best to leave them there so they will be applied to the selected area. Be careful not to change or add styles in the modified prompt that will clash with the rest of the image.',
+							'When modifying the prompt, there is no need to get too poetic or descriptive because most of the image and its styles are already still there and taken into account, unless you paint out a very large portion of the image. Also if our style selectors were used initially, the styles will already be applied to your modified prompt. If you entered your own styles and modifiers to the prompt field, it is best to leave them there so they will be applied to the selected area. Be careful not to change or add styles in the modified prompt that will clash with the rest of the image.',
 							'imajinn-ai'
 						) }
 					</p>

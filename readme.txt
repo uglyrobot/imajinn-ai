@@ -1,8 +1,8 @@
-=== Imajinn - Magical AI Image Generation like DALL·E ===
+=== Imajinn - Magical AI Image Generation ===
 
 Requires at least: 6.0
-Tested up to: 6.4
-Stable tag: 1.5.4
+Tested up to: 6.7
+Stable tag: 1.5.5
 Requires PHP: 7.2
 Contributors: uglyrobot, jdailey
 Tags: AI, DALLE, image generator, stock photos, art, stable diffusion, SDXL
@@ -29,7 +29,6 @@ Now powered by the latest **Stable Diffusion XL** model, allowing you to create 
 - **Gutenberg block** - Create images right inside your posts/pages with the Imajinn AI Block.
 - **Save to library** - Upscale and save your favorite images to your WordPress media library for easy access in any theme/plugin.
 - **Insert images** - Insert your high resolution generated images into any post/page as an image block with a single click.
-- **Prompt Genie** - Summon the genie to use AI to turn your boring prompts into amazingly artistic images.
 - **Style presets** - Customize your images with a variety of preset options like art medium, artist style, and more!
 - **History** - Easily view and jump back to previous image generations to modify and customize your prompts.
 - **Create variations** - Generate more variations of your favorite images with a similar style and layout.
@@ -59,10 +58,6 @@ Now powered by the latest **Stable Diffusion XL** model, allowing you to create 
 ★★★★★
 > “VERY impressive...Love the 3:2 option (obvious need but missing from most other AI image tools). Easy, no-fuss install. Great documentation. The array of config options are intuitive, and actually make a big difference in output. And it's FAST!” - J. Paul Hendricks
 
-### Prompt Genie
-
-Prompt Genie is a powerful AI tool that can help you generate better prompts for your images. Just enter a few simple words to describe what you would like to create, then summon Prompt Genie to use it's custom-trained machine learning model to turn your boring prompts into amazingly artistic images. Prompt Genie is a great way to create fantastic images with Imajinn without having to learn the complex skill of prompt building that's necessary to use other tools like DALLE or Stable Diffusion.
-
 ### Touchup (Inpainting)
 
 Touchup mode allows you to customize and make modifications to an image in a more precise way by allowing you to remove or replace parts of the image with new content generated from your prompt. This is useful for removing unwanted objects like watermarks, signatures, or duplicates. Or you can use it to add new objects to the image, such as a forground item or background. Touchup allows you to create the exact image you want by choosing where each element in the image goes. You can create that complex image you have in mind, even if it is too specific to get right with one initial prompt.
@@ -71,13 +66,13 @@ Touchup works by choosing an image as an input, masking an area with the brush t
 
 ### Privacy
 
-This plugin does not collect or share data other than your prompts and generated images as needed to run our API service. Read our [Privacy Policy](https://infiniteuploads.com/privacy/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=imajinn_readme&utm_term=privacy) for more information.
+This plugin does not collect or share data other than your prompts and generated images as needed to run our API service. Read our [Privacy Policy](https://wp.imajinn.ai/privacy/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=imajinn_readme&utm_term=privacy) for more information.
 
 == Installation ==
 
 Once you install the plugin, simply insert the "Imajinn AI" Gutenberg block in any post or page editor, or visit the Media->Imajinn AI page. You will be prompted to create a free account or connect to your existing account right in the block, and then you can start generating images right away.
 
-Running an artificial intelligence neural network requires a lot of computing power. To make this possible, we run a cloud service to run the neural network. This means that you need to connect to our service before you can use the plugin. To connect to Imajinn AI, you need to have a user account. You can create one for free with just your valid email address and a password, or if you already have an account, you can log in with your Infinite Uploads/Imajinn AI email and password.
+Running an artificial intelligence neural network requires a lot of computing power. To make this possible, we run a cloud service to run the neural network. This means that you need to connect to our service before you can use the plugin. To connect to Imajinn AI, you need to have a user account. You can create one for free with just your valid email address and a password, or if you already have an account, you can log in with your Imajinn AI email and password.
 
 == Frequently Asked Questions ==
 
@@ -131,13 +126,18 @@ We also will be filtering prompt input and screening output to block the creatio
 1. The Imajinn AI block with generated images and prompt history.
 1. Saving high-resolution images to your WordPress media library for use in any theme or page builder.
 1. Saving and inserting images as an image block in Gutenberg.
-1. Using Prompt Genie and the face repair tools.
+1. Using the face repair tools.
 1. Generate variations of an image with a similar style and layout.
 1. AI-based facial restoration to restore facial details and enhance colors with a good balance of realness and fidelity.
 1. Using Touchup (inpainting) to remove a watermark and add a crown to a princess.
 1. Fine-tune custom AI models to visualize people, products, or styles with AI. Find at https://imajinn.ai
 
 == Changelog ==
+
+1.5.4 - 2024-11-09
+----------------------------------------------------------------------
+- Migrate API domain to wp.imajinn.ai
+- Remove Prompt Genie
 
 1.5.4 - 2023-10-25
 ----------------------------------------------------------------------

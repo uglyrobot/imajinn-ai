@@ -31,7 +31,6 @@ import { close, cloud } from '@wordpress/icons';
 import metadata from '../block.json';
 import { Imajinn } from './components/images/images';
 import { PromptHelpModal } from './components/help-modals';
-import { PromptGenieModal } from './components/PromptGenieModal';
 import { LicenseModal } from './components/LicenseModal';
 import { Connect } from './components/Connect';
 import optionData from './option-data';
@@ -489,17 +488,6 @@ export default function Edit() {
 									{ promptStyle }
 								</Text>
 								<div className={ 'styles-form' }>
-									<PromptGenieModal
-										{ ...{
-											prompt,
-											setPrompt,
-											setPromptStyle,
-											startJob,
-											setError,
-											clearStyles,
-											isLoading,
-										} }
-									/>
 									<StyleSelect
 										setImageStyle={ setImageStyle }
 										isLoading={ isLoading }
@@ -579,27 +567,27 @@ export default function Edit() {
 					<span className={ 'imajinn-credits' }>
 						{ _x(
 							'Made with ',
-							'Made with love by Infinite Uploads',
+							'Made with love by Imajinn AI',
 							'imajinn-ai'
 						) }
 						<Dashicon
 							icon="heart"
 							aria-label={ _x(
 								'love',
-								'Made with love by Infinite Uploads',
+								'Made with love by Imajinn AI',
 								'imajinn-ai'
 							) }
 						/>
 						{ _x(
 							' by ',
-							'Made with love by Infinite Uploads',
+							'Made with love by Imajinn AI',
 							'imajinn-ai'
 						) }
 						<a
-							href="https://infiniteuploads.com/"
+							href="https://imajinn.ai/"
 							target={ '_blank' }
 						>
-							Infinite Uploads
+							Imajinn AI
 						</a>
 					</span>
 				</div>

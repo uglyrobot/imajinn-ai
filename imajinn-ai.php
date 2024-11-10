@@ -4,22 +4,22 @@
  * Description:       Generate the perfect images for your blog in seconds with cutting-edge AI. The Imajinn Block brings AI image generation previously only seen on restricted platforms like DALL·E 2 right into the backend of your website so you can create stunning images for any topic with just your imagination.
  * Requires at least: 6.0
  * Requires PHP:      7.2
- * Version:           1.5.4
+ * Version:           1.5.5
  * Author:            Imajinn AI
  * Author URI:        https://imajinn.ai
- * Plugin URI:        https://infiniteuploads.com/imajinn/
+ * Plugin URI:        https://wp.imajinn.ai
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       imajinn-ai
  *
  * @package           imajinn-ai
  *
- * Copyright 2022 UglyRobot, LLC. All rights reserved.
+ * Copyright 2024 UglyRobot, LLC. All rights reserved.
  *
  * Developers: Aaron Edwards @UglyRobotDev
  */
 
-define( 'IMAJINN_AI_VERSION', '1.5.4' );
+define( 'IMAJINN_AI_VERSION', '1.5.5' );
 
 class Imajinn_AI {
 
@@ -40,7 +40,7 @@ class Imajinn_AI {
 	public function __construct() {
 
 		if ( ! defined( 'IMAJINN_API_URL' ) ) {
-			define( 'IMAJINN_API_URL', 'https://infiniteuploads.com/api/imajinn/v1/' );
+			define( 'IMAJINN_API_URL', 'https://wp.imajinn.ai/api/imajinn/v1/' );
 		}
 
 		add_action( 'init', [ &$this, 'block_init' ] );
@@ -127,9 +127,9 @@ class Imajinn_AI {
 			$site_id      = $this->get_site_id();
 			$expire       = strtotime( '+1 day' );
 			$auth         = hash( 'sha256', $site_id . $expire . hash( 'sha256', $this->get_api_key() ) );
-			$checkout_url = add_query_arg( compact( [ 'site_id', 'expire', 'auth' ] ), 'https://infiniteuploads.com/imajinn/checkout/' );
+			$checkout_url = add_query_arg( compact( [ 'site_id', 'expire', 'auth' ] ), 'https://wp.imajinn.ai/checkout/' );
 		} else {
-			$checkout_url = 'https://infiniteuploads.com/imajinn/checkout/';
+			$checkout_url = 'https://wp.imajinn.ai/checkout/';
 		}
 
 		//get history from post type

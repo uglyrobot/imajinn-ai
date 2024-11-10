@@ -91,7 +91,7 @@ export function Connect( props ) {
 						{ hasError }
 						{ errorCode === 'incorrect_password' && (
 							<ExternalLink
-								href="https://infiniteuploads.com/wp-login.php?action=lostpassword"
+								href="https://wp.imajinn.ai/wp-login.php?action=lostpassword"
 								target="_blank"
 							>
 								{ __( 'Reset Password', 'imajinn-ai' ) }
@@ -142,7 +142,7 @@ export function Connect( props ) {
 			/>
 			<p>
 				{ __(
-					"We hope you are excited to turn your imagination into creative media for your WordPress site. To get started please create a free account or login with your existing Infinite Uploads/Imajinn credentials and we'll connect your site to our cloud.",
+					"We hope you are excited to turn your imagination into creative media for your WordPress site. To get started please create a free account or login with your existing Imajinn credentials and we'll connect your site to our cloud.",
 					'imajinn-ai'
 				) }
 			</p>
@@ -190,13 +190,13 @@ export function Connect( props ) {
 							) }
 						/>
 						<ExternalLink
-							href="https://infiniteuploads.com/terms-of-service/"
+							href="https://wp.imajinn.ai/terms-of-service/"
 							target="_blank"
 						>
 							{ __( 'Terms of Service', 'imajinn-ai' ) }
 						</ExternalLink>
 						<ExternalLink
-							href="https://infiniteuploads.com/privacy/"
+							href="https://wp.imajinn.ai/privacy/"
 							target="_blank"
 						>
 							{ __( 'Privacy Policy', 'imajinn-ai' ) }

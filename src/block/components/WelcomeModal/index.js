@@ -65,7 +65,7 @@ export function WelcomeModal( { showWelcome, setShowWelcome, ...props } ) {
 						</li>
 						<li>
 							{ __(
-								'Use Prompt Genie or our style dropdowns for the best results.',
+								'Use our style dropdowns for the best results.',
 								'imajinn-ai'
 							) }
 						</li>
