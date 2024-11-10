@@ -134,7 +134,7 @@ We also will be filtering prompt input and screening output to block the creatio
 
 == Changelog ==
 
-1.5.4 - 2024-11-09
+1.5.5 - 2024-11-09
 ----------------------------------------------------------------------
 - Migrate API domain to wp.imajinn.ai
 - Remove Prompt Genie
